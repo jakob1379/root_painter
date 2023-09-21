@@ -110,6 +110,15 @@ class SegmentFolderWidget(QtWidgets.QWidget):
         specify_input_dir_btn.clicked.connect(self.select_input_dir)
         layout.addWidget(specify_input_dir_btn)
 
+        model_label = QtWidgets.QLabel()
+        model_label.setText("Model file: Not yet specified")
+        layout.addWidget(model_label)
+        self.model_label = model_label
+        specify_model_btn = QtWidgets.QPushButton('Specify model file')
+        specify_model_btn.clicked.connect(self.select_model)
+        layout.addWidget(specify_model_btn)
+
+
         out_dir_label = QtWidgets.QLabel()
         out_dir_label.setText("Output directory: Not yet specified")
         layout.addWidget(out_dir_label)
@@ -120,13 +129,6 @@ class SegmentFolderWidget(QtWidgets.QWidget):
         layout.addWidget(specify_output_dir_btn)
 
 
-        model_label = QtWidgets.QLabel()
-        model_label.setText("Model file: Not yet specified")
-        layout.addWidget(model_label)
-        self.model_label = model_label
-        specify_model_btn = QtWidgets.QPushButton('Specify model file')
-        specify_model_btn.clicked.connect(self.select_model)
-        layout.addWidget(specify_model_btn)
 
         format_label = QtWidgets.QLabel()
         format_label.setText("Segmentation Format: RootPainter Default")
@@ -161,15 +163,16 @@ class SegmentFolderWidget(QtWidgets.QWidget):
             self.submit_btn.setEnabled(False)
             return
 
+        if not self.selected_models:
+            self.info_label.setText("Starting model must be specified to create project")
+            self.submit_btn.setEnabled(False)
+            return
+
         if not self.output_dir:
             self.info_label.setText("Output directory must be specified to create project")
             self.submit_btn.setEnabled(False)
             return
 
-        if not self.selected_models:
-            self.info_label.setText("Starting model must be specified to create project")
-            self.submit_btn.setEnabled(False)
-            return
         self.info_label.setText("")
         self.submit_btn.setEnabled(True)
 
