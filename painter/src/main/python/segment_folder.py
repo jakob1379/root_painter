@@ -124,10 +124,10 @@ class SegmentFolderWidget(QtWidgets.QWidget):
         layout.addWidget(out_dir_label)
         self.out_dir_label = out_dir_label
 
-        specify_output_dir_btn = QtWidgets.QPushButton('Specify output directory')
-        specify_output_dir_btn.clicked.connect(self.select_output_dir)
-        layout.addWidget(specify_output_dir_btn)
-
+        self.specify_output_dir_btn = QtWidgets.QPushButton('Specify output directory')
+        self.specify_output_dir_btn.clicked.connect(self.select_output_dir)
+        self.specify_output_dir_btn.setEnabled(False)
+        layout.addWidget(self.specify_output_dir_btn)
 
 
         format_label = QtWidgets.QLabel()
@@ -168,6 +168,11 @@ class SegmentFolderWidget(QtWidgets.QWidget):
             self.submit_btn.setEnabled(False)
             return
 
+        # if models are selected then output can be specified. This is because
+        # we want to disable output selection until a model is selected so
+        # we can suggest a sensible output folder name based on the selected model
+        self.specify_output_dir_btn.setEnabled(True)
+
         if not self.output_dir:
             self.info_label.setText("Output directory must be specified to create project")
             self.submit_btn.setEnabled(False)
@@ -200,7 +205,34 @@ class SegmentFolderWidget(QtWidgets.QWidget):
         self.output_dialog.fileSelected.connect(output_selected)
         self.output_dialog.open()
 
+    def get_suggested_output_dir(self, model_file_paths):
+        """
+        Suggest an output directory path based on the selected models.
+        This should both save the user time and encourage sensible (organised?)
+        file structure and workflow. 
 
+        They can still overwrite the output dir if they wish.
+        """
+
+        # For a model /rp_sync/projects/project_a/models/000004_1685012907.pkl the output folder would be /rp_sync/projects/project_a/results/segmentations_model_4
+        model_fpath = model_file_paths[0]
+        model_name = os.path.basename(model_fpath)
+        project_directory_path = os.path.dirname(model_fpath)
+        projects_directory_path = os.path.dirname(project_directory_path)
+        if os.path.basename(projects_directory_path) != 'projects':
+            # if the model file was not in a models dir in a project in the projects folder then do not suggest an ouput location.
+            return None 
+        results_dir = os.path.join(project_directory_path, 'results')
+        model_fnames = [os.path.splitext(m)[0] for m in model_
+
+
+
+If multiple models are selected, the output folder would be /rp_sync/projects/project_a/results/segmentations_model_4_5_6_7_8
+If the model has been renamed by the user i.e it is not 000004_1685012907.pkl but user_model_name.pkl then we include the user-specified name(s) verbatim.
+        
+
+
+        return 
 
     def select_model(self):
         options = QtWidgets.QFileDialog.Options()
@@ -215,4 +247,10 @@ class SegmentFolderWidget(QtWidgets.QWidget):
             else:
                 self.model_label.setText(f'{len(file_paths)} model files selected')
             self.selected_models = file_paths
+
+            # if there is not yet a specified output directory. Then at this point
+            # we will suggest one based on the model name.
+            if self.output_dir is None:
+                self.output_dir = self.get_suggested_output_dir(file_paths)
+
             self.validate()
