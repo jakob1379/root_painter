@@ -21,8 +21,8 @@ from PyQt5 import QtWidgets
 from PyQt5 import QtCore
 from skimage.io import imsave
 
-from progress_widget import BaseProgressWidget
-import im_utils
+from root_painter.progress_widget import BaseProgressWidget
+from root_painter import im_utils
 
 class CreationProgressWidget(BaseProgressWidget):
     def __init__(self):

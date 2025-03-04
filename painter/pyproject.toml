@@ -1,0 +1,41 @@
+[project]
+name = "root-painter"
+version = "0.1.0"
+description = "the painter"
+readme = "README.md"
+authors = [
+    { name = "Jakob Guldberg Aaes", email = "jakob1379@gmail.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "humanfriendly==10.0",
+    "imagecodecs==2021.11.20",
+    "jupyter-rfb>=0.5.1",
+    "matplotlib==3.5.2",
+    "natsort==8.0.2",
+    "numpy==1.22.1",
+    "pillow==9.3.0",
+    "poethepoet>=0.33.0",
+    "pyopengl>=3.1.9",
+    "pyqt5==5.15.7",
+    "pyqtgraph==0.12.4",
+    "pywavelets==1.2.0",
+    "qimage2ndarray==1.9.0",
+    "scikit-image==0.19.1",
+    "scipy==1.10.0",
+    "setuptools==65.5.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+root-painter = "root_painter.main:init_root_painter"
+
+[dependency-groups]
+dev = [
+    "poethepoet>=0.33.0",
+    "pyinstaller>=6.12.0",
+    "ruff>=0.9.9",
+]

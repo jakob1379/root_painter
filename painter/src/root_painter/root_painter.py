@@ -42,32 +42,32 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PIL import Image
 
-from about import AboutWindow, LicenseWindow
-from create_project import CreateProjectWidget
-from create_dataset import CreateDatasetWidget, check_extend_dataset
-from segment_folder import SegmentFolderWidget
-from extract_count import ExtractCountWidget
-from extract_regions import ExtractRegionsWidget
-from extract_length import ExtractLengthWidget
-from extract_comp import ExtractCompWidget
-from mask_images import MaskImWidget
-from assign_corrections import AssignCorrectionsWidget
-from convert_seg import ConvertSegWidget, convert_seg_to_rve, convert_seg_to_annot
-from graphics_scene import GraphicsScene
-from graphics_view import CustomGraphicsView
-from nav import NavWidget
-from visibility_widget import VisibilityWidget
-from file_utils import last_fname_with_annotations
-from file_utils import get_annot_path
-from file_utils import maybe_save_annotation
-from file_utils import ls # list directory without hidden files.
-import im_utils
-from instructions import send_instruction
-from plot_seg_metrics import MetricsPlot, ExtractMetricsWidget
-from im_viewer import ContextViewer
-from random_split import RandomSplitWidget
-from resize_images import ResizeWidget
-from controls_dialog import ControlsDialog
+from root_painter.about import AboutWindow, LicenseWindow
+from root_painter.create_project import CreateProjectWidget
+from root_painter.create_dataset import CreateDatasetWidget, check_extend_dataset
+from root_painter.segment_folder import SegmentFolderWidget
+from root_painter.extract_count import ExtractCountWidget
+from root_painter.extract_regions import ExtractRegionsWidget
+from root_painter.extract_length import ExtractLengthWidget
+from root_painter.extract_comp import ExtractCompWidget
+from root_painter.mask_images import MaskImWidget
+from root_painter.assign_corrections import AssignCorrectionsWidget
+from root_painter.convert_seg import ConvertSegWidget, convert_seg_to_rve, convert_seg_to_annot
+from root_painter.graphics_scene import GraphicsScene
+from root_painter.graphics_view import CustomGraphicsView
+from root_painter.nav import NavWidget
+from root_painter.visibility_widget import VisibilityWidget
+from root_painter.file_utils import last_fname_with_annotations
+from root_painter.file_utils import get_annot_path
+from root_painter.file_utils import maybe_save_annotation
+from root_painter.file_utils import ls # list directory without hidden files.
+from root_painter import im_utils
+from root_painter.instructions import send_instruction
+from root_painter.plot_seg_metrics import MetricsPlot, ExtractMetricsWidget
+from root_painter.im_viewer import ContextViewer
+from root_painter.random_split import RandomSplitWidget
+from root_painter.resize_images import ResizeWidget
+from root_painter.controls_dialog import ControlsDialog
 
 use_plugin("pil")
 
@@ -82,7 +82,8 @@ class RootPainter(QtWidgets.QMainWindow):
         super().__init__()
         # give the main RootPainter window an Icon.
         app_dir = os.path.dirname(os.path.realpath(__file__))
-        self.setWindowIcon(QtGui.QIcon(os.path.join(app_dir, 'icons/linux/128.png')))
+        icon_path = os.path.join(app_dir, 'icons/linux/128.png')
+        self.setWindowIcon(QtGui.QIcon(icon_path))
 
         self.assign_sync_directory(sync_dir)
         self.tracking = False

@@ -1,4 +1,4 @@
- # Copyright (C) 2022 Abraham George Smith
+# Copyright (C) 2022 Abraham George Smith
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,13 +39,13 @@ mkdir -p dist/ubuntu_setup/usr/local/bin
 
 # the /usr/share/applications folder is required so the deb file unpacks the an application shortcut into the correct location.
 mkdir -p dist/ubuntu_setup/usr/share/applications
-cp src/build/RootPainter.desktop dist/ubuntu_setup/usr/share/applications
+cp build/RootPainter.desktop dist/ubuntu_setup/usr/share/applications
 
 
 mkdir dist/ubuntu_setup/DEBIAN
-cp -r src/build/DEBIAN_control dist/ubuntu_setup/DEBIAN/control
+cp -r build/DEBIAN_control dist/ubuntu_setup/DEBIAN/control
 cp -r dist/RootPainter dist/ubuntu_setup/usr/local/bin/RootPainter
-cp -r src/main/icons dist/ubuntu_setup/usr/local/bin/RootPainter/icons
+cp -r src/root_painter/icons dist/ubuntu_setup/usr/local/bin/RootPainter/icons
 
 dpkg-deb --build dist/ubuntu_setup
 mv dist/ubuntu_setup.deb dist/RootPainter.deb

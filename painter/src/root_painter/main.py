@@ -1,4 +1,4 @@
-
+1
 """
 Copyright (C) 2020 Abraham George Smith
 
@@ -23,7 +23,7 @@ import json
 import traceback
 from PyQt5 import QtWidgets
 
-from root_painter import RootPainter
+from root_painter.root_painter import RootPainter
 
 def init_root_painter():
     settings_path = os.path.join(Path.home(), 'root_painter_settings.json')

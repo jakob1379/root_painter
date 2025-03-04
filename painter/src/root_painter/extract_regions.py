@@ -23,8 +23,8 @@ from PyQt5 import QtCore
 import numpy as np
 from skimage import measure
 from PIL import Image
-from eccentricity import eccentricity2
-from base_extract import BaseExtractWidget
+from root_painter.eccentricity import eccentricity2
+from root_painter.base_extract import BaseExtractWidget
 
 region_props_headers = ['file_name', 'x', 'y', 'diameter',
                         'area', 'perimeter', 'eccentricity']

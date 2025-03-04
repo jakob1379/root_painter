@@ -1,0 +1,23 @@
+[project]
+name = "root_painter_trainer"
+version = "0.2.27.1"
+description = "Trainer (server component) for RootPainter"
+readme = "README.md"
+authors = [
+    {name = "Abraham George Smith"},
+]
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+]
+license = {text = "GPL-2.0"}
+requires-python = ">=3.8,<3.11"
+
+[project.urls]
+Homepage = "https://github.com/Abe404/root_painter"
+
+[tool.uv.workspace]
+members = ["root-trainer", "painter"]
+

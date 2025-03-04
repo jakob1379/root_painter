@@ -28,16 +28,16 @@ from PyQt5 import QtWidgets
 from PyQt5 import QtCore
 from skimage.io import imread, imsave
 from skimage.color import rgba2rgb
-from im_utils import is_image
+from root_painter.im_utils import is_image
 
 # Avoiding bug with truncated images,
 # "Reason: "broken data stream when reading image file"
 from PIL import Image, ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-from progress_widget import BaseProgressWidget
-from name_edit_widget import NameEditWidget
-import im_utils
+from root_painter.progress_widget import BaseProgressWidget
+from root_painter.name_edit_widget import NameEditWidget
+from root_painter import im_utils
 
 def get_dupes(a):
     seen = {}

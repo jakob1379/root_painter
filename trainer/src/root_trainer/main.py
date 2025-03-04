@@ -16,7 +16,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from trainer import Trainer
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -32,9 +31,10 @@ parser.add_argument('--maxworkers',
                     default=12,
                     help=('maximum number of workers used for the dataloader'))
 
-
-
-if __name__ == '__main__':
+def start():
     args = parser.parse_args()
+
+    # Simply to improve speed of --help
+    from root_trainer.trainer import Trainer
     trainer = Trainer(sync_dir=args.syncdir, patch_size=args.patchsize, max_workers=args.maxworkers)
     trainer.main_loop()
