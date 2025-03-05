@@ -15,7 +15,6 @@ dependencies = [
     "natsort==8.0.2",
     "numpy==1.22.1",
     "pillow==9.3.0",
-    "poethepoet>=0.33.0",
     "pyopengl>=3.1.9",
     "pyqt5==5.15.7",
     "pyqtgraph==0.12.4",
@@ -35,7 +34,6 @@ root-painter = "root_painter.main:init_root_painter"
 
 [dependency-groups]
 dev = [
-    "poethepoet>=0.33.0",
     "pyinstaller>=6.12.0",
     "ruff>=0.9.9",
 ]
