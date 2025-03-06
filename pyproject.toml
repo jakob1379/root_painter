@@ -14,10 +14,18 @@ classifiers = [
 ]
 license = {text = "GPL-2.0"}
 requires-python = ">=3.8,<3.11"
+dependencies = [
+    "root-painter",
+    "root-trainer",
+]
 
 [project.urls]
 Homepage = "https://github.com/Abe404/root_painter"
 
 [tool.uv.workspace]
-members = ["root-trainer", "painter"]
+members = ["trainer", "painter"]
+
+[tool.uv.sources]
+root-trainer = { workspace = true }
+root-painter = { workspace = true }
 
