@@ -18,15 +18,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import os
-import sys
 import shutil
 
-# Add the parent directory to sys.path
-parent_dir = os.path.abspath('../')
-sys.path.insert(0, parent_dir)
 
-
-from metrics import get_metrics_str, get_metric_csv_row
+from root_painter_trainer.metrics import get_metrics_str, get_metric_csv_row
 
 def log_metrics(metrics, fpath):
     if not os.path.isfile(fpath):
