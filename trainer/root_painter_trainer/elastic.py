@@ -31,7 +31,7 @@ from scipy.ndimage import gaussian_filter
 from scipy.ndimage import map_coordinates
 from scipy.ndimage import gaussian_filter
 from skimage.transform import resize
-import im_utils
+import root_painter_trainer.im_utils
 
 def get_indices(im_shape, scale, sigma, padding=60):
     """ based on cognitivemedium.com/assets/rmnist/Simard.pdf """

@@ -29,7 +29,7 @@ from PIL import Image, ImageOps
 from skimage import color
 from skimage.exposure import rescale_intensity
 from skimage.io import imread, imsave
-from file_utils import ls
+from root_painter_trainer.file_utils import ls
 
 # https://github.com/Abe404/root_painter/discussions/131#discussioncomment-8596334
 Image.MAX_IMAGE_PIXELS = 1e10 

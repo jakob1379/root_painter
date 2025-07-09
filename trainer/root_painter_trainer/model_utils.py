@@ -25,11 +25,11 @@ import torch
 from torch.nn.functional import softmax
 from skimage.io import imread
 from skimage import img_as_float32
-import im_utils
-from unet import UNetGNRes
-from metrics import get_metrics
-from file_utils import ls
-from loss import combined_loss as criterion
+from root_painter_trainer import im_utils
+from root_painter_trainer.unet import UNetGNRes
+from root_painter_trainer.metrics import get_metrics
+from root_painter_trainer.file_utils import ls
+from root_painter_trainer.loss import combined_loss as criterion
 
 
 def get_device():
