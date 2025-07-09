@@ -1,7 +1,7 @@
 [project]
 name = "root-trainer"
 version = "0.1.0"
-description = "the trainer"
+description = "Trainer (server component) for RootPainter"
 readme = "README.txt"
 authors = [
     { name = "Jakob Guldberg Aaes", email = "jakob1379@gmail.com" }

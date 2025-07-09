@@ -114,7 +114,7 @@ run_args.append('com.rootpainter')
 # scriptname: Name of scriptfile to be processed.
 run_args.append(os.path.join('src', 'root_painter', 'main.py'))
 
-PyInstaller.__main__.run(run_args)
+# PyInstaller.__main__.run(run_args)
 # Useful when debugging to see what these folders look like.
 print("run args:", run_args)
 print('list cwd', os.listdir(os.getcwd()))

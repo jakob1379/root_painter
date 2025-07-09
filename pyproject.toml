@@ -1,7 +1,7 @@
 [project]
 name = "root_painter_trainer"
 version = "0.2.27.1"
-description = "Trainer (server component) for RootPainter"
+description = "RootPainter is a GUI-based software tool for the rapid training of deep neural networks for use in image analysis."
 readme = "README.md"
 authors = [
     {name = "Abraham George Smith"},

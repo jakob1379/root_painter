@@ -1,7 +1,7 @@
 [project]
 name = "root-painter"
 version = "0.1.0"
-description = "the painter"
+description = "Painter (gui component) for RootPainter"
 readme = "README.md"
 authors = [
     { name = "Jakob Guldberg Aaes", email = "jakob1379@gmail.com" }
