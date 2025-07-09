@@ -15,19 +15,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import sys
-from os.path import dirname
-sys.path.append(dirname(__file__)) # find modules in current directory
-
 import argparse
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--syncdir',
-                    help=('location of directory where data is'
-                           ' synced between the client and server'))
 
 def start():
-    from trainer import Trainer
+    from .trainer import Trainer
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--syncdir',
+                        help=('location of directory where data is'
+                               ' synced between the client and server'))
     args = parser.parse_args()
     if args.syncdir:
         trainer = Trainer(sync_dir=args.syncdir)
