@@ -1,0 +1,39 @@
+[project]
+name = "root_painter"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Jakob Stender Guldberg", email = "jakob1379@gmail.com" }
+]
+requires-python = ">=3.8"
+dependencies = [
+    "humanfriendly==10.0",
+    "imagecodecs==2021.11.20",
+    "matplotlib==3.5.2",
+    "natsort==8.0.2",
+    "numpy==1.22.1",
+    "pillow==9.3.0",
+    "pyqt5>=5.15.11",
+    "pyqtgraph==0.12.4",
+    "pywavelets==1.2.0",
+    "qimage2ndarray==1.9.0",
+    "scikit-image==0.19.1",
+    "scipy==1.10.0",
+    "setuptools==65.5.1",
+]
+
+[project.scripts]
+root-painter = "root_painter.main:init_root_painter"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "cairosvg>=2.7.1",
+    "pyinstaller>=6.14.2",
+]
+
+
