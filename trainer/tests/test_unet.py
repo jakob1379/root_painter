@@ -3,16 +3,12 @@ Basic tests for the UNetGNRes U-Net implementation.
 Can the network be trained to approximate and target.
 """
 
-import sys
 import os
-# Add the parent directory to sys.path
-parent_dir = os.path.abspath('../')
-sys.path.insert(0, parent_dir)
 
 # Now you can import the module located in the parent directory
 from torch.nn.functional import softmax
-from unet import UNetGNRes
-from test_utils import get_acc
+from root_painter_trainer.unet import UNetGNRes
+from .test_utils import get_acc
 
 def setup_function():
     import os
@@ -26,7 +22,7 @@ def setup_function():
 def test_inference():
     """ should not raise an exception """
     import torch
-    from model_utils import get_device
+    from root_painter_trainer.model_utils import get_device
     from PIL import Image
     device = get_device()
     from skimage.io import imsave
@@ -51,9 +47,9 @@ def test_training():
     """ test that network can be trained,
         and can approximate a square """
     import torch
-    from model_utils import get_device
+    from root_painter_trainer.model_utils import get_device
     import numpy as np
-    from loss import combined_loss as criterion
+    from root_painter_trainer.loss import combined_loss as criterion
 # this seems to work well and is simpler, but further testing is required.  # from torch.nn.functional import cross_entropy
     from skimage.io import imsave
     from skimage import img_as_uint
@@ -95,10 +91,10 @@ def test_mask_training():
         This time also using a mask of the 'defined' region """
 
     import torch
-    from model_utils import get_device
+    from root_painter_trainer.model_utils import get_device
     import numpy as np
     from torch.nn.functional import softmax, binary_cross_entropy 
-    from loss import combined_loss as criterion
+    from root_painter_trainer.loss import combined_loss as criterion
 
     # would like to experiment with switching to these but more experiments required.
     #from torch.nn.functional import cross_entropy, binary_cross_entropy
@@ -125,7 +121,7 @@ def test_mask_training():
     defined[:, :250] = 1
     defined = torch.from_numpy(defined).float().to(device)
 
-    from loss import dice_loss, dice_loss2
+    from root_painter_trainer.loss import dice_loss, dice_loss2
     for step in range(30000):
         optimizer.zero_grad()
         preds = unet(test_input)

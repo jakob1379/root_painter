@@ -35,19 +35,19 @@ import numpy as np
 import torch
 from torch.nn.functional import softmax
 from torch.utils.data import DataLoader
-from loss import combined_loss as criterion
+from root_painter_trainer.loss import combined_loss as criterion
 
-from datasets import TrainDataset
-from metrics import get_metrics, get_metrics_str, get_metric_csv_row
-from model_utils import ensemble_segment
-from model_utils import create_first_model_with_random_weights
-import model_utils
-from model_utils import save_if_better
+from root_painter_trainer.datasets import TrainDataset
+from root_painter_trainer.metrics import get_metrics, get_metrics_str, get_metric_csv_row
+from root_painter_trainer.model_utils import ensemble_segment
+from root_painter_trainer.model_utils import create_first_model_with_random_weights
+from root_painter_trainer import model_utils
+from root_painter_trainer.model_utils import save_if_better
 
-from im_utils import is_photo, load_image, save_then_move
-from file_utils import ls
-from startup import startup_setup, ensure_required_folders_exist
-from unet import get_valid_patch_sizes
+from root_painter_trainer.im_utils import is_photo, load_image, save_then_move
+from root_painter_trainer.file_utils import ls
+from root_painter_trainer.startup import startup_setup, ensure_required_folders_exist
+from root_painter_trainer.unet import get_valid_patch_sizes
 
 class Trainer():
 

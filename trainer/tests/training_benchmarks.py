@@ -19,17 +19,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import os
 import sys
 
-# Add the parent directory to sys.path
-parent_dir = os.path.abspath('../')
-sys.path.insert(0, parent_dir)
-
 import torch
 import time
-from datasets import TrainDataset
+from root_painter_trainer.datasets import TrainDataset
 from torch.utils.data import DataLoader
-from multi_epoch.multi_epoch_loader import MultiEpochsDataLoader
-from test_utils import get_acc, log_metrics
-from metrics import get_metrics
+from root_painter_trainer.multi_epoch.multi_epoch_loader import MultiEpochsDataLoader
+from .test_utils import get_acc, log_metrics
+from root_painter_trainer.metrics import get_metrics
 
 # sync directory for use with tests
 sync_dir = os.path.join(os.getcwd(), 'tests', 'test_rp_sync')
@@ -49,7 +45,7 @@ def setup_function():
     import urllib.request
     import zipfile
     import shutil
-    from test_utils import dl_dir_from_zip
+    from .test_utils import dl_dir_from_zip
     print('running setup')
     # prepare biopores training dataset
     if not os.path.isdir(datasets_dir):
@@ -85,8 +81,8 @@ def setup_function():
 def training(dataset_dir, annot_dir, name):
     # a specific training set f1 score can be obtained in a specific number of update steps
     # and wall clock time?
-    import model_utils
-    from unet import UNetGNRes
+    from root_painter_trainer import model_utils
+    from root_painter_trainer.unet import UNetGNRes
     runs = 6
     for run in range(1, runs+1):
         model = UNetGNRes()

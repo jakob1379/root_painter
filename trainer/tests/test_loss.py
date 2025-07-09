@@ -1,16 +1,12 @@
 
-import sys; import os; import numpy as np
-# Add the parent directory to sys.path
-parent_dir = os.path.abspath('../')
-sys.path.insert(0, parent_dir)
-
+import numpy as np
 import torch
 from torch.nn.functional import softmax, binary_cross_entropy 
 from torch.nn.functional import cross_entropy
-from loss import combined_loss as criterion
+from root_painter_trainer.loss import combined_loss as criterion
 from skimage.io import imsave
 from skimage import img_as_uint
-from loss import dice_loss, dice_loss2
+from root_painter_trainer.loss import dice_loss, dice_loss2
 
 
 

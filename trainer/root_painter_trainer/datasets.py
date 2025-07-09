@@ -28,10 +28,10 @@ from PIL import Image
 from skimage import img_as_float32
 from skimage.exposure import rescale_intensity
 
-from im_utils import load_train_image_and_annot
-from file_utils import ls
-import im_utils
-import elastic
+from root_painter_trainer.im_utils import load_train_image_and_annot
+from root_painter_trainer.file_utils import ls
+from root_painter_trainer import im_utils
+from root_painter_trainer import elastic
 
 def elastic_transform(photo, annot):
     def_map = elastic.get_elastic_map(photo.shape,
