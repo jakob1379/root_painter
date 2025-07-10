@@ -18,9 +18,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import os
 from PyQt5 import QtWidgets
 from PyQt5 import QtCore
-from im_utils import save_masked_image
-from progress_widget import BaseProgressWidget
-from file_utils import ls
+from .im_utils import save_masked_image
+from .progress_widget import BaseProgressWidget
+from .file_utils import ls
 
 class Thread(QtCore.QThread):
     progress_change = QtCore.pyqtSignal(int, int)

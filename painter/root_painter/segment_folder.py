@@ -19,10 +19,10 @@ import os
 import time
 from PyQt5 import QtWidgets
 from PyQt5 import QtCore
-import file_utils
-from progress_widget import BaseProgressWidget
-from instructions import send_instruction
-from im_utils import is_image
+from . import file_utils
+from .progress_widget import BaseProgressWidget
+from .instructions import send_instruction
+from .im_utils import is_image
 
 class SegmentWatchThread(QtCore.QThread):
     """

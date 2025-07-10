@@ -19,7 +19,7 @@ import csv
 
 from PyQt5 import QtWidgets
 from PyQt5 import QtCore
-from progress_widget import BaseProgressWidget
+from .progress_widget import BaseProgressWidget
 
 
 class Thread(QtCore.QThread):

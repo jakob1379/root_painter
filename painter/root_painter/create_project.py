@@ -26,10 +26,10 @@ from pathlib import Path, PurePosixPath
 from PyQt5 import QtWidgets
 from PyQt5 import QtCore
 
-from im_utils import is_image
-import file_utils
-from name_edit_widget import NameEditWidget
-from palette import PaletteEditWidget
+from .im_utils import is_image
+from . import file_utils
+from .name_edit_widget import NameEditWidget
+from .palette import PaletteEditWidget
 
 class CreateProjectWidget(QtWidgets.QWidget):
 

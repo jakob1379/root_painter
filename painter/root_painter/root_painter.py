@@ -42,32 +42,32 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PIL import Image
 
-from about import AboutWindow, LicenseWindow
-from create_project import CreateProjectWidget
-from create_dataset import CreateDatasetWidget, check_extend_dataset
-from segment_folder import SegmentFolderWidget
-from extract_count import ExtractCountWidget
-from extract_regions import ExtractRegionsWidget
-from extract_length import ExtractLengthWidget
-from extract_comp import ExtractCompWidget
-from mask_images import MaskImWidget
-from assign_corrections import AssignCorrectionsWidget
-from convert_seg import ConvertSegWidget, convert_seg_to_rve, convert_seg_to_annot
-from graphics_scene import GraphicsScene
-from graphics_view import CustomGraphicsView
-from nav import NavWidget
-from visibility_widget import VisibilityWidget
-from file_utils import last_fname_with_annotations
-from file_utils import get_annot_path
-from file_utils import maybe_save_annotation
-from file_utils import ls # list directory without hidden files.
-import im_utils
-from instructions import send_instruction
-from plot_seg_metrics import MetricsPlot, ExtractMetricsWidget
-from im_viewer import ContextViewer
-from random_split import RandomSplitWidget
-from resize_images import ResizeWidget
-from controls_dialog import ControlsDialog
+from .about import AboutWindow, LicenseWindow
+from .create_project import CreateProjectWidget
+from .create_dataset import CreateDatasetWidget, check_extend_dataset
+from .segment_folder import SegmentFolderWidget
+from .extract_count import ExtractCountWidget
+from .extract_regions import ExtractRegionsWidget
+from .extract_length import ExtractLengthWidget
+from .extract_comp import ExtractCompWidget
+from .mask_images import MaskImWidget
+from .assign_corrections import AssignCorrectionsWidget
+from .convert_seg import ConvertSegWidget, convert_seg_to_rve, convert_seg_to_annot
+from .graphics_scene import GraphicsScene
+from .graphics_view import CustomGraphicsView
+from .nav import NavWidget
+from .visibility_widget import VisibilityWidget
+from .file_utils import last_fname_with_annotations
+from .file_utils import get_annot_path
+from .file_utils import maybe_save_annotation
+from .file_utils import ls # list directory without hidden files.
+from . import im_utils
+from .instructions import send_instruction
+from .plot_seg_metrics import MetricsPlot, ExtractMetricsWidget
+from .im_viewer import ContextViewer
+from .random_split import RandomSplitWidget
+from .resize_images import ResizeWidget
+from .controls_dialog import ControlsDialog
 
 use_plugin("pil")
 

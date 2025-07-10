@@ -19,7 +19,7 @@ import os
 import numpy as np
 from skimage import measure
 from PIL import Image
-from base_extract import BaseExtractWidget
+from .base_extract import BaseExtractWidget
 
 
 def save_count_to_csv(seg_dir, fname, writer, _):

@@ -28,8 +28,8 @@ import numpy as np
 from PyQt5 import QtWidgets
 from PyQt5 import QtCore
 
-from progress_widget import BaseProgressWidget
-import im_utils
+from .progress_widget import BaseProgressWidget
+from . import im_utils
 
 class CreationProgressWidget(BaseProgressWidget):
     def __init__(self):

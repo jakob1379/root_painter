@@ -35,9 +35,9 @@ from im_utils import is_image
 from PIL import Image, ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-from progress_widget import BaseProgressWidget
-from name_edit_widget import NameEditWidget
-import im_utils
+from .progress_widget import BaseProgressWidget
+from .name_edit_widget import NameEditWidget
+from . import im_utils
 
 def get_dupes(a):
     seen = {}

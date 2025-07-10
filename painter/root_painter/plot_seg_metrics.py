@@ -29,9 +29,9 @@ from pyqtgraph.Qt import mkQApp
 from PyQt5 import QtWidgets
 from PyQt5 import QtCore
 from skimage.io import imread
-from progress_widget import BaseProgressWidget
-from interaction_time import events_from_client_log 
-from interaction_time import get_annot_duration_s
+from .progress_widget import BaseProgressWidget
+from .interaction_time import events_from_client_log 
+from .interaction_time import get_annot_duration_s
 
 
 def moving_average(x_vals, y_vals, w):

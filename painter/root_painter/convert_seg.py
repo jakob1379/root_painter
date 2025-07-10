@@ -20,7 +20,7 @@ import os
 import numpy as np
 from PyQt5 import QtWidgets
 from PyQt5 import QtCore
-from progress_widget import BaseProgressWidget
+from .progress_widget import BaseProgressWidget
 from skimage.io import imread, imsave
 from skimage import img_as_ubyte, img_as_float
 
