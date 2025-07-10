@@ -1,6 +1,6 @@
 from sys import platform
-import PyInstaller.__main__
 
+import PyInstaller.__main__
 
 # to run this script, first activate the environment.
 # if you don't have an environment.
@@ -34,8 +34,8 @@ So the plan for now is to go with more options passed to PyInstaller, and then
 only move onto using a custom spec file when this is recommended by the above
 advice.
 """
-import shutil
 import os
+import shutil
 from sys import platform
 
 # pyinstaller expects icon file to be in the dist folder

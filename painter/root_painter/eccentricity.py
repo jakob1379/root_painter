@@ -36,15 +36,14 @@ IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
 
+import itertools
 import os
 from math import sqrt
-import itertools
 
 import numpy as np
+from PIL import Image
 from skimage import measure
 from skimage.measure import _moments
-from PIL import Image
-
 
 
 def eccentricity_for_region(region):

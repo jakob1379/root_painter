@@ -22,8 +22,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 import time
-from PyQt5 import QtWidgets
+
 from humanfriendly import format_timespan
+from PyQt5 import QtWidgets
 
 
 class DoneMessageWindow(QtWidgets.QWidget):

@@ -15,12 +15,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import os
-from PyQt5 import QtWidgets
-from PyQt5 import QtGui
-from PyQt5 import QtCore
+
 import numpy as np
-from skimage.color import rgb2gray
 import qimage2ndarray
+from PyQt5 import QtCore, QtGui, QtWidgets
+from skimage.color import rgb2gray
 
 
 class ContextViewer(QtWidgets.QWidget):

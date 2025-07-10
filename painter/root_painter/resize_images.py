@@ -17,12 +17,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import os
 from pathlib import Path
 
-from PyQt5 import QtWidgets
-from PyQt5 import QtCore
+from PyQt5 import QtCore, QtWidgets
 from skimage.io import imsave
 
-from .progress_widget import BaseProgressWidget
-from . import im_utils
+from root_painter import im_utils
+from root_painter.progress_widget import BaseProgressWidget
+
 
 class CreationProgressWidget(BaseProgressWidget):
     def __init__(self):

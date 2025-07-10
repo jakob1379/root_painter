@@ -15,22 +15,19 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 # pylint: disable=C0111, W0511
-import os
-import warnings
 import glob
+import os
 import sys
+import warnings
 
 import numpy as np
-from PyQt5 import QtGui
-from skimage import color
-from skimage.io import imread, imsave
-from skimage import img_as_ubyte
-from skimage import img_as_float
-from skimage import exposure
-from skimage.transform import resize
-from skimage.color import rgb2gray
 import qimage2ndarray
 from PIL import Image, ImageOps
+from PyQt5 import QtGui
+from skimage import color, exposure, img_as_float, img_as_ubyte
+from skimage.color import rgb2gray
+from skimage.io import imread, imsave
+from skimage.transform import resize
 
 # https://github.com/Abe404/root_painter/discussions/131#discussioncomment-8596334
 Image.MAX_IMAGE_PIXELS = 1e10 

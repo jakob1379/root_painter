@@ -16,20 +16,20 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 #pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
+import json
 import os
 import random
-import time
 import shutil
-import json
-
+import time
 from pathlib import Path, PurePosixPath
-from PyQt5 import QtWidgets
-from PyQt5 import QtCore
 
-from .im_utils import is_image
-from . import file_utils
-from .name_edit_widget import NameEditWidget
-from .palette import PaletteEditWidget
+from PyQt5 import QtCore, QtWidgets
+
+from root_painter import file_utils
+from root_painter.im_utils import is_image
+from root_painter.name_edit_widget import NameEditWidget
+from root_painter.palette import PaletteEditWidget
+
 
 class CreateProjectWidget(QtWidgets.QWidget):
 

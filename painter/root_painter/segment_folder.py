@@ -17,12 +17,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
 import os
 import time
-from PyQt5 import QtWidgets
-from PyQt5 import QtCore
-from . import file_utils
-from .progress_widget import BaseProgressWidget
-from .instructions import send_instruction
-from .im_utils import is_image
+
+from PyQt5 import QtCore, QtWidgets
+
+from root_painter import file_utils
+from root_painter.im_utils import is_image
+from root_painter.instructions import send_instruction
+from root_painter.progress_widget import BaseProgressWidget
+
 
 class SegmentWatchThread(QtCore.QThread):
     """

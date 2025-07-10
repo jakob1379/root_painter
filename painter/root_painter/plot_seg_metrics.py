@@ -16,22 +16,22 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-import os
 import csv
-import math
 import json
-import time
+import math
+import os
 import pickle
-import numpy as np
 import random
+import time
+
+import numpy as np
 import pyqtgraph as pg
+from PyQt5 import QtCore, QtWidgets
 from pyqtgraph.Qt import mkQApp
-from PyQt5 import QtWidgets
-from PyQt5 import QtCore
 from skimage.io import imread
-from .progress_widget import BaseProgressWidget
-from .interaction_time import events_from_client_log 
-from .interaction_time import get_annot_duration_s
+
+from root_painter.interaction_time import events_from_client_log, get_annot_duration_s
+from root_painter.progress_widget import BaseProgressWidget
 
 
 def moving_average(x_vals, y_vals, w):

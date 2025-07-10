@@ -14,8 +14,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import sys
-from PyQt5 import QtWidgets
-from PyQt5 import QtCore
+
+from PyQt5 import QtCore, QtWidgets
+
 
 # class to create a new dialog window that shows the controls of the application
 class ControlsDialog(QtWidgets.QDialog):

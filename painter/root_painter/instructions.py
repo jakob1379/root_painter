@@ -15,9 +15,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 #pylint: disable=C0111
-import os
 import json
+import os
 from pathlib import Path
+
 
 def fix_path(path, sync_dir):
     """ fix path by removing everything that might

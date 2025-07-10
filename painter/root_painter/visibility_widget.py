@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # pylint: disable=E0611, C0111, C0111, R0903, I1101
 from PyQt5 import QtWidgets
 
+
 class VisibilityWidget(QtWidgets.QWidget):
 
     def __init__(self):

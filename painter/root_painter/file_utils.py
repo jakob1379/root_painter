@@ -17,11 +17,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
 # pylint: disable=W0703 # Too broad an exception
 
+import filecmp
 import os
 from os.path import splitext
-import filecmp
+
 import numpy as np
 from skimage.io import imread
+
 
 def ls(dir_path):
     # Don't show hidden files

@@ -17,14 +17,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
 import os
 
-
-from PyQt5 import QtWidgets
-from PyQt5 import QtCore
 import numpy as np
-from skimage import measure
 from PIL import Image
-from .eccentricity import eccentricity2
-from .base_extract import BaseExtractWidget
+from PyQt5 import QtCore, QtWidgets
+from skimage import measure
+
+from root_painter.base_extract import BaseExtractWidget
+from root_painter.eccentricity import eccentricity2
 
 region_props_headers = ['file_name', 'x', 'y', 'diameter',
                         'area', 'perimeter', 'eccentricity']

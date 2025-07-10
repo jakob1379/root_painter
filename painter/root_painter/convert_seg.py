@@ -17,12 +17,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
 import os
+
 import numpy as np
-from PyQt5 import QtWidgets
-from PyQt5 import QtCore
-from .progress_widget import BaseProgressWidget
+from PyQt5 import QtCore, QtWidgets
+from skimage import img_as_float, img_as_ubyte
 from skimage.io import imread, imsave
-from skimage import img_as_ubyte, img_as_float
+
+from root_painter.progress_widget import BaseProgressWidget
+
 
 class ConvertThread(QtCore.QThread):
     progress_change = QtCore.pyqtSignal(int, int)

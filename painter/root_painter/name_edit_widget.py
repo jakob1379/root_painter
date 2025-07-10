@@ -21,8 +21,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pylint: disable=I1101
 
 import re
-from PyQt5 import QtWidgets
-from PyQt5 import QtCore
+
+from PyQt5 import QtCore, QtWidgets
+
 
 class NameEditWidget(QtWidgets.QWidget):
 

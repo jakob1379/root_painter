@@ -15,13 +15,14 @@ along with this program.  If not, see <https://www.gnu.o
 """
 
 import os
+
 import numpy as np
+import skimage.util as skim_util
 from cairosvg import svg2png
 from PIL import Image
-import skimage.util as skim_util
-from skimage.transform import resize
-from skimage.io import imread, imsave
 from skimage import img_as_ubyte
+from skimage.io import imread, imsave
+from skimage.transform import resize
 
 icons_dir = os.path.join(os.path.dirname(__file__), '..', 'src', 'root_painter', 'icons')
 icons_dir = os.path.normpath(icons_dir)

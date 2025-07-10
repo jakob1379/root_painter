@@ -14,22 +14,22 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 #pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914, R0915, R0911
-import os
 import glob
-import random
-from pathlib import Path
 import itertools
 import json
-from random import shuffle
-import traceback
+import os
+import random
 import shutil
+import traceback
+from pathlib import Path
+from random import shuffle
 
 import numpy as np
-from PyQt5 import QtWidgets
-from PyQt5 import QtCore
+from PyQt5 import QtCore, QtWidgets
 
-from .progress_widget import BaseProgressWidget
-from . import im_utils
+from root_painter import im_utils
+from root_painter.progress_widget import BaseProgressWidget
+
 
 class CreationProgressWidget(BaseProgressWidget):
     def __init__(self):

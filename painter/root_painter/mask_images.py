@@ -16,11 +16,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
 import os
-from PyQt5 import QtWidgets
-from PyQt5 import QtCore
-from .im_utils import save_masked_image
-from .progress_widget import BaseProgressWidget
-from .file_utils import ls
+
+from PyQt5 import QtCore, QtWidgets
+
+from root_painter.file_utils import ls
+from root_painter.im_utils import save_masked_image
+from root_painter.progress_widget import BaseProgressWidget
+
 
 class Thread(QtCore.QThread):
     progress_change = QtCore.pyqtSignal(int, int)
