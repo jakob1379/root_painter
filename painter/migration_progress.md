@@ -22,10 +22,10 @@ This file tracks the to-do items for restructuring the `painter` project.
 
 ## Phase 2: Code Updates
 
--   [ ] Update `painter/scripts/run_pyinstaller.py` to reflect new paths for the main script and icons.
--   [ ] Update `painter/scripts/export_icons.py` to correctly locate `icon.svg`.
--   [ ] Update `painter/src/root_painter/root_painter.py` to use a package-relative path for `missing.png`.
--   [ ] Search for and update any other hardcoded relative paths.
+-   [x] Update `painter/scripts/run_pyinstaller.py` to reflect new paths for the main script and icons.
+-   [x] Update `painter/scripts/export_icons.py` to correctly locate `icon.svg`.
+-   [x] Update `painter/src/root_painter/root_painter.py` to use a package-relative path for `missing.png`.
+-   [x] Search for and update any other hardcoded relative paths.
 
 ## Phase 3: Verification
 
