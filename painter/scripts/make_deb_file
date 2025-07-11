@@ -17,7 +17,7 @@ IFS=$'\n\t'
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # run from project root directory
-# bash painter/scripts/make_deb_file
+# bash scripts/make_deb_file
 
 # from man dpkg-deb
 # dpkl-deb --build creates a debian archive from the filesystem tree stroed in binary-directory.
@@ -36,20 +36,20 @@ IFS=$'\n\t'
 # packages that do not require one.
 
 # Mandatory fields are Package, Version, Architecture, Maintainer and Descript.
-# binary pack control file is located in painter/scripts/assets/DEBIAN_control
+# binary pack control file is located in scripts/assets/DEBIAN_control
 
 # the /usr/local/bin folder is required so the deb file unpacks the application into the correct location.
 mkdir -p dist/ubuntu_setup/usr/local/bin
 
 # the /usr/share/applications folder is required so the deb file unpacks the an application shortcut into the correct location.1
 mkdir -p dist/ubuntu_setup/usr/share/applications
-cp painter/scripts/assets/RootPainter.desktop dist/ubuntu_setup/usr/share/applications
+cp scripts/assets/RootPainter.desktop dist/ubuntu_setup/usr/share/applications
 
 
-mkdir dist/ubuntu_setup/DEBIAN
-cp -r painter/scripts/assets/DEBIAN_control dist/ubuntu_setup/DEBIAN/control
+mkdir -p dist/ubuntu_setup/DEBIAN
+cp -r scripts/assets/DEBIAN_control dist/ubuntu_setup/DEBIAN/control
 cp -r dist/RootPainter dist/ubuntu_setup/usr/local/bin/RootPainter
-cp -r painter/root_painter/icons dist/ubuntu_setup/usr/local/bin/RootPainter/icons
+cp -r root_painter/icons dist/ubuntu_setup/usr/local/bin/RootPainter/icons
 
 dpkg-deb --build dist/ubuntu_setup
 mv dist/ubuntu_setup.deb dist/RootPainter.deb
