@@ -1,9 +1,17 @@
-## RootPainter
 
-RootPainter is a GUI-based software tool for the rapid training of deep neural networks for use in image analysis. 
-RootPainter uses a client-server architecture, allowing users with a typical laptop to utilise a GPU on a more computationally powerful server.  
+<div align="center">
 
-A detailed description is available in the paper published in the New Phytologist  [RootPainter: Deep Learning Segmentation of Biological Images with Corrective Annotation](https://doi.org/10.1111/nph.18387)
+<h2>RootPainter</h2>
+
+<a href="https://doi.org/10.1111/nph.18387">Paper</a> - <a href="https://jakob1379.github.io/root_painter">Documentation</a>
+
+</div>
+
+
+RootPainter is a GUI-based software tool for the rapid training of deep neural networks for use in image analysis.
+RootPainter uses a client-server architecture, allowing users with a typical laptop to utilise a GPU on a more computationally powerful server.
+
+A detailed description is available in the paper published in the New Phytologist [RootPainter: Deep Learning Segmentation of Biological Images with Corrective Annotation](https://doi.org/10.1111/nph.18387)
 
 ![RootPainter Interface](https://user-images.githubusercontent.com/376295/224013411-cb44c7c2-5c72-4819-98a3-6c0ab8b9ea4d.png)
 
@@ -12,14 +20,12 @@ To see a list of work using (or citing) the RootPainter paper, please see the [g
 A BioRxiv Pre-print (earlier version of the paper) is available at:
 [https://www.biorxiv.org/content/10.1101/2020.04.16.044461v2](https://www.biorxiv.org/content/10.1101/2020.04.16.044461v2)
 
-
 ### Getting started quickly
 
- I suggest the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
- 
- A  shorter [mini guide](https://github.com/Abe404/root_painter/blob/master/docs/mini_guide.md) is available including more concise instruction, that could be used as reference. I suggest the paper, videos and then colab tutorial to get an idea of how the software interface could be used and then this mini guide for reference to help remember each of the key steps to get from raw data to final measurements. 
- 
- 
+I suggest the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
+
+A shorter [quickstart](https://jakob1379.github.io/root_painter/quickstart.md) is available including more concise instruction, that could be used as reference. I suggest the paper, videos and then colab tutorial to get an idea of how the software interface could be used and then this quickstart for reference to help remember each of the key steps to get from raw data to final measurements.
+
 ### Videos
 
 A 14 minute video showing how to install RootPainter on windows 11 with google drive and google colab is available on [youtube](https://www.youtube.com/watch?v=HuSujZQOkQw). A similar video for macOS is also [now available on youtube](https://youtu.be/rBCkem0ub_I). I suggest watching these videos to help with the installation part of the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
@@ -28,50 +34,54 @@ A video demonstrating how to train and use a model is available to [download](ht
 
 There is a [youtube video](https://www.youtube.com/watch?v=73u73tBvRO4) of a workshop explaining the background behind the software and covering using the colab notebook to train and use a root segmentation model.
 
+---
 
-### Client Downloads
+### Installation
 
-See [releases](https://github.com/Abe404/root_painter/releases) 
+#### Server
 
-If you are not confident installing and running python applications on the command line then to get started quickly I suggest the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
+The server needs to be installed on the machine that run the training:
 
-#### Server setup 
+```bash
+# with uv
+uvx --from root-painter-trainer start-trainer
 
-The following instructions are for a local server. If you do not have a suitable NVIDIA GPU with at least 8GB of GPU memory then my current recommendation is to run via Google colab. A publicly available notebook is available at [Google Drive with Google Colab](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
-
-Other options to run the server component of RootPainter on a remote machine include the [the sshfs server setup tutorial](https://github.com/Abe404/root_painter/blob/master/docs/server_setup_sshfs.md). You can also use Dropbox instead of sshfs.
-
-
-For the next steps I assume you have a suitable GPU and CUDA installed.
-
-1. To install the RootPainter trainer:
-
-```
+# with pip
 pip install root-painter-trainer
-```
-
-2. To run the trainer.  This will first create the sync directory.
-
-```
 start-trainer
 ```
 
-Note: if you are installing the RootPainter trainer (server) from scartch on windows 11 I suggest [these linked instructions](docs/windows_11_trainer_install.md).
+#### Client
 
-You will be prompted to input a location for the sync directory. This is the folder where files are shared between the client and server. I will use ~/root_painter_sync.
-RootPainter will then create some folders inside ~/root_painter_sync.
-The server should print the automatically selected batch size, which should be greater than 0. It will then start watching for instructions from the client.
+Go to [releases](https://github.com/Abe404/root_painter/releases/latest), download, and install the client for your platform, or install directly with python
 
-You should now be able to see the folders created by RootPainter (datasets, instructions and projects) inside ~/Desktop/root_painter_sync on your local machine 
-See [lung tutorial](docs/cxr_lung_tutorial.md) for an example of how to use RootPainter to train a model. I now actually suggest following the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing) instructions but using your local setup instead of the colab server, as these are easier to follow than the lung tutorial.
+```bash
+# run directly with uv
+uvx root-painter
 
+# similarly with pip - you need to figure out how to install the correct python yourself - uv does this for you.
+pip install root-painter
+root-painter
+```
+
+If you are not confident installing and running python applications on the command line then to get started quickly I suggest the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
+
+### Documentation
+
+You can find comprehensive documentation, including setup guides, tutorials, and developer information [here](https://jakob1379.github.io/root_painter). Some quick links to the documentation:
+
+- **Getting Started:** For a quick start, we recommend the [Colab Tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing). A concise [Mini Guide](https://jakob1379.github.io/root_painter/quickstart/) is also available for quick reference.
+- **Server Setup:** Instructions for setting up the server component are available for [local installations](https://jakob1379.github.io/root_painter/setup/local_server/), [sshfs setups](https://jakob1379.github.io/root_painter/setup/remote_server_sshfs/), and more.
+- **Tutorials:** See the [lung segmentation tutorial](https://jakob1379.github.io/root_painter/tutorials/cxr_lung/) for a practical example.
+- **FAQ:** Check the [Frequently Asked Questions](https://jakob1379.github.io/root_painter/faq/) for answers to common issues.
+
+### For Developers
+
+Developer-focused documentation, including build instructions and contribution guidelines, can found in the [developer section](https://jakob1379.github.io/root_painter/developer/painter/)
+
+- [Painter (Client) Readme](https://jakob1379.github.io/root_painter/developer/painter/)
+- [Trainer (Server) Readme](https://jakob1379.github.io/root_painter/developer/trainer/)
 
 ### Questions and Problems
- 
-The [FAQ](https://github.com/Abe404/root_painter/blob/master/docs/FAQ.md) may  be worth checking before reaching out with any questions you have. If you do have a question you can either email me or post in the [discussions](https://github.com/Abe404/root_painter/discussions). If you have an issue/ have identified a problem with the software then you can [post an issue](https://github.com/Abe404/root_painter/issues).
 
-
-### Contributions
-
-At this time, I prefer that any potential contributors discuss proposed changes with me before submitting a pull request. I'm aiming to keep the project stable and focused, so I want to fully understand and prioritize any changes as part of an agreed-upon strategy or roadmap.
-
+The [FAQ](https://jakob1379.github.io/root_painter/faq/) may be worth checking before reaching out with any questions you have. If you do have a question you can either email me or post in the [discussions](https://github.com/Abe404/root_painter/discussions). If you have an issue/ have identified a problem with the software then you can [post an issue](https://github.com/Abe404/root_painter/issues).
