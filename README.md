@@ -17,7 +17,7 @@ A BioRxiv Pre-print (earlier version of the paper) is available at:
 
  I suggest the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
  
- A  shorter [mini guide](https://github.com/Abe404/root_painter/blob/master/docs/mini_guide.md) is available including more concise instruction, that could be used as reference. I suggest the paper, videos and then colab tutorial to get an idea of how the software interface could be used and then this mini guide for reference to help remember each of the key steps to get from raw data to final measurements. 
+ A  shorter [mini guide](docs/mini_guide.md) is available including more concise instruction, that could be used as reference. I suggest the paper, videos and then colab tutorial to get an idea of how the software interface could be used and then this mini guide for reference to help remember each of the key steps to get from raw data to final measurements. 
  
  
 ### Videos
@@ -35,37 +35,23 @@ See [releases](https://github.com/Abe404/root_painter/releases)
 
 If you are not confident installing and running python applications on the command line then to get started quickly I suggest the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
 
-#### Server setup 
+### Documentation
 
-The following instructions are for a local server. If you do not have a suitable NVIDIA GPU with at least 8GB of GPU memory then my current recommendation is to run via Google colab. A publicly available notebook is available at [Google Drive with Google Colab](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
+Comprehensive documentation, including setup guides, tutorials, and developer information, is available in the [`docs/`](docs/) directory.
 
-Other options to run the server component of RootPainter on a remote machine include the [the sshfs server setup tutorial](https://github.com/Abe404/root_painter/blob/master/docs/server_setup_sshfs.md). You can also use Dropbox instead of sshfs.
+- **Getting Started:** For a quick start, we recommend the [Colab Tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing). A concise [Mini Guide](docs/mini_guide.md) is also available for quick reference.
+- **Server Setup:** Instructions for setting up the server component are available for [local installations](docs/server_setup_local.md), [sshfs setups](docs/server_setup_sshfs.md), and more.
+- **Tutorials:** See the [lung segmentation tutorial](docs/cxr_lung_tutorial.md) for a practical example.
+- **FAQ:** Check the [Frequently Asked Questions](docs/FAQ.md) for answers to common issues.
 
+### For Developers
 
-For the next steps I assume you have a suitable GPU and CUDA installed.
+Developer-focused documentation, including build instructions and contribution guidelines, can be found in `docs/dev/`.
 
-1. To install the RootPainter trainer:
-
-```
-pip install root-painter-trainer
-```
-
-2. To run the trainer.  This will first create the sync directory.
-
-```
-start-trainer
-```
-
-Note: if you are installing the RootPainter trainer (server) from scartch on windows 11 I suggest [these linked instructions](docs/windows_11_trainer_install.md).
-
-You will be prompted to input a location for the sync directory. This is the folder where files are shared between the client and server. I will use ~/root_painter_sync.
-RootPainter will then create some folders inside ~/root_painter_sync.
-The server should print the automatically selected batch size, which should be greater than 0. It will then start watching for instructions from the client.
-
-You should now be able to see the folders created by RootPainter (datasets, instructions and projects) inside ~/Desktop/root_painter_sync on your local machine 
-See [lung tutorial](docs/cxr_lung_tutorial.md) for an example of how to use RootPainter to train a model. I now actually suggest following the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing) instructions but using your local setup instead of the colab server, as these are easier to follow than the lung tutorial.
+- [Painter (Client) Readme](docs/dev/painter_readme.md)
+- [Trainer (Server) Readme](docs/dev/trainer_readme.md)
 
 
  ### Questions and Problems
  
-The [FAQ](https://github.com/Abe404/root_painter/blob/master/docs/FAQ.md) may  be worth checking before reaching out with any questions you have. If you do have a question you can either email me or post in the [discussions](https://github.com/Abe404/root_painter/discussions). If you have an issue/ have identified a problem with the software then you can [post an issue](https://github.com/Abe404/root_painter/issues).
+The [FAQ](docs/FAQ.md) may  be worth checking before reaching out with any questions you have. If you do have a question you can either email me or post in the [discussions](https://github.com/Abe404/root_painter/discussions). If you have an issue/ have identified a problem with the software then you can [post an issue](https://github.com/Abe404/root_painter/issues).
