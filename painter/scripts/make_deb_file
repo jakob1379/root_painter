@@ -1,4 +1,8 @@
- # Copyright (C) 2022 Abraham George Smith
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+# Copyright (C) 2022 Abraham George Smith
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,7 +41,7 @@
 # the /usr/local/bin folder is required so the deb file unpacks the application into the correct location.
 mkdir -p dist/ubuntu_setup/usr/local/bin
 
-# the /usr/share/applications folder is required so the deb file unpacks the an application shortcut into the correct location.
+# the /usr/share/applications folder is required so the deb file unpacks the an application shortcut into the correct location.1
 mkdir -p dist/ubuntu_setup/usr/share/applications
 cp src/build/RootPainter.desktop dist/ubuntu_setup/usr/share/applications
 
