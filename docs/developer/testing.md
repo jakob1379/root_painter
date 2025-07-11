@@ -2,10 +2,10 @@
 
 Tests for the server (trainer) component of RootPainter.
 
-To run the tests (from the project root directory):
+To run the tests (from the `trainer` directory):
 
 ```bash
-pytest trainer/tests/
+pytest tests/
 ```
 
 ## TODO / Roadmap

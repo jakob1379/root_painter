@@ -8,9 +8,9 @@ The instructions below are for building the painter from source.
 The server (trainer) must be running for the client to function.
 
 ## Install dependencies
-It is recommended to use a virtual environment.
+It is recommended to use a virtual environment. The following commands should be run from within the `painter` directory.
 
-    pip install -r painter/requirements.txt
+    pip install -r requirements.txt
 
 ### Windows Build Dependencies
 
@@ -21,13 +21,13 @@ For generating an executable on Windows, ensure that the following are installed
 
 ## Running from source
 
-    python painter/root_painter/main.py
+    python root_painter/main.py
 
 ## Building the application
 
 To build the application for your current platform, run:
 
-    python painter/scripts/run_pyinstaller.py
+    python scripts/run_pyinstaller.py
 
 The output will be in the `dist/` directory.
 
@@ -37,7 +37,7 @@ Installers must be created on the target platform (e.g., a Windows installer mus
 
 ### Windows (.exe)
 
-    makensis painter/scripts/assets/Installer.nsi
+    makensis scripts/assets/Installer.nsi
 
 ### macOS (.pkg)
 
@@ -45,7 +45,7 @@ Installers must be created on the target platform (e.g., a Windows installer mus
 
 ### Debian/Ubuntu (.deb)
 
-    bash painter/scripts/make_deb_file
+    bash scripts/make_deb_file
 
 The output installer will be located at `dist/RootPainter.deb`. To install it:
 
