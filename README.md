@@ -62,10 +62,10 @@ If you are not confident installing and running python applications on the comma
 
 Comprehensive documentation, including setup guides, tutorials, and developer information, is available in the [`docs/`](docs/) directory.
 
-- **Getting Started:** For a quick start, we recommend the [Colab Tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing). A concise [Mini Guide](docs/mini_guide.md) is also available for quick reference.
-- **Server Setup:** Instructions for setting up the server component are available for [local installations](docs/server_setup_local.md), [sshfs setups](docs/server_setup_sshfs.md), and more.
+- **Getting Started:** For a quick start, we recommend the [Colab Tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing). A concise [Mini Guide](docs/quickstart.md) is also available for quick reference.
+- **Server Setup:** Instructions for setting up the server component are available for [local installations](docs/setup/local_server.md), [sshfs setups](docs/setup/remote_server_sshfs.md), and more.
 - **Tutorials:** See the [lung segmentation tutorial](docs/cxr_lung_tutorial.md) for a practical example.
-- **FAQ:** Check the [Frequently Asked Questions](docs/FAQ.md) for answers to common issues.
+- **FAQ:** Check the [Frequently Asked Questions](docs/faq.md) for answers to common issues.
 
 ### For Developers
 
