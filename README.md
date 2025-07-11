@@ -15,9 +15,9 @@ A BioRxiv Pre-print (earlier version of the paper) is available at:
 
 ### Getting started quickly
 
- I suggest the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
+I suggest the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
  
- A  shorter [mini guide](docs/mini_guide.md) is available including more concise instruction, that could be used as reference. I suggest the paper, videos and then colab tutorial to get an idea of how the software interface could be used and then this mini guide for reference to help remember each of the key steps to get from raw data to final measurements. 
+A  shorter [mini guide](docs/mini_guide.md) is available including more concise instruction, that could be used as reference. I suggest the paper, videos and then colab tutorial to get an idea of how the software interface could be used and then this mini guide for reference to help remember each of the key steps to get from raw data to final measurements. 
  
 ### Videos
 
@@ -27,10 +27,34 @@ A video demonstrating how to train and use a model is available to [download](ht
 
 There is a [youtube video](https://www.youtube.com/watch?v=73u73tBvRO4) of a workshop explaining the background behind the software and covering using the colab notebook to train and use a root segmentation model.
 
+---
 
-### Client Downloads
+### Installation
 
-See [releases](https://github.com/Abe404/root_painter/releases) 
+#### Server
+
+Install from PyPi:
+
+```bash
+pip install root-painter-trainer
+```
+
+#### Client
+
+Go to [releases](https://github.com/Abe404/root_painter/releases/latest) and download install the client for your platform. 
+
+or install directly with python
+
+```bash
+# install to start from form with uv
+uv tool install -p 3.10 git+https://github.com/jakob1379/root_painter@jga-end-goal#subdirectory=painter
+
+# similarly with pipx - you need to figure out how to install the correct python yourself - uv does this for you.
+pipx git+https://github.com/jakob1379/root_painter@jga-end-goal#subdirectory=painter
+
+# now you can always do
+root-painter
+```
 
 If you are not confident installing and running python applications on the command line then to get started quickly I suggest the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
 
@@ -53,4 +77,4 @@ Developer-focused documentation, including build instructions and contribution g
 
  ### Questions and Problems
  
-The [FAQ](docs/FAQ.md) may  be worth checking before reaching out with any questions you have. If you do have a question you can either email me or post in the [discussions](https://github.com/Abe404/root_painter/discussions). If you have an issue/ have identified a problem with the software then you can [post an issue](https://github.com/Abe404/root_painter/issues).
+The [FAQ](docs/faq.md) may  be worth checking before reaching out with any questions you have. If you do have a question you can either email me or post in the [discussions](https://github.com/Abe404/root_painter/discussions). If you have an issue/ have identified a problem with the software then you can [post an issue](https://github.com/Abe404/root_painter/issues).
