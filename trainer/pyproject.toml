@@ -2,7 +2,6 @@
 name = "root_painter_trainer"
 version = "0.2.27.1"
 description = "Trainer (server component) for RootPainter"
-readme = "README.txt"
 authors = [
     {name = "Abraham George Smith"},
 ]
