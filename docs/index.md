@@ -1,4 +1,4 @@
-# Welcome to the RootPainter Documentation
+## Welcome to the RootPainter Documentation
 
 RootPainter is a powerful image annotation tool designed for semantic segmentation tasks, enabling efficient collaboration between a client GUI (Painter) and a server (Trainer).
 
@@ -17,6 +17,5 @@ Want to contribute to RootPainter or learn more about its internals? The develop
 
 *   **[Painter (Client)](developer/painter.md)**: Information about the painter GUI.
 *   **[Testing](developer/testing.md)**: How to run tests for the trainer.
-*   **[Icons](developer/icons.md)**: Notes on application icons.
 
 We are constantly working to improve RootPainter and its documentation. If you have feedback or questions, please don't hesitate to reach out.

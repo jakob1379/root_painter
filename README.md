@@ -19,7 +19,6 @@ A BioRxiv Pre-print (earlier version of the paper) is available at:
  
  A  shorter [mini guide](docs/mini_guide.md) is available including more concise instruction, that could be used as reference. I suggest the paper, videos and then colab tutorial to get an idea of how the software interface could be used and then this mini guide for reference to help remember each of the key steps to get from raw data to final measurements. 
  
- 
 ### Videos
 
 A 14 minute video showing how to install RootPainter on windows 11 with google drive and google colab is available on [youtube](https://www.youtube.com/watch?v=HuSujZQOkQw). A similar video for macOS is also [now available on youtube](https://youtu.be/rBCkem0ub_I). I suggest watching these videos to help with the installation part of the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
