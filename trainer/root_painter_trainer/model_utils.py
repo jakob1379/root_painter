@@ -98,7 +98,7 @@ def get_val_metrics(cnn, val_annot_dir, dataset_dir, in_w, out_w, bs):
     fnames = ls(val_annot_dir)
     fnames = [a for a in fnames if im_utils.is_photo(a)]
     # TODO: In order to speed things up, be a bit smarter here
-    # by only segmenting the parts of the image where we have
+    # by only segmenting the parts of the image where we have
     # some annotation defined.
     # implement a 'partial segment' which exlcudes tiles with no
     # annotation defined.

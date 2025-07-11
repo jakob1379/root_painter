@@ -30,5 +30,5 @@ This file tracks the to-do items for restructuring the `painter` project.
 ## Phase 3: Verification
 
 -   [x] Run the application to ensure it starts and functions correctly.
--   [ ] Run `painter/scripts/run_pyinstaller.py` to verify the build process.
--   [ ] Run `painter/scripts/export_icons.py` to verify icon exporting.
+-   [x] Run `painter/scripts/run_pyinstaller.py` to verify the build process.
+-   [x] Run `painter/scripts/export_icons.py` to verify icon exporting.
