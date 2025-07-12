@@ -87,3 +87,7 @@ Developer-focused documentation, including build instructions and contribution g
 ### Questions and Problems
 
 The [FAQ](https://jakob1379.github.io/root_painter/faq/) may  be worth checking before reaching out with any questions you have. If you do have a question you can either email me or post in the [discussions](https://github.com/Abe404/root_painter/discussions). If you have an issue/ have identified a problem with the software then you can [post an issue](https://github.com/Abe404/root_painter/issues).
+
+### Contributions
+
+At this time, I prefer that any potential contributors discuss proposed changes with me before submitting a pull request. I'm aiming to keep the project stable and focused, so I want to fully understand and prioritize any changes as part of an agreed-upon strategy or roadmap.
