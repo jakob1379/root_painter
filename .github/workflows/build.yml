@@ -1,0 +1,121 @@
+# Copyright (C) 2022 André Pedersen
+# Copyright (C) 2022 Abraham Smith
+# Copyright (C) 2022 Abraham George Smith
+
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+
+#You should have received a copy of the GNU General Public License
+#along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+name: Build
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Build on ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: 'Windows'
+            os: windows-2019
+            python-version: '3.8'
+            pyinstaller-version: '5.4.1'
+            artifact-name: RootPainterInstaller.exe
+          - name: 'Ubuntu 22.04'
+            os: ubuntu-22.04
+            python-version: '3.10'
+            pyinstaller-version: '4.8'
+            artifact-name: RootPainter.deb
+          - name: 'Ubuntu 20.04'
+            os: ubuntu-20.04
+            python-version: '3.10'
+            pyinstaller-version: '4.8'
+            artifact-name: RootPainter.deb
+          - name: 'macOS'
+            os: macos-11
+            python-version: '3.9.5'
+            pyinstaller-version: '4.8'
+            artifact-name: RootPainter.pkg
+
+    steps:
+    - uses: actions/checkout@v1
+    
+    - name: Set up Python ${{ matrix.config.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.config.python-version }}
+
+    - name: Install dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        cd painter
+        brew install create-dmg
+        python -m pip install --upgrade pip
+        python -m venv env
+        source env/bin/activate
+        pip install pyinstaller==${{ matrix.config.pyinstaller-version }}
+        pip install -r requirements.txt
+
+    - name: Install dependencies (Linux)
+      if: runner.os == 'Linux'
+      run: |
+        cd painter
+        python -m pip install --upgrade pip
+        python -m venv env
+        source env/bin/activate
+        pip install pyinstaller==${{ matrix.config.pyinstaller-version }}
+        pip install -r requirements.txt
+
+    - name: Install dependencies (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller==${{ matrix.config.pyinstaller-version }}
+        pip install -r painter/requirements.txt
+
+    - name: Build software
+      shell: bash
+      run: |
+        cd painter
+        if [[ "${{ runner.os }}" != 'Windows' ]]; then
+          source env/bin/activate
+        fi
+        python src/build/run_pyinstaller.py
+        
+    - name: Make installer (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        cd painter
+        pkgbuild --component dist/RootPainter.app --install-location /Applications dist/RootPainter.pkg
+
+    - name: Make installer (Linux)
+      if: runner.os == 'Linux'
+      run: |
+        cd painter
+        bash src/build/make_deb_file.sh
+
+    - name: Make installer (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        cd painter
+        makensis.exe src/build/assets/Installer.nsi
+
+    - name: Upload package
+      uses: actions/upload-artifact@v2
+      with:
+        name: Package-${{ matrix.config.name }}
+        path: ${{github.workspace}}/painter/dist/${{ matrix.config.artifact-name }}
+        if-no-files-found: error
