@@ -17,12 +17,8 @@
 name: Build Ubuntu 22.04
 
 on:
-  push:
-    branches:
-      - '*'
-  pull_request:
-    branches:
-      - '*'
+  release:
+    types: [published]
 
 jobs:
   build:
