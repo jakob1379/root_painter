@@ -1,4 +1,4 @@
-### Frequently asked questions
+### Frequently Asked Questions
 
 #### Question - [How do I skip to images?](https://github.com/Abe404/root_painter/issues/59)
 

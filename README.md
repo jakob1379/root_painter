@@ -24,7 +24,7 @@ A BioRxiv Pre-print (earlier version of the paper) is available at:
 
 I suggest the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
 
-A  shorter [quickstart](docs/quickstart.md) is available including more concise instruction, that could be used as reference. I suggest the paper, videos and then colab tutorial to get an idea of how the software interface could be used and then this quickstart for reference to help remember each of the key steps to get from raw data to final measurements.
+A  shorter [quickstart](https://jakob1379.github.io/root_painter/quickstart.md) is available including more concise instruction, that could be used as reference. I suggest the paper, videos and then colab tutorial to get an idea of how the software interface could be used and then this quickstart for reference to help remember each of the key steps to get from raw data to final measurements.
 
 ### Videos
 
@@ -67,20 +67,20 @@ If you are not confident installing and running python applications on the comma
 
 ### Documentation
 
-Comprehensive documentation, including setup guides, tutorials, and developer information, is available in the [`docs/`](docs/) directory.
+You can find comprehensive documentation, including setup guides, tutorials, and developer information, on the [here](https://jakob1379.github.io/root_painter)
 
-- **Getting Started:** For a quick start, we recommend the [Colab Tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing). A concise [Mini Guide](docs/quickstart.md) is also available for quick reference.
-- **Server Setup:** Instructions for setting up the server component are available for [local installations](docs/setup/local_server.md), [sshfs setups](docs/setup/remote_server_sshfs.md), and more.
-- **Tutorials:** See the [lung segmentation tutorial](docs/cxr_lung_tutorial.md) for a practical example.
-- **FAQ:** Check the [Frequently Asked Questions](docs/faq.md) for answers to common issues.
+- **Getting Started:** For a quick start, we recommend the [Colab Tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing). A concise [Mini Guide](https://jakob1379.github.io/root_painter/quickstart/) is also available for quick reference.
+- **Server Setup:** Instructions for setting up the server component are available for [local installations](https://jakob1379.github.io/root_painter/setup/local_server/), [sshfs setups](https://jakob1379.github.io/root_painter/setup/remote_server_sshfs/), and more.
+- **Tutorials:** See the [lung segmentation tutorial](https://jakob1379.github.io/root_painter/tutorials/cxr_lung/) for a practical example.
+- **FAQ:** Check the [Frequently Asked Questions](https://jakob1379.github.io/root_painter/faq/) for answers to common issues.
 
 ### For Developers
 
 Developer-focused documentation, including build instructions and contribution guidelines, can be found in `docs/dev/`.
 
-- [Painter (Client) Readme](docs/developer/painter.md)
-- [Trainer (Server) Readme](docs/developer/trainer.md)
+- [Painter (Client) Readme](https://jakob1379.github.io/root_painter/developer/painter/)
+- [Trainer (Server) Readme](https://jakob1379.github.io/root_painter/developer/trainer/)
 
 ### Questions and Problems
 
-The [FAQ](docs/faq.md) may  be worth checking before reaching out with any questions you have. If you do have a question you can either email me or post in the [discussions](https://github.com/Abe404/root_painter/discussions). If you have an issue/ have identified a problem with the software then you can [post an issue](https://github.com/Abe404/root_painter/issues).
+The [FAQ](https://jakob1379.github.io/root_painter/faq/) may  be worth checking before reaching out with any questions you have. If you do have a question you can either email me or post in the [discussions](https://github.com/Abe404/root_painter/discussions). If you have an issue/ have identified a problem with the software then you can [post an issue](https://github.com/Abe404/root_painter/issues).
