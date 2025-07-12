@@ -1,6 +1,14 @@
-## RootPainter
 
-RootPainter is a GUI-based software tool for the rapid training of deep neural networks for use in image analysis. 
+<div align="center">
+
+<h2>RootPainter</h2>
+
+<a href="https://jakob1379.github.io/root_painter">Documentation</a>
+
+</div>
+
+
+RootPainter is a GUI-based software tool for the rapid training of deep neural networks for use in image analysis.
 RootPainter uses a client-server architecture, allowing users with a typical laptop to utilise a GPU on a more computationally powerful server.  
 
 A detailed description is available in the paper published in the New Phytologist  [RootPainter: Deep Learning Segmentation of Biological Images with Corrective Annotation](https://doi.org/10.1111/nph.18387)
@@ -12,13 +20,12 @@ To see a list of work using (or citing) the RootPainter paper, please see the [g
 A BioRxiv Pre-print (earlier version of the paper) is available at:
 [https://www.biorxiv.org/content/10.1101/2020.04.16.044461v2](https://www.biorxiv.org/content/10.1101/2020.04.16.044461v2)
 
-
 ### Getting started quickly
 
 I suggest the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
- 
-A  shorter [quickstart](docs/quickstart.md) is available including more concise instruction, that could be used as reference. I suggest the paper, videos and then colab tutorial to get an idea of how the software interface could be used and then this quickstart for reference to help remember each of the key steps to get from raw data to final measurements. 
- 
+
+A  shorter [quickstart](docs/quickstart.md) is available including more concise instruction, that could be used as reference. I suggest the paper, videos and then colab tutorial to get an idea of how the software interface could be used and then this quickstart for reference to help remember each of the key steps to get from raw data to final measurements.
+
 ### Videos
 
 A 14 minute video showing how to install RootPainter on windows 11 with google drive and google colab is available on [youtube](https://www.youtube.com/watch?v=HuSujZQOkQw). A similar video for macOS is also [now available on youtube](https://youtu.be/rBCkem0ub_I). I suggest watching these videos to help with the installation part of the [colab tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing).
@@ -41,7 +48,7 @@ pip install root-painter-trainer
 
 #### Client
 
-Go to [releases](https://github.com/Abe404/root_painter/releases/latest) and download install the client for your platform. 
+Go to [releases](https://github.com/Abe404/root_painter/releases/latest) and download install the client for your platform.
 
 or install directly with python
 
@@ -71,10 +78,9 @@ Comprehensive documentation, including setup guides, tutorials, and developer in
 
 Developer-focused documentation, including build instructions and contribution guidelines, can be found in `docs/dev/`.
 
-- [Painter (Client) Readme](docs/dev/painter_readme.md)
-- [Trainer (Server) Readme](docs/dev/trainer_readme.md)
+- [Painter (Client) Readme](docs/developer/painter.md)
+- [Trainer (Server) Readme](docs/developer/trainer.md)
 
+### Questions and Problems
 
- ### Questions and Problems
- 
 The [FAQ](docs/faq.md) may  be worth checking before reaching out with any questions you have. If you do have a question you can either email me or post in the [discussions](https://github.com/Abe404/root_painter/discussions). If you have an issue/ have identified a problem with the software then you can [post an issue](https://github.com/Abe404/root_painter/issues).

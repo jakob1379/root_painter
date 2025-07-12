@@ -8,6 +8,7 @@ The instructions below are for building the painter from source.
 The server (trainer) must be running for the client to function.
 
 ## Install dependencies
+
 It is recommended to use a virtual environment. The following commands should be run from within the `painter` directory.
 
     pip install -r requirements.txt
@@ -15,6 +16,7 @@ It is recommended to use a virtual environment. The following commands should be
 ### Windows Build Dependencies
 
 For generating an executable on Windows, ensure that the following are installed and available in your system's PATH:
+
 - [NSIS tools](https://nsis.sourceforge.io/Main_Page)
 - [C++ Redistributable for Visual Studio 2012](https://www.microsoft.com/en-us/download/details.aspx?id=30679)
 - [Windows 10 SDK](https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk)
