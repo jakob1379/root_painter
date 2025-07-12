@@ -691,17 +691,15 @@
 <p>This is a guide for using <a href="https://www.biorxiv.org/content/10.1101/2020.04.16.044461v1">RootPainter</a> to train a model to segment lungs in chest X-ray images.</p>
 <p>In this guide I assume you have the server component of RootPainter set up and running. I also assume the sync directory location to be ~/Desktop/root_painter_sync. Please modify accordingly.</p>
 <ol>
-<li>
-<p>Download and extract the <a href="https://lhncbc.nlm.nih.gov/publication/pub9931">Shenzhen Hospital X-ray Set</a>:
+<li>Download and extract the <a href="https://lhncbc.nlm.nih.gov/publication/pub9931">Shenzhen Hospital X-ray Set</a>:</li>
+</ol>
 <div class="highlight"><pre><span></span><code>  wget http://openi.nlm.nih.gov/imgs/collections/ChinaSet_AllFiles.zip
   unzip ChinaSet_AllFiles.zip
-</code></pre></div></p>
-</li>
-<li>
-<p>This step is optional but highly recommended. The images are big and more than we need for this tutorial. I suggest resizing the data to speed up the training process and data transfer. We will also use only 300 of the images.</p>
-</li>
+</code></pre></div>
+<ol>
+<li>This step is optional but highly recommended. The images are big and more than we need for this tutorial. I suggest resizing the data to speed up the training process and data transfer. We will also use only 300 of the images.</li>
 </ol>
-<p>Add the following to a file named resize_cxr.py:
+<p>Add the following to a file named resize_cxr.py:</p>
 <div class="highlight"><pre><span></span><code>import os
 import sys
 from multiprocessing import Pool
@@ -743,14 +741,14 @@ if __name__ == &#39;__main__&#39;:
     with Pool(processes=16) as pool:
         for _ in tqdm.tqdm(pool.imap_unordered(resize_file, fnames), total=len(fnames)):
             pass
-</code></pre></div></p>
+</code></pre></div>
 <ol>
-<li>
-<p>Run the resize script. This will add the resized images to a new RootPainter dataset in the
-datasets folder.
+<li>Run the resize script. This will add the resized images to a new RootPainter dataset in the
+datasets folder.</li>
+</ol>
 <div class="highlight"><pre><span></span><code>  python resize_cxr.py ChinaSet_AllFiles/CXR_png/ ~/Desktop/root_painter_sync/datasets/cxr
-</code></pre></div></p>
-</li>
+</code></pre></div>
+<ol>
 <li>
 <p>If you haven't already installed the RootPainter client then download the
   client installer for your operating system.
@@ -772,20 +770,20 @@ datasets folder.
 <li>
 <p>Annotate and train.</p>
 <ul>
-<li>Label two images. Use the red (foreground) brush for the lungs and the green (background) brush for everything else. The brushes can be selected from the brush menu or using the shortcut key Q for foreground and W for background. Leave ambiguous regions as undefined. It is important to label both some foreground and some background in the first 2 images. Hold alt (on Mac) or shift (on windows) and scroll to change the size of the brush. If you make a mistake you can undo by pressing the Z key or using the eraser tool (key E). Click 'Save &amp; Next' after completing each annotation. Your annotations may look differently depending on your knowledge of lungs, the random order and which images were used for the dataset. </li>
+<li>Label two images. Use the red (foreground) brush for the lungs and the green (background) brush for everything else. The brushes can be selected from the brush menu or using the shortcut key Q for foreground and W for background. Leave ambiguous regions as undefined. It is important to label both some foreground and some background in the first 2 images. Hold alt (on Mac) or shift (on windows) and scroll to change the size of the brush. If you make a mistake you can undo by pressing the Z key or using the eraser tool (key E). Click 'Save &amp; Next' after completing each annotation. Your annotations may look differently depending on your knowledge of lungs, the random order and which images were used for the dataset.</li>
 </ul>
-<p><img alt="First Lung Annotation" src="images/lungs1.jpeg" /></p>
-<p><img alt="Second Lung Annotation" src="images/lungs2.jpeg" /></p>
+<p><img alt="First Lung Annotation" src="../../images/lungs1.jpeg" /></p>
+<p><img alt="Second Lung Annotation" src="../../images/lungs2.jpeg" /></p>
 <ul>
 <li>Click start training from the network menu.</li>
 <li>Label a third image in a similar way to the first two.</li>
 <li>
-<p>For the fourth image, first view the segmentation to inspect the trained model performance. The segmentation can be shown by ticking the checkbox or pressing the S key. It may be useful to also hide the annotation (key A) and image (key I) when inspecting the segmentation. 
- <img alt="Fourth Lung Segmentation" src="images/lungs_4th_image_seg.jpeg" /></p>
+<p>For the fourth image, first view the segmentation to inspect the trained model performance. The segmentation can be shown by ticking the checkbox or pressing the S key. It may be useful to also hide the annotation (key A) and image (key I) when inspecting the segmentation.
+ <img alt="Fourth Lung Segmentation" src="../../images/lungs_4th_image_seg.jpeg" /></p>
 </li>
 <li>
 <p>Target the annotations towards areas where the segentation is inadequate.
-  <img alt="Fourth Lung Annotation" src="images/lungs_4th_annot.jpeg" /></p>
+  <img alt="Fourth Lung Annotation" src="../../images/lungs_4th_annot.jpeg" /></p>
 </li>
 <li>
 <p>Proceed through the images. First viewing the segmentation and then assigning annotations to correct for mistakes.</p>
@@ -793,8 +791,8 @@ datasets folder.
 <li>If waiting for the segmentation is slowing you down then set Pre-Segment from 0 to 1. Pre-Segment is in the options menu.</li>
 <li>
 <p>Keep progressing through the images until you are happy with the quality of the model. It's possible to work through over 200 images in two hours but this will depend on your attention to detail and GPU. The segmentation quality will vary but should improve on average, with less annotation being required over time and eventually many of the images will not require corrections allowing you to proceed faster as you continue.</p>
-<p><img alt="34th Lung Annotation" src="images/lungs_34.jpeg" />
-<img alt="212 Lung Segmentation" src="images/lungs_212.jpeg" /></p>
+<p><img alt="34th Lung Annotation" src="../../images/lungs_34.jpeg" />
+<img alt="212 Lung Segmentation" src="../../images/lungs_212.jpeg" /></p>
 </li>
 </ul>
 </li>
@@ -836,7 +834,7 @@ datasets folder.
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../setup/windows_trainer/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Installing the RootPainter trainer (server) on windows 11.">
+          <a href="../../setup/windows_trainer/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Installing the RootPainter trainer (server) on windows 11">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -846,7 +844,7 @@ datasets folder.
                 Previous
               </span>
               <div class="md-ellipsis">
-                Installing the RootPainter trainer (server) on windows 11.
+                Installing the RootPainter trainer (server) on windows 11
               </div>
             </div>
           </a>

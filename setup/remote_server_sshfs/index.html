@@ -671,7 +671,7 @@
   
   
   <span class="md-ellipsis">
-    Installing the RootPainter trainer (server) on windows 11.
+    Installing the RootPainter trainer (server) on windows 11
     
   </span>
   
@@ -761,48 +761,46 @@
 <h3 id="rootpainter-server-setup-with-sshfs">RootPainter Server Setup with sshfs<a class="headerlink" href="#rootpainter-server-setup-with-sshfs" title="Permanent link">&para;</a></h3>
 <p>This is is a guide for getting started with the RootPainter software
 using sshfs to connect the client and server components. RootPainter is described in <a href="https://www.biorxiv.org/content/10.1101/2020.04.16.044461v1">this paper.</a></p>
-<p>This page includes instructions for setting up the server. After completing these instructions, you can follow the <a href="cxr_lung_tutorial.md">lung tutorial</a> for an example of how to use RootPainter to train a model using the graphical client.</p>
+<p>This page includes instructions for setting up the server. After completing these instructions, you can follow the <a href="../../tutorials/cxr_lung/">lung tutorial</a> for an example of how to use RootPainter to train a model using the graphical client.</p>
 <p>I assume you have ssh access to a linux server with a suitable GPU and CUDA installed.</p>
 <ol>
-<li>
-<p>SSH into your server to set up the server component of RootPainter.
+<li>SSH into your server to set up the server component of RootPainter.</li>
+</ol>
 <div class="highlight"><pre><span></span><code>ssh username@xxx.xxx.xxx.xxx
-</code></pre></div></p>
-</li>
-<li>
-<p>Clone the RootPainter code from the repository and then cd into the trainer directory (the server component).
+</code></pre></div>
+<ol>
+<li>Clone the RootPainter code from the repository and then cd into the trainer directory (the server component).</li>
+</ol>
 <div class="highlight"><pre><span></span><code>git clone https://github.com/Abe404/root_painter.git
 cd root_painter/trainer
-</code></pre></div></p>
-</li>
-<li>
-<p>To avoid alterating global packages. I suggest using a virtual environment. Create a virtual environment and activate it. This tutorial has been tested using python 3.7
+</code></pre></div>
+<ol>
+<li>To avoid alterating global packages. I suggest using a virtual environment. Create a virtual environment and activate it. This tutorial has been tested using python 3.7</li>
+</ol>
 <div class="highlight"><pre><span></span><code>python -m venv env
 source ./env/bin/activate
-</code></pre></div></p>
-</li>
-<li>
-<p>Install dependencies in the virtual environment. (takes over 3 minutes)
+</code></pre></div>
+<ol>
+<li>Install dependencies in the virtual environment. (takes over 3 minutes)</li>
+</ol>
 <div class="highlight"><pre><span></span><code>pip install torch
 pip install -r requirements.txt
-</code></pre></div></p>
-</li>
-<li>
-<p>Run root painter. This will first create the sync directory.
+</code></pre></div>
+<ol>
+<li>Run root painter. This will first create the sync directory.</li>
+</ol>
 <div class="highlight"><pre><span></span><code>python main.py
 </code></pre></div>
-You will be prompted to input a location for the sync directory. This is the folder where files are shared between the client and server. I will use ~/root_painter_sync.
+<p>You will be prompted to input a location for the sync directory. This is the folder where files are shared between the client and server. I will use ~/root_painter_sync.
 RootPainter will then create some folders inside ~/root_painter_sync.
 The server should print the automatically selected batch size, which should be greater than 0. It will then start watching for instructions from the client.</p>
-</li>
-</ol>
 <p>If you see a batch size above 0 and 'Started main loop. Checking for instructions..' in the console output then this means you have been successful in starting the server and can move onto the next step.</p>
 <ol>
 <li>To mount the sync directory from your local machine you will need to install sshfs locally (SSH Filesystem client).</li>
 </ol>
-<p><strong>If you are using Debian / Ubuntu</strong>
+<p><strong>If you are using Debian / Ubuntu</strong></p>
 <div class="highlight"><pre><span></span><code>sudo apt-get install sshfs
-</code></pre></div></p>
+</code></pre></div>
 <p><strong>If you are using mac / OSX:</strong></p>
 <p>Download the <a href="https://github.com/osxfuse/osxfuse/releases">macFUSE dmg</a>.
 Open the OSXFuse dmg and run the installer.
@@ -817,13 +815,13 @@ See <a href="https://github.com/billziss-gh/sshfs-win">sshfs-win</a></p>
 <div class="highlight"><pre><span></span><code>mkdir ~/Desktop/root_painter_sync
 </code></pre></div>
 <ol>
-<li>mount the drive locally using sshfs. </li>
+<li>mount the drive locally using sshfs.</li>
 </ol>
-<p>You will need to run the following command on your local machine. You should replace username with the username of the corresponding user on the server (the one you use when sshing into your server). You should also replace xxx.xxx.xxx.xxx with the ip address of your server.
+<p>You will need to run the following command on your local machine. You should replace username with the username of the corresponding user on the server (the one you use when sshing into your server). You should also replace xxx.xxx.xxx.xxx with the ip address of your server.</p>
 <div class="highlight"><pre><span></span><code>sudo sshfs -o allow_other,default_permissions username@xxx.xxx.xxx.xxx:/home/username/root_painter_sync ~/Desktop/root_painter_sync
-</code></pre></div></p>
-<p>You should now be able to see the folders created by RootPainter (datasets, instructions and projects) inside ~/Desktop/root_painter_sync on your local machine 
-See <a href="cxr_lung_tutorial.md">lung tutorial</a> for an example of how to use RootPainter to train a model.</p>
+</code></pre></div>
+<p>You should now be able to see the folders created by RootPainter (datasets, instructions and projects) inside ~/Desktop/root_painter_sync on your local machine
+See <a href="../../tutorials/cxr_lung/">lung tutorial</a> for an example of how to use RootPainter to train a model.</p>
 
 
 
@@ -878,13 +876,13 @@ See <a href="cxr_lung_tutorial.md">lung tutorial</a> for an example of how to us
         
         
           
-          <a href="../windows_trainer/" class="md-footer__link md-footer__link--next" aria-label="Next: Installing the RootPainter trainer (server) on windows 11.">
+          <a href="../windows_trainer/" class="md-footer__link md-footer__link--next" aria-label="Next: Installing the RootPainter trainer (server) on windows 11">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Installing the RootPainter trainer (server) on windows 11.
+                Installing the RootPainter trainer (server) on windows 11
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -22,7 +22,7 @@
     
     
       
-        <title>Installing the RootPainter trainer (server) on windows 11. - Root Painter</title>
+        <title>Installing the RootPainter trainer (server) on windows 11 - Root Painter</title>
       
     
     
@@ -107,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Installing the RootPainter trainer (server) on windows 11.
+              Installing the RootPainter trainer (server) on windows 11
             
           </span>
         </div>
@@ -633,7 +633,7 @@
   
   
   <span class="md-ellipsis">
-    Installing the RootPainter trainer (server) on windows 11.
+    Installing the RootPainter trainer (server) on windows 11
     
   </span>
   
@@ -719,18 +719,18 @@
   
 
 
-<h1 id="installing-the-rootpainter-trainer-server-on-windows-11">Installing the RootPainter trainer (server) on windows 11.<a class="headerlink" href="#installing-the-rootpainter-trainer-server-on-windows-11" title="Permanent link">&para;</a></h1>
+<h1 id="installing-the-rootpainter-trainer-server-on-windows-11">Installing the RootPainter trainer (server) on windows 11<a class="headerlink" href="#installing-the-rootpainter-trainer-server-on-windows-11" title="Permanent link">&para;</a></h1>
 <p>Note: This tutorial assume you have a suitable GPU and CUDA already setup.</p>
 <ol>
 <li>Open powershell as administrator</li>
 <li>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned</li>
-<li>Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" -OutFile "./install-pyenv-win.ps1"; &amp;"./install-pyenv-win.ps1"</li>
+<li>Invoke-WebRequest -UseBasicParsing -Uri "<a href="https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1">https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1</a>" -OutFile "./install-pyenv-win.ps1"; &amp;"./install-pyenv-win.ps1"</li>
 <li>Close and reopen powershell as administrator.</li>
 <li>pyenv install 3.10.11</li>
 <li>pyenv global 3.10.11</li>
-<li>pyenv version </li>
+<li>pyenv version</li>
 <li>python -c "import sys; print(sys.executable)"</li>
-<li>pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 --index-url https://download.pytorch.org/whl/cu117</li>
+<li>pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 --index-url <a href="https://download.pytorch.org/whl/cu117">https://download.pytorch.org/whl/cu117</a></li>
 <li>pip install root-painter-trainer</li>
 <li>start-trainer</li>
 <li>You will be prompted to input the RootPainter Sync directory. You can just type root_painter_sync and press enter.</li>
