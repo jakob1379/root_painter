@@ -3,7 +3,7 @@
 
 <h2>RootPainter</h2>
 
-<a href="https://jakob1379.github.io/root_painter">Documentation</a>
+<a href="https://doi.org/10.1111/nph.18387">Paper</a> - <a href="https://jakob1379.github.io/root_painter">Documentation</a>
 
 </div>
 
