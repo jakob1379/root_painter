@@ -70,7 +70,7 @@ If you are not confident installing and running python applications on the comma
 
 ### Documentation
 
-You can find comprehensive documentation, including setup guides, tutorials, and developer information, on the [here](https://jakob1379.github.io/root_painter)
+You can find comprehensive documentation, including setup guides, tutorials, and developer information [here](https://jakob1379.github.io/root_painter). Some quick links to the documentation:
 
 - **Getting Started:** For a quick start, we recommend the [Colab Tutorial](https://colab.research.google.com/drive/104narYAvTBt-X4QEDrBSOZm_DRaAKHtA?usp=sharing). A concise [Mini Guide](https://jakob1379.github.io/root_painter/quickstart/) is also available for quick reference.
 - **Server Setup:** Instructions for setting up the server component are available for [local installations](https://jakob1379.github.io/root_painter/setup/local_server/), [sshfs setups](https://jakob1379.github.io/root_painter/setup/remote_server_sshfs/), and more.
@@ -79,7 +79,7 @@ You can find comprehensive documentation, including setup guides, tutorials, and
 
 ### For Developers
 
-Developer-focused documentation, including build instructions and contribution guidelines, can be found in `docs/dev/`.
+Developer-focused documentation, including build instructions and contribution guidelines, can found in the [developer section](https://jakob1379.github.io/root_painter/developer/painter/)
 
 - [Painter (Client) Readme](https://jakob1379.github.io/root_painter/developer/painter/)
 - [Trainer (Server) Readme](https://jakob1379.github.io/root_painter/developer/trainer/)
