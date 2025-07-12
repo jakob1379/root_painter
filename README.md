@@ -40,26 +40,29 @@ There is a [youtube video](https://www.youtube.com/watch?v=73u73tBvRO4) of a wor
 
 #### Server
 
-Install from PyPi:
+The server needs to be installed on the machine that should train the models:
 
 ```bash
+# with uv
+uxv root-painter-trainer
+
+# with pip
 pip install root-painter-trainer
+start-trainer
 ```
 
 #### Client
 
-Go to [releases](https://github.com/Abe404/root_painter/releases/latest) and download install the client for your platform.
+Go to [releases](https://github.com/Abe404/root_painter/releases/latest), download, and install the client for your platform.
 
 or install directly with python
 
 ```bash
-# install to start from form with uv
-uv tool install -p 3.10 git+https://github.com/jakob1379/root_painter@jga-end-goal#subdirectory=painter
+# run directly with uv
+uvx root-painter
 
-# similarly with pipx - you need to figure out how to install the correct python yourself - uv does this for you.
-pipx git+https://github.com/jakob1379/root_painter@jga-end-goal#subdirectory=painter
-
-# now you can always do
+# similarly with pip - you need to figure out how to install the correct python yourself - uv does this for you.
+pip install root-painter
 root-painter
 ```
 
