@@ -659,7 +659,10 @@
 
 <h3 id="a-concise-guide-to-using-rootpainter">A concise guide to using RootPainter<a class="headerlink" href="#a-concise-guide-to-using-rootpainter" title="Permanent link">&para;</a></h3>
 <p>This is a short guide to help users remember the key steps to obtain measurements using RootPainter.  See <a href="https://github.com/Abe404/root_painter">main page</a> for additional documentation including links to videos, papers and a colab notebook.</p>
-<p>Note: RootPainter is primarily used for root segmentation but works for many other objects. Modify instructions accordingly.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>RootPainter is primarily used for root segmentation but works for many other objects. Modify instructions accordingly.</p>
+</div>
 <ol>
 <li>Open RootPainter and select 'Create training dataset'. Create a training dataset using 1000 images with a target size of 750 pixels and 1 tile per image.</li>
 <li>Create a new project referencing the new training dataset as the source dataset.</li>
@@ -691,8 +694,11 @@
 <li>To communicate that your model was accurate you can use both composites of random images and the metrics plot. The metrics plot can be right-clicked giving an export option. You may export to various formats including a PNG that can be inserted into manuscript (supplementary material etc).</li>
 <li>If you generate the composites or extract measurements and then decide later that you want to further train the model to get even better or more accurate results then you should reopen the project and annotate more images (correcting the errors on new images) whilst training. Then you should repeat steps 7-15. But give the output segmentation and results files new names, assuming a new more accurate model has been generated.</li>
 <li>To include more images in your training dataset, then you must add these images to the existing dataset folder and then run 'extend dataset' from the extras menu with the project open.</li>
-<li>Note: RootPainter displays a message stating X epochs out of 60 (or similar) when it is training. You don’t have to wait until 60 epochs without progress to use the model trained, this is optional and may only be marginally beneficial.</li>
 </ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>RootPainter displays a message stating X epochs out of 60 (or similar) when it is training. You don’t have to wait until 60 epochs without progress to use the model trained, this is optional and may only be marginally beneficial.</p>
+</div>
 
 
 
