@@ -42,10 +42,10 @@ The server needs to be installed on the machine that run the training:
 
 ```bash
 # with uv
-uvx --from root-painter-trainer start-trainer
+uvx --from root-painter start-trainer
 
 # with pip
-pip install root-painter-trainer
+pip install root-painter
 start-trainer
 ```
 
