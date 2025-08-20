@@ -1,10 +1,8 @@
-
 <div align="center">
-
 <h2>RootPainter</h2>
 
-<a href="https://doi.org/10.1111/nph.18387">Paper</a> - <a href="https://jakob1379.github.io/root_painter">Documentation</a>
-
+[![DOI](https://zenodo.org/badge/doi/10.1111/nph.18387.svg)](https://doi.org/10.1111/nph.18387)
+[![Docs](https://img.shields.io/badge/Docs-root__painter-green)](https://jakob1379.github.io/root_painter)
 </div>
 
 
