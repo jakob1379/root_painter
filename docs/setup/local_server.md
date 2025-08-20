@@ -9,13 +9,13 @@ For the next steps I assume you have a suitable GPU and CUDA installed.
 1. To install the RootPainter trainer:
 
     ```
-    pip install root-painter-trainer
+    pip install root-painter
     ```
 
 2. To run the trainer. This will first create the sync directory.
 
     ```
-    start-trainer
+    root-painter trainer
     ```
 
     !!! note
