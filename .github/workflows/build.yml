@@ -52,7 +52,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    
+
     - name: Set up Python ${{ matrix.config.python-version }}
       uses: actions/setup-python@v2
       with:
@@ -94,7 +94,7 @@ jobs:
           source env/bin/activate
         fi
         python src/build/run_pyinstaller.py
-        
+
     - name: Make installer (macOS)
       if: runner.os == 'macOS'
       run: |
@@ -114,7 +114,7 @@ jobs:
         makensis.exe src/build/assets/Installer.nsi
 
     - name: Upload package
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: Package-${{ matrix.config.name }}
         path: ${{github.workspace}}/painter/dist/${{ matrix.config.artifact-name }}
