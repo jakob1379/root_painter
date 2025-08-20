@@ -1,8 +1,8 @@
 <div align="center">
 <h2>RootPainter</h2>
 
-[![DOI](https://zenodo.org/badge/doi/10.1111/nph.18387.svg)](https://doi.org/10.1111/nph.18387)
-[![Docs](https://img.shields.io/badge/Docs-root__painter-green)](https://jakob1379.github.io/root_painter)
+[![DOI](https://img.shields.io/badge/DOI-10.1111/nph.18387-4A80B0?style=for-the-badge&logo=orcid&logoColor=white&labelColor=2E648C)](https://doi.org/10.1111/nph.18387)
+[![Documentation](https://img.shields.io/badge/Documentation-Read%20Here-83C5BE?style=for-the-badge&logo=readthedocs&logoColor=white&labelColor=006D77)](https://root-painter.readthedocs.io/en/latest/)
 </div>
 
 
@@ -42,11 +42,11 @@ The server needs to be installed on the machine that run the training:
 
 ```bash
 # with uv
-uvx --from root-painter start-trainer
+uvx root-painter trainer
 
 # with pip
 pip install root-painter
-start-trainer
+root-painter trainer
 ```
 
 #### Client
