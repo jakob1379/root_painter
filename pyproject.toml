@@ -1,15 +1,14 @@
 [project]
 name = "root-painter"
-version = "0.1.0"
 description = "RootPainter GUI and trainer packaged as a single CLI"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.12"
 license = { text = "GPL-3.0-or-later" }
 dependencies = [
     "root-painter-painter",
-    "root-painter-trainer",
-    "typer[all]>=0.16.1",
+    "typer>=0.16.1",
 ]
+version = "0.1.4"
 
 [project.scripts]
 root-painter = "main:main"

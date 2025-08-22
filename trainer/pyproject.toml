@@ -12,13 +12,13 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 dependencies = [
-    "Pillow==9.3.0",
-    "imagecodecs==2021.8.26",
-    "numpy==1.24.2",
-    "scikit-image==0.19.3",
-    "scipy==1.10.0",
-    "torch==1.13.1",
-    "torchvision==0.14.1",
+    "Pillow>=9.3.0",
+    "imagecodecs>=2021.11.20",
+    "numpy>=1.24.2",
+    "scikit-image>=0.19.3",
+    "scipy>=1.10.0",
+    "torch>=1.13.1",
+    "torchvision>=0.14.1",
 ]
 license = {text = "GPL-2.0"}
 requires-python = ">=3.8,<3.11"
