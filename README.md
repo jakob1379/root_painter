@@ -2,7 +2,7 @@
 <h2>RootPainter</h2>
 
 [![DOI](https://img.shields.io/badge/DOI-10.1111/nph.18387-4A80B0?style=for-the-badge&logo=orcid&logoColor=white&labelColor=2E648C)](https://doi.org/10.1111/nph.18387)
-[![Documentation](https://img.shields.io/badge/Documentation-Read%20Here-83C5BE?style=for-the-badge&logo=readthedocs&logoColor=white&labelColor=006D77)](https://root-painter.readthedocs.io/en/latest/)
+[![Documentation](https://img.shields.io/badge/Docs-read_here-83C5BE?style=for-the-badge&logo=readthedocs&logoColor=white&labelColor=006D77)](https://jakob1379.github.io/root_painter)
 </div>
 
 
@@ -38,14 +38,14 @@ There is a [youtube video](https://www.youtube.com/watch?v=73u73tBvRO4) of a wor
 
 #### Server
 
-The server needs to be installed on the machine that run the training:
+The server needs to be installed on the machine that will run the training:
 
 ```bash
 # with uv
-uvx root-painter trainer
+uvx root-painter[trainer] trainer
 
 # with pip
-pip install root-painter
+pip install root-painter[trainer]
 root-painter trainer
 ```
 

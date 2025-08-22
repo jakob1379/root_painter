@@ -8,10 +8,15 @@ dependencies = [
     "root-painter-painter",
     "typer>=0.16.1",
 ]
-version = "0.1.4"
+version = "0.1.6"
 
 [project.scripts]
 root-painter = "main:main"
+
+[project.optional-dependencies]
+trainer = [
+    "root-painter-trainer",
+]
 
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
@@ -37,5 +42,5 @@ publish-url = "https://test.pypi.org/legacy/"
 explicit = true
 
 [tool.uv.sources]
-root-painter-trainer = { path = "trainer" }
 root-painter-painter = { path = "painter" }
+root-painter-trainer = { path = "trainer" }
