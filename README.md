@@ -38,14 +38,14 @@ There is a [youtube video](https://www.youtube.com/watch?v=73u73tBvRO4) of a wor
 
 #### Server
 
-The server needs to be installed on the machine that run the training:
+The server needs to be installed on the machine that will run the training:
 
 ```bash
 # with uv
-uvx root-painter trainer
+uvx root-painter[trainer] trainer
 
 # with pip
-pip install root-painter
+pip install root-painter[trainer]
 root-painter trainer
 ```
 

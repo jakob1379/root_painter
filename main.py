@@ -1,3 +1,4 @@
+import importlib.util
 import typer
 
 app = typer.Typer(invoke_without_command=True)
@@ -15,7 +16,6 @@ def _default(ctx: typer.Context):
         rp_main.init_root_painter()
 
 
-@app.command("trainer")
 def run_trainer():
     """
     Start the trainer (server).
@@ -24,6 +24,11 @@ def run_trainer():
     # Expected function: trainer.root_painter_trainer.start()
     import trainer.root_painter_trainer as trainer_pkg
     trainer_pkg.start()
+
+
+# Register the 'trainer' command only if the optional server component is installed.
+if importlib.util.find_spec("trainer.root_painter_trainer") is not None:
+    app.command("trainer")(run_trainer)
 
 
 def main():
