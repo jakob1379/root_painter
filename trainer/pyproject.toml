@@ -2,25 +2,22 @@
 name = "root-painter-trainer"
 version = "0.2.27.1"
 description = "Trainer (server component) for RootPainter"
-authors = [
-    {name = "Abraham George Smith"},
-]
+authors = [{ name = "Abraham George Smith" }]
 classifiers = [
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
 ]
 dependencies = [
-    "Pillow>=9.3.0",
-    "imagecodecs>=2021.11.20",
-    "numpy>=1.24.2",
-    "scikit-image>=0.19.3",
-    "scipy>=1.10.0",
-    "torch>=1.13.1",
-    "torchvision>=0.14.1",
+  "Pillow>=9.3.0",
+  "imagecodecs>=2021.11.20",
+  "numpy>=1.24.2",
+  "scikit-image>=0.19.3",
+  "scipy>=1.10.0",
+  "torch>=1.13.1",
+  "torchvision>=0.14.1",
 ]
-license = {text = "GPL-2.0"}
+license = "GPL-2.0"
 requires-python = ">=3.8,<3.11"
 
 [project.urls]
@@ -34,10 +31,5 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [dependency-groups]
-dev = [
-    "pytest>=8.3.5",
-]
-publish = [
-    "build==1.2.2",
-    "twine==6.1.0",
-]
+dev = ["pytest>=8.3.5"]
+publish = ["build==1.2.2", "twine==6.1.0"]
