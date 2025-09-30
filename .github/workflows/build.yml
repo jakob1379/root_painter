@@ -59,20 +59,20 @@ jobs:
 
       - name: Make installer (macOS)
         if: runner.os == 'macOS'
+        working-directory: painter
         run: |
-          cd painter
           pkgbuild --component dist/RootPainter.app --install-location /Applications dist/RootPainter.pkg
 
       - name: Make installer (Linux)
         if: runner.os == 'Linux'
+        working-directory: painter
         run: |
-          cd painter
           bash scripts/make_deb_file
 
       - name: Make installer (Windows)
         if: runner.os == 'Windows'
+        working-directory: painter
         run: |
-          cd painter
           makensis.exe scripts/assets/Installer.nsi
 
       - name: Upload package
