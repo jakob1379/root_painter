@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-print('Initialising RootPainter')
+
 #pylint: disable=I1101,C0111,W0201,R0903,E0611,R0902,R0914,W0703
 import json
 import os
@@ -22,12 +22,18 @@ import sys
 import traceback
 from pathlib import Path
 
-from PyQt5 import QtWidgets
+
+# Marker inserted to allow unique removal of the top-level GUI import
 
 from root_painter.root_painter import RootPainter
 
 
 def init_root_painter():
+    # Import GUI libraries and heavy modules lazily so importing this module
+    # doesn't pull PyQt5 into environments that don't need the UI.
+    from PyQt5 import QtWidgets
+    from root_painter.root_painter import RootPainter
+
     settings_path = os.path.join(Path.home(), 'root_painter_settings.json')
     try:
         app = QtWidgets.QApplication([])

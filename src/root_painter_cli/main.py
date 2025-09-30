@@ -74,10 +74,11 @@ def _default(
 ):
     """Launch the Painter graphical application (default)."""
     if ctx.invoked_subcommand is None:
-        # Import and start the painter GUI entrypoint from the painter package
-        # Expected function: root_painter.main.init_root_painter()
-        import root_painter.main as rp_main
-        rp_main.init_root_painter()
+        # Import and start the painter GUI entrypoint from the painter package.
+        # Use the package-level helper to avoid importing heavy GUI dependencies
+        # at module import time.
+        from root_painter import init_root_painter
+        init_root_painter()
 
 
 def run_trainer():
@@ -98,8 +99,8 @@ def run_trainer():
         raise typer.Exit(code=2)
 
     # Expected function: root_painter_trainer.start()
-    import root_painter_trainer as trainer_pkg
-    trainer_pkg.start()
+    import root_painter_trainer
+    root_painter_trainer.start()
 
 
 # Ensure the 'trainer' command is always visible, but mark it as not installed when missing.
