@@ -23,6 +23,8 @@ import traceback
 from pathlib import Path
 
 
+# Marker inserted to allow unique removal of the top-level GUI import
+
 from root_painter.root_painter import RootPainter
 
 
