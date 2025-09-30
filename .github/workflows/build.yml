@@ -5,8 +5,16 @@
 name: Build
 
 on:
-  release:
-    types: [published]
+  pull_request:
+    branches:
+      - main
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
 
 jobs:
   build:
