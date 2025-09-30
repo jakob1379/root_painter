@@ -22,6 +22,7 @@ jobs:
     runs-on: ${{ matrix.config.os }}
     strategy:
       fail-fast: false
+      max-parallel: 3
       matrix:
         config:
           - name: 'Windows'
@@ -52,14 +53,9 @@ jobs:
           uv sync --all-packages --group dev
 
       - name: Build software (PyInstaller)
+        working-directory: painter
         run: |
-          cd painter
-          # Prefer using uv so the command runs inside uv's managed environment if available.
-          if command -v uv >/dev/null 2>&1; then
-            uv run -- python scripts/run_pyinstaller.py
-          else
-            python scripts/run_pyinstaller.py
-          fi
+          uv run python scripts/run_pyinstaller.py
 
       - name: Make installer (macOS)
         if: runner.os == 'macOS'
