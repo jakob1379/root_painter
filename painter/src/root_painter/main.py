@@ -22,12 +22,16 @@ import sys
 import traceback
 from pathlib import Path
 
-from PyQt5 import QtWidgets
 
 from root_painter.root_painter import RootPainter
 
 
 def init_root_painter():
+    # Import GUI libraries and heavy modules lazily so importing this module
+    # doesn't pull PyQt5 into environments that don't need the UI.
+    from PyQt5 import QtWidgets
+    from root_painter.root_painter import RootPainter
+
     settings_path = os.path.join(Path.home(), 'root_painter_settings.json')
     try:
         app = QtWidgets.QApplication([])
