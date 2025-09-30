@@ -24,7 +24,7 @@ from skimage import img_as_ubyte
 from skimage.io import imread, imsave
 from skimage.transform import resize
 
-icons_dir = os.path.join(os.path.dirname(__file__), '..', 'root_painter', 'icons')
+icons_dir = os.path.join(os.path.dirname(__file__), '..', 'src', 'root_painter', 'icons')
 icons_dir = os.path.normpath(icons_dir)
 
 svg_text = open(os.path.join(icons_dir, 'icon.svg'), 'r').read()
