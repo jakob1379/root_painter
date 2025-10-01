@@ -13,7 +13,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-#pylint: disable=I1101,C0111,R0903
+
+# pylint: disable=I1101,C0111,R0903
 from PyQt5 import QtCore, QtWidgets
 
 license_text = """
@@ -25,7 +26,7 @@ license_text = """
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  <title>GNU General Public License v3.0 - GNU Project - Free Software Foundation (FSF)</title>
  <link rel="alternate" type="application/rdf+xml"
-       href="http://www.gnu.org/licenses/gpl-3.0.rdf" /> 
+       href="http://www.gnu.org/licenses/gpl-3.0.rdf" />
 </head>
 <body>
 <h3 style="text-align: center;">GNU GENERAL PUBLIC LICENSE</h3>
@@ -107,7 +108,7 @@ modification follow.</p>
 
 <p>&ldquo;Copyright&rdquo; also means copyright-like laws that apply to other kinds of
 works, such as semiconductor masks.</p>
- 
+
 <p>&ldquo;The Program&rdquo; refers to any copyrightable work licensed under this
 License.  Each licensee is addressed as &ldquo;you&rdquo;.  &ldquo;Licensees&rdquo; and
 &ldquo;recipients&rdquo; may be individuals or organizations.</p>
@@ -546,7 +547,7 @@ actual knowledge that, but for the patent license, your conveying the
 covered work in a country, or your recipient's use of the covered work
 in a country, would infringe one or more identifiable patents in that
 country that you have reason to believe are valid.</p>
-  
+
 <p>If, pursuant to or in connection with a single transaction or
 arrangement, you convey, or propagate by procuring conveyance of, a
 covered work, and grant a patent license to some of the parties
@@ -715,8 +716,10 @@ Public License instead of this License.  But first, please read
 </body></html>
 """
 
+
 class AboutWindow(QtWidgets.QWidget):
-    """ Show some info about RootPainter """
+    """Show some info about RootPainter"""
+
     def __init__(self):
         super().__init__()
         self.initUI()
@@ -731,7 +734,7 @@ class AboutWindow(QtWidgets.QWidget):
         networks for use in biological image analysis.
         <br />
         <br />
-        If you find RootPainter useful in your research then please cite the published 
+        If you find RootPainter useful in your research then please cite the published
         paper: 'RootPainter: Deep Learning Segmentation of Biological Images with Corrective Annotation'
         <br />
         The paper is now available at the following URL:
@@ -768,8 +771,10 @@ class AboutWindow(QtWidgets.QWidget):
         self.resize(600, 300)
         self.text_edit.verticalScrollBar().setValue(0)
 
+
 class LicenseWindow(QtWidgets.QWidget):
-    """ Show license (GPLv3) """
+    """Show license (GPLv3)"""
+
     def __init__(self):
         super().__init__()
         self.initUI()
@@ -790,4 +795,3 @@ class LicenseWindow(QtWidgets.QWidget):
     def adjust_size(self):
         self.text_edit.verticalScrollBar().setValue(0)
         self.resize(800, 600)
-

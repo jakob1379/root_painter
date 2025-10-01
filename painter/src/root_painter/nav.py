@@ -22,8 +22,8 @@ from PyQt5.QtCore import Qt
 
 
 class NavWidget(QtWidgets.QWidget):
-    """ Shows next and previous buttons as well as image position in folder.
-    """
+    """Shows next and previous buttons as well as image position in folder."""
+
     file_change = QtCore.pyqtSignal(str)
 
     def __init__(self, all_fnames, annot_dirs):
@@ -39,7 +39,7 @@ class NavWidget(QtWidgets.QWidget):
         nav_layout = QtWidgets.QHBoxLayout()
 
         # && to escape it and show single &
-        self.prev_image_button = QtWidgets.QPushButton('< Previous')
+        self.prev_image_button = QtWidgets.QPushButton("< Previous")
         self.prev_image_button.setFocusPolicy(Qt.NoFocus)
         self.prev_image_button.clicked.connect(self.show_prev_image)
         nav_layout.addWidget(self.prev_image_button)
@@ -47,7 +47,7 @@ class NavWidget(QtWidgets.QWidget):
         nav_layout.addWidget(self.nav_label)
 
         # && to escape it and show single &
-        self.next_image_button = QtWidgets.QPushButton('Save && Next >')
+        self.next_image_button = QtWidgets.QPushButton("Save && Next >")
         self.next_image_button.setFocusPolicy(Qt.NoFocus)
         self.next_image_button.clicked.connect(self.show_next_image)
         nav_layout.addWidget(self.next_image_button)
@@ -66,13 +66,15 @@ class NavWidget(QtWidgets.QWidget):
 
     def get_path_list(self, dir_path):
         all_files = self.all_fnames
-        all_paths = [os.path.abspath(os.path.join(os.path.abspath(dir_path), a))
-                     for a in all_files]
+        all_paths = [
+            os.path.abspath(os.path.join(os.path.abspath(dir_path), a))
+            for a in all_files
+        ]
         return all_paths
 
     def show_next_image(self):
         self.next_image_button.setEnabled(False)
-        self.next_image_button.setText('Loading..')
+        self.next_image_button.setText("Loading..")
         self.next_image_button.setEnabled(False)
         QtWidgets.QApplication.processEvents()
         dir_path, _ = os.path.split(self.image_path)
@@ -100,9 +102,10 @@ class NavWidget(QtWidgets.QWidget):
         dir_path, _ = os.path.split(self.image_path)
         all_paths = self.get_path_list(dir_path)
         cur_idx = all_paths.index(os.path.abspath(self.image_path))
-        
+
         annotation_count = 0
         for annot_dir in self.annot_dirs:
             annotation_count += len(os.listdir(annot_dir))
         self.nav_label.setText(
-            f'{cur_idx + 1} / {len(all_paths)} ({annotation_count} Annotated)')
+            f"{cur_idx + 1} / {len(all_paths)} ({annotation_count} Annotated)"
+        )

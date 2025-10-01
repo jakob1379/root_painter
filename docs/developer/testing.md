@@ -10,5 +10,5 @@ pytest tests/
 
 ## TODO / Roadmap
 
-* Get tests to run without error.
-  * figure out why tests are failing.
+- Get tests to run without error.
+  - figure out why tests are failing.

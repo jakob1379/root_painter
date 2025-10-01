@@ -21,7 +21,6 @@ from PyQt5 import QtWidgets
 
 
 class VisibilityWidget(QtWidgets.QWidget):
-
     def __init__(self):
         super().__init__()
         self.initUI()

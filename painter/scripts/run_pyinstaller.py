@@ -36,48 +36,48 @@ advice.
 """
 import os
 import shutil
-from sys import platform
 
 # pyinstaller expects icon file to be in the dist folder
-if not os.path.isdir('dist'):
-    os.makedirs('dist')
-    os.makedirs(os.path.join('dist', 'tmp_files'))
+if not os.path.isdir("dist"):
+    os.makedirs("dist")
+    os.makedirs(os.path.join("dist", "tmp_files"))
 
 # Icon for used for mac or windows (linux has different mechanism, see make_deb_file.sh)
-icon_fname = 'Icon.ico' # ico for windows.
+icon_fname = "Icon.ico"  # ico for windows.
 if platform == "darwin":
-    icon_fname = 'Icon.icns' # icns for mac
+    icon_fname = "Icon.icns"  # icns for mac
 
 # icon path should be relative to the dist folder
-shutil.copyfile(os.path.join('src', 'root_painter', 'icons', icon_fname),
-                os.path.join('dist', icon_fname))
+shutil.copyfile(
+    os.path.join("src", "root_painter", "icons", icon_fname),
+    os.path.join("dist", icon_fname),
+)
 
 # pyinstaller command line argument documentation is available from:
 # https://pyinstaller.org/en/stable/usage.html
 run_args = [
     # --noconfirm: don't ask user to confirm when deleting existing files in dist folder.
-    '--noconfirm',
-
+    "--noconfirm",
     # --clean: Clean PyInstaller cache and remove temporary files before building.
-    '--clean',
-
+    "--clean",
     # hidden imports added based on this advice:
     # https://github.com/pyqtgraph/pyqtgraph/issues/2179
-    '--hidden-import', 'pyqtgraph.graphicsItems.ViewBox.axisCtrlTemplate_pyqt5',
-    '--hidden-import', 'pyqtgraph.graphicsItems.PlotItem.plotConfigTemplate_pyqt5',
-    '--hidden-import', 'pyqtgraph.imageview.ImageViewTemplate_pyqt5',
-
+    "--hidden-import",
+    "pyqtgraph.graphicsItems.ViewBox.axisCtrlTemplate_pyqt5",
+    "--hidden-import",
+    "pyqtgraph.graphicsItems.PlotItem.plotConfigTemplate_pyqt5",
+    "--hidden-import",
+    "pyqtgraph.imageview.ImageViewTemplate_pyqt5",
     # Where to put all the temporary work files .log, .pyz and etc. (default: ./build)
-    '--workpath', os.path.join('dist', 'tmp_files'),
-
+    "--workpath",
+    os.path.join("dist", "tmp_files"),
     # --debug==all provides a significant amount of diagnostic information.
     # This can be useful during development of a complex package, or when your
     # app doesn’t seem to be starting, or just to learn how the runtime works.
     # '--debug', 'all',
-
     # Name to assign to the bundled app and spec file (default: first script’s basename)
-    '--name', 'RootPainter',
-
+    "--name",
+    "RootPainter",
     # I dont think this makes a difference for ubuntu, but I think it will help on OSX.
     # see https://pyinstaller.org/en/stable/usage.html?highlight=icon#cmdoption-i
     # -i FILE.exe,ID or FILE.icns or "NONE"> FILE.ico: apply the icon to a Windows
@@ -85,38 +85,42 @@ run_args = [
     # the icon to the .app bundle on Mac OS. Use "NONE" to not apply any icon,
     # thereby making the OS to show some default (default: apply PyInstaller's icon)
     # thereby making the OS to show some default (default: apply PyInstaller's icon)
-    '--icon', icon_fname,  # should be relative to the dist directory
+    "--icon",
+    icon_fname,  # should be relative to the dist directory
     # I dont actually use the spec file yet, so put the auto-generated one in dist to avoid cluttering the repo
-    '--specpath', 'dist',
-
+    "--specpath",
+    "dist",
 ]
 
-if platform == 'darwin':
+if platform == "darwin":
     # Windows and Mac OS X: do not provide a console window for standard i/o.
     # On Mac OS this also triggers building a Mac OS .app bundle. On Windows
     # this option is automatically set if the first script is a ‘.pyw’ file.
     # This option is ignored on *NIX systems.
-    run_args.append('--windowed')
+    run_args.append("--windowed")
 else:
     # -c, --console, --nowindowed
     # Open a console window for standard i/o (default). On Windows this option
     # has no effect if the first script is a ‘.pyw’ file.
     # NOTE: console brought back in for debugging purposes.
-    run_args.append('--console') # added for windows only
+    run_args.append("--console")  # added for windows only
 
 # Mac OS .app bundle identifier is used as the default unique program name
 # for code signing purposes. The usual form is a hierarchical name in reverse DNS
 # notation. For example: com.mycompany.department.appname (default: first
 # script’s basename)
-run_args.append('--osx-bundle-identifier')
-run_args.append('com.rootpainter')
+run_args.append("--osx-bundle-identifier")
+run_args.append("com.rootpainter")
 
 # scriptname: Name of scriptfile to be processed.
-run_args.append(os.path.join('src', 'root_painter', 'main.py'))
+run_args.append(os.path.join("src", "root_painter", "main.py"))
 
 PyInstaller.__main__.run(run_args)
 
 # Useful when debugging to see what these folders look like.
-print('list cwd', os.listdir(os.getcwd()))
-print('list cwd/dist', os.listdir(os.path.join(os.getcwd(), 'dist')))
-print('list cwd/dist/RootPainter', os.listdir(os.path.join(os.getcwd(), 'dist', 'RootPainter')))
+print("list cwd", os.listdir(os.getcwd()))
+print("list cwd/dist", os.listdir(os.path.join(os.getcwd(), "dist")))
+print(
+    "list cwd/dist/RootPainter",
+    os.listdir(os.path.join(os.getcwd(), "dist", "RootPainter")),
+)

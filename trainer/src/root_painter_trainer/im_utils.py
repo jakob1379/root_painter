@@ -23,7 +23,6 @@ import shutil
 from math import ceil
 import random
 import numpy as np
-import skimage.util as skim_util
 
 from PIL import Image, ImageOps
 from skimage import color
@@ -32,13 +31,15 @@ from skimage.io import imread, imsave
 from root_painter_trainer.file_utils import ls
 
 # https://github.com/Abe404/root_painter/discussions/131#discussioncomment-8596334
-Image.MAX_IMAGE_PIXELS = 1e10 
+Image.MAX_IMAGE_PIXELS = 1e10
+
 
 def is_photo(fname):
-    """ extensions that have been tested with so far """
-    extensions = {".jpg", ".png", ".jpeg", '.tif', '.tiff'}
+    """extensions that have been tested with so far"""
+    extensions = {".jpg", ".png", ".jpeg", ".tif", ".tiff"}
     fname_ext = os.path.splitext(fname)[1].lower()
     return fname_ext in extensions
+
 
 def normalize_tile(tile):
     if np.min(tile) < np.max(tile):
@@ -46,6 +47,7 @@ def normalize_tile(tile):
     assert np.min(tile) >= 0, f"tile min {np.min(tile)}"
     assert np.max(tile) <= 1, f"tile max {np.max(tile)}"
     return tile
+
 
 def load_train_image_and_annot(dataset_dir, train_annot_dir):
     max_attempts = 60
@@ -57,70 +59,70 @@ def load_train_image_and_annot(dataset_dir, train_annot_dir):
     while attempts < max_attempts:
         attempts += 1
         # file systems are unpredictable.
-        # We may have problems reading the file.
+        # We may have problems reading the file.
         # try-catch to avoid this.
-        # (just try again)
+        # (just try again)
         try:
             # set to None each time.
             latest_annot_path = None
             latest_im_path = None
 
-            # This might take ages, profile and optimize
+            # This might take ages, profile and optimize
             fnames = ls(train_annot_dir)
             fnames = [a for a in fnames if is_photo(a)]
             fname = random.sample(fnames, 1)[0]
             annot_path = os.path.join(train_annot_dir, fname)
-            image_path_part = os.path.join(dataset_dir,
-                                           os.path.splitext(fname)[0])
-            # it's possible the image has a different extenstion
+            image_path_part = os.path.join(dataset_dir, os.path.splitext(fname)[0])
+            # it's possible the image has a different extension
             # so use glob to get it
-            
+
             # Use glob.escape to allow arbitrary strings in file paths,
-            # including [ and ]  
+            # including [ and ]
             # For related bug See https://github.com/Abe404/root_painter/issues/87
             image_path_part = glob.escape(image_path_part)
-            image_path = glob.glob(image_path_part + '.*')[0]
-            
+            image_path = glob.glob(image_path_part + ".*")[0]
+
             latest_im_path = image_path
             image = load_image(image_path)
             latest_annot_path = annot_path
             annot = imread(annot_path).astype(bool)
             assert np.sum(annot) > 0
-            assert image.shape[2] == 3 # should be RGB
+            assert image.shape[2] == 3  # should be RGB
             # also return fname for debugging purposes.
             return image, annot, fname
         except Exception as e:
             latest_error = e
-            # This could be due to an empty annotation saved by the user.
-            # Which happens rarely due to deleting all labels in an 
+            # This could be due to an empty annotation saved by the user.
+            # Which happens rarely due to deleting all labels in an
             # existing annotation and is not a problem.
             # give it some time and try again.
             time.sleep(0.1)
 
     if attempts == max_attempts:
-        if latest_annot_path is None: # if annot path still None we know it failed on the photo
-            raise Exception(f'Could not load photo {latest_im_path}, {latest_error}')
+        if (
+            latest_annot_path is None
+        ):  # if annot path still None we know it failed on the photo
+            raise Exception(f"Could not load photo {latest_im_path}, {latest_error}")
         else:
             # otherwise it must have failed on the annotation
-            raise Exception(f'Could not load annotation {latest_annot_path}, {e}')
+            raise Exception(f"Could not load annotation {latest_annot_path}, {e}")
 
 
-def pad(image, width: int, mode='reflect', constant_values=0):
+def pad(image, width: int, mode="reflect", constant_values=0):
     # only pad the first two dimensions
     pad_width = [(width, width), (width, width)]
     if len(image.shape) == 3:
         # don't pad channels
         pad_width.append((0, 0))
-    if mode == 'reflect':
+    if mode == "reflect":
         return np.pad(image, pad_width, mode)
-    return np.pad(image, pad_width, mode=mode,
-                         constant_values=constant_values)
+    return np.pad(image, pad_width, mode=mode, constant_values=constant_values)
 
 
 def crop_from_pad_settings(image, pad_settings):
-    """ Crop image back to what it was before padding using
-        the pad_settings. See pad_to_min for how 
-        pad_settings are generated and used """
+    """Crop image back to what it was before padding using
+    the pad_settings. See pad_to_min for how
+    pad_settings are generated and used"""
     h_pad_before, h_pad_after = pad_settings[0]
     w_pad_before, w_pad_after = pad_settings[1]
     h_start = h_pad_before
@@ -144,8 +146,9 @@ def pad_to_min(im, min_w, min_h):
     w_pad_after = w_pad - w_pad_before
     pad_settings = ((h_pad_before, h_pad_after), (w_pad_before, w_pad_after), (0, 0))
     if h_pad or w_pad:
-        im = np.pad(im, pad_settings, mode='reflect')
+        im = np.pad(im, pad_settings, mode="reflect")
     return im, pad_settings
+
 
 def add_salt_pepper(image, intensity):
     image = np.array(image)
@@ -164,12 +167,14 @@ def add_salt_pepper(image, intensity):
     image[y_coords, x_coords] = black
     return image
 
+
 def add_gaussian_noise(image, sigma):
     assert np.min(image) >= 0, f"should be at least 0, min {np.min(image)}"
     assert np.max(image) <= 1, f"can't exceed 1, max {np.max(image)}"
     gaussian_noise = np.random.normal(loc=0, scale=sigma, size=image.shape)
     gaussian_noise = gaussian_noise.reshape(image.shape)
     return image + gaussian_noise
+
 
 def get_tiles(image, in_tile_shape, out_tile_shape):
     width_diff = in_tile_shape[1] - out_tile_shape[1]
@@ -180,8 +185,8 @@ def get_tiles(image, in_tile_shape, out_tile_shape):
     vertical_count = ceil(image.shape[0] / out_tile_shape[0])
 
     # first split the image based on the tiles that fit
-    x_coords = [h*out_tile_shape[1] for h in range(horizontal_count-1)]
-    y_coords = [v*out_tile_shape[0] for v in range(vertical_count-1)]
+    x_coords = [h * out_tile_shape[1] for h in range(horizontal_count - 1)]
+    y_coords = [v * out_tile_shape[0] for v in range(vertical_count - 1)]
 
     # The last row and column of tiles might not fit
     # (Might go outside the image)
@@ -202,29 +207,29 @@ def get_tiles(image, in_tile_shape, out_tile_shape):
 def reconstruct_from_tiles(tiles, coords, output_shape):
     image = np.zeros(output_shape)
     for tile, (x, y) in zip(tiles, coords):
-        image[y:y+tile.shape[0], x:x+tile.shape[1]] = tile
+        image[y : y + tile.shape[0], x : x + tile.shape[1]] = tile
     return image
 
 
 def tiles_from_coords(image, coords, tile_shape):
     tiles = []
     for x, y in coords:
-        tile = image[y:y+tile_shape[0],
-                     x:x+tile_shape[1]]
+        tile = image[y : y + tile_shape[0], x : x + tile_shape[1]]
         tiles.append(tile)
     return tiles
 
+
 def save_then_move(out_path, seg_output, npy=False):
-    """ need to save as a tmp file first (.tmp.fname) and
-        then rename after saving.
-        this is because scripts are monitoring the segmentation folder
-        and the file saving takes time..
-        We don't want the scripts that monitor the segmentation
-        folder to try loading the file half way through saving
-        as this causes errors. Thus we save and then rename.
+    """need to save as a tmp file first (.tmp.fname) and
+    then rename after saving.
+    this is because scripts are monitoring the segmentation folder
+    and the file saving takes time..
+    We don't want the scripts that monitor the segmentation
+    folder to try loading the file half way through saving
+    as this causes errors. Thus we save and then rename.
     """
     fname = os.path.basename(out_path)
-    temp_path = os.path.join(os.path.dirname(out_path), '.tmp.' + fname)
+    temp_path = os.path.join(os.path.dirname(out_path), ".tmp." + fname)
 
     if npy:
         # numpy can be easier than PNG to work with in some scripts.
@@ -244,8 +249,10 @@ def save_then_move(out_path, seg_output, npy=False):
             os.remove(temp_path)
             return
         time.sleep(0.1)
-    raise Exception(f'Could not find image at {temp_path} '
-                    f'after trying {max_attempts} times')
+    raise Exception(
+        f"Could not find image at {temp_path} after trying {max_attempts} times"
+    )
+
 
 def load_image(photo_path):
     photo = Image.open(photo_path)

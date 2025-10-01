@@ -43,10 +43,12 @@ class Thread(QtCore.QThread):
             if os.path.isfile(f):
                 try:
                     save_corrected_segmentation(
-                        f, self.seg_dir, self.out_dir,
+                        f,
+                        self.seg_dir,
+                        self.out_dir,
                     )
                 except Exception as e:
-                    print('Exception handling', f)
+                    print("Exception handling", f)
                     print(e)
                     traceback.print_exc()
         self.done.emit()

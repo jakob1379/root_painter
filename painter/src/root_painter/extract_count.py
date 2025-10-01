@@ -14,7 +14,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-#pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
+# pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
 import os
 
 import numpy as np
@@ -31,10 +31,11 @@ def save_count_to_csv(seg_dir, fname, writer, _):
     count = measure.label(seg_im).max()
     writer.writerow([os.path.basename(fpath), count])
 
+
 class ExtractCountWidget(BaseExtractWidget):
     def __init__(self):
         super().__init__(
             "Count",
-            ['file_name', 'count'],
+            ["file_name", "count"],
             save_count_to_csv,
         )

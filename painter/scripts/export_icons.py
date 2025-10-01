@@ -16,21 +16,22 @@ along with this program.  If not, see <https://www.gnu.o
 
 import os
 
-import numpy as np
 import skimage.util as skim_util
 from cairosvg import svg2png
 from PIL import Image
-from skimage import img_as_ubyte
 from skimage.io import imread, imsave
 from skimage.transform import resize
 
-icons_dir = os.path.join(os.path.dirname(__file__), '..', 'src', 'root_painter', 'icons')
+icons_dir = os.path.join(
+    os.path.dirname(__file__), "..", "src", "root_painter", "icons"
+)
 icons_dir = os.path.normpath(icons_dir)
 
-svg_text = open(os.path.join(icons_dir, 'icon.svg'), 'r').read()
+svg_text = open(os.path.join(icons_dir, "icon.svg"), "r").read()
 base_sizes = [16, 24, 32, 48, 64]
 linux_sizes = [128, 256, 512, 1024]
 mac_sizes = [128, 256, 512, 1024]
+
 
 def pad(image, width: int, constant_values=0):
     # only pad the first two dimensions
@@ -38,45 +39,55 @@ def pad(image, width: int, constant_values=0):
     if len(image.shape) >= 3:
         # don't pad channels
         pad_width.append((0, 0))
-    return skim_util.pad(image, pad_width, mode='constant',
-                     constant_values=constant_values)
+    return skim_util.pad(
+        image, pad_width, mode="constant", constant_values=constant_values
+    )
 
-# base and linux png icons don't need extra border.
-base_dir = os.path.join(icons_dir, 'base')
-linux_dir = os.path.join(icons_dir, 'linux')
-mac_dir = os.path.join(icons_dir, 'mac')
+
+# base and linux png icons don't need extra border.
+base_dir = os.path.join(icons_dir, "base")
+linux_dir = os.path.join(icons_dir, "linux")
+mac_dir = os.path.join(icons_dir, "mac")
 
 os.makedirs(base_dir, exist_ok=True)
 for w in base_sizes:
-    fpath = os.path.join(base_dir, str(w) + '.png')
+    fpath = os.path.join(base_dir, str(w) + ".png")
     svg2png(bytestring=svg_text, write_to=fpath, output_width=w, output_height=w)
 
 os.makedirs(linux_dir, exist_ok=True)
 for w in linux_sizes:
-    fpath = os.path.join(linux_dir, str(w) + '.png')
+    fpath = os.path.join(linux_dir, str(w) + ".png")
     svg2png(bytestring=svg_text, write_to=fpath, output_width=w, output_height=w)
 
-# Right now mac icon is done manually as cairosvg fails to add dropshadow properly.
+# Right now mac icon is done manually as cairosvg fails to add dropshadow properly.
 if False:
     os.makedirs(mac_dir, exist_ok=True)
     for w in mac_sizes:
-        fpath = os.path.join(mac_dir, str(w) + '.png')
-        # make it a bit smaller
-        svg2png(bytestring=svg_text, write_to=fpath,
-                output_width=w, output_height=w)
+        fpath = os.path.join(mac_dir, str(w) + ".png")
+        # make it a bit smaller
+        svg2png(bytestring=svg_text, write_to=fpath, output_width=w, output_height=w)
         # Max icons contain ~5% transparent margin, so they don't look too big
-        # in the Dock or app switcher
+        # in the Dock or app switcher
         im = imread(fpath)
-        pad_w = round((im.shape[1]/100) * 5) # pad using 5% margin
+        pad_w = round((im.shape[1] / 100) * 5)  # pad using 5% margin
         padded_im = pad(im, pad_w)
-        im = resize(padded_im, (w, w), mode='reflect', anti_aliasing=True)
+        im = resize(padded_im, (w, w), mode="reflect", anti_aliasing=True)
         # im[:, :, 3][im[:, :, 3] < 1.0] = 0
         # print('unique alpha = ', print(np.unique(im[:, :, 3])))
         imsave(fpath, im)
 
-# Take the biggest png and generate some variations in an ico file
-filename = os.path.join(linux_dir, '1024.png')
+# Take the biggest png and generate some variations in an ico file
+filename = os.path.join(linux_dir, "1024.png")
 img = Image.open(filename)
-icon_sizes = [(16,16), (24, 24), (32, 32), (48, 48), (64,64),
-              (128, 128), (256, 256), (512, 512), (1024, 1024)]
-img.save(os.path.join(icons_dir, 'Icon.ico'), sizes=icon_sizes)
+icon_sizes = [
+    (16, 16),
+    (24, 24),
+    (32, 32),
+    (48, 48),
+    (64, 64),
+    (128, 128),
+    (256, 256),
+    (512, 512),
+    (1024, 1024),
+]
+img.save(os.path.join(icons_dir, "Icon.ico"), sizes=icon_sizes)

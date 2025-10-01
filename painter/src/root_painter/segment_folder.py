@@ -14,7 +14,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-#pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
+# pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
 import os
 import time
 
@@ -30,6 +30,7 @@ class SegmentWatchThread(QtCore.QThread):
     """
     Runs another thread.
     """
+
     progress_change = QtCore.pyqtSignal(int, int)
     done = QtCore.pyqtSignal()
 
@@ -41,7 +42,7 @@ class SegmentWatchThread(QtCore.QThread):
     def run(self):
         while True:
             done_fnames = file_utils.ls(self.segment_dir)
-            done_fnames = [f for f in done_fnames if is_image(f) or f.endswith('.npz')]
+            done_fnames = [f for f in done_fnames if is_image(f) or f.endswith(".npz")]
             count = len(done_fnames)
             if count >= self.total_images:
                 self.done.emit()
@@ -53,7 +54,7 @@ class SegmentWatchThread(QtCore.QThread):
 
 class SegmentProgressWidget(BaseProgressWidget):
     def __init__(self):
-        super().__init__('Segmenting dataset')
+        super().__init__("Segmenting dataset")
 
     def run(self, segment_dir, total_images):
         self.progress_bar.setMaximum(total_images)
@@ -62,8 +63,8 @@ class SegmentProgressWidget(BaseProgressWidget):
         self.watch_thread.done.connect(self.done)
         self.watch_thread.start()
 
-class SegmentFolderWidget(QtWidgets.QWidget):
 
+class SegmentFolderWidget(QtWidgets.QWidget):
     submit = QtCore.pyqtSignal()
 
     def __init__(self, sync_dir, instruction_dir):
@@ -88,9 +89,9 @@ class SegmentFolderWidget(QtWidgets.QWidget):
             "dataset_dir": input_dir,
             "seg_dir": output_dir,
             "file_names": all_fnames,
-            "format": self.format_dropdown.currentText()
+            "format": self.format_dropdown.currentText(),
         }
-        send_instruction('segment', content, self.instruction_dir, self.sync_dir)
+        send_instruction("segment", content, self.instruction_dir, self.sync_dir)
         self.progress_widget = SegmentProgressWidget()
 
         self.progress_widget.run(output_dir, len(all_fnames))
@@ -108,7 +109,7 @@ class SegmentFolderWidget(QtWidgets.QWidget):
         layout.addWidget(in_dir_label)
         self.in_dir_label = in_dir_label
 
-        specify_input_dir_btn = QtWidgets.QPushButton('Specify input directory')
+        specify_input_dir_btn = QtWidgets.QPushButton("Specify input directory")
         specify_input_dir_btn.clicked.connect(self.select_input_dir)
         layout.addWidget(specify_input_dir_btn)
 
@@ -117,16 +118,15 @@ class SegmentFolderWidget(QtWidgets.QWidget):
         layout.addWidget(out_dir_label)
         self.out_dir_label = out_dir_label
 
-        specify_output_dir_btn = QtWidgets.QPushButton('Specify output directory')
+        specify_output_dir_btn = QtWidgets.QPushButton("Specify output directory")
         specify_output_dir_btn.clicked.connect(self.select_output_dir)
         layout.addWidget(specify_output_dir_btn)
-
 
         model_label = QtWidgets.QLabel()
         model_label.setText("Model file: Not yet specified")
         layout.addWidget(model_label)
         self.model_label = model_label
-        specify_model_btn = QtWidgets.QPushButton('Specify model file')
+        specify_model_btn = QtWidgets.QPushButton("Specify model file")
         specify_model_btn.clicked.connect(self.select_model)
         layout.addWidget(specify_model_btn)
 
@@ -135,41 +135,53 @@ class SegmentFolderWidget(QtWidgets.QWidget):
         layout.addWidget(format_label)
         self.format_label = format_label
         self.format_dropdown = QtWidgets.QComboBox()
-        self.format_dropdown.addItems(['RootPainter Default (.png)', 'RhizoVision Explorer (.png)'])
+        self.format_dropdown.addItems(
+            ["RootPainter Default (.png)", "RhizoVision Explorer (.png)"]
+        )
         # nobody needs numpy yet
         # self.format_dropdown.addItems(['RootPainter Default (.png)', 'RhizoVision Explorer (.png)', 'Numpy Compressed (.npz)'])
         self.format_dropdown.currentIndexChanged.connect(self.format_selection_change)
         layout.addWidget(self.format_dropdown)
 
         info_label = QtWidgets.QLabel()
-        info_label.setText("Input directory, output directory and model"
-                           " must be specified to segment folder.")
+        info_label.setText(
+            "Input directory, output directory and model"
+            " must be specified to segment folder."
+        )
         layout.addWidget(info_label)
         self.info_label = info_label
 
         # Add segment button
-        submit_btn = QtWidgets.QPushButton('Segment')
+        submit_btn = QtWidgets.QPushButton("Segment")
         submit_btn.clicked.connect(self.segment_folder)
         layout.addWidget(submit_btn)
         submit_btn.setEnabled(False)
         self.submit_btn = submit_btn
 
     def format_selection_change(self, _):
-        self.format_label.setText("Segmentation Format: " + self.format_dropdown.currentText())
+        self.format_label.setText(
+            "Segmentation Format: " + self.format_dropdown.currentText()
+        )
 
     def validate(self):
         if not self.input_dir:
-            self.info_label.setText("Input directory must be specified to create project")
+            self.info_label.setText(
+                "Input directory must be specified to create project"
+            )
             self.submit_btn.setEnabled(False)
             return
 
         if not self.output_dir:
-            self.info_label.setText("Output directory must be specified to create project")
+            self.info_label.setText(
+                "Output directory must be specified to create project"
+            )
             self.submit_btn.setEnabled(False)
             return
 
         if not self.selected_models:
-            self.info_label.setText("Starting model must be specified to create project")
+            self.info_label.setText(
+                "Starting model must be specified to create project"
+            )
             self.submit_btn.setEnabled(False)
             return
         self.info_label.setText("")
@@ -184,34 +196,34 @@ class SegmentFolderWidget(QtWidgets.QWidget):
 
         def output_selected():
             self.input_dir = self.input_dialog.selectedFiles()[0]
-            self.in_dir_label.setText('Input directory: ' + self.input_dir)
+            self.in_dir_label.setText("Input directory: " + self.input_dir)
             self.validate()
+
         self.input_dialog.fileSelected.connect(output_selected)
         self.input_dialog.open()
 
     def select_output_dir(self):
         self.output_dialog = QtWidgets.QFileDialog(self)
         self.output_dialog.setFileMode(QtWidgets.QFileDialog.Directory)
+
         def output_selected():
             self.output_dir = self.output_dialog.selectedFiles()[0]
-            self.out_dir_label.setText('Output directory: ' + self.output_dir)
+            self.out_dir_label.setText("Output directory: " + self.output_dir)
             self.validate()
+
         self.output_dialog.fileSelected.connect(output_selected)
         self.output_dialog.open()
 
-
-
     def select_model(self):
         options = QtWidgets.QFileDialog.Options()
-        file_paths, _ = QtWidgets.QFileDialog.getOpenFileNames(self,
-                                                               "Specify model file", "",
-                                                               "Pickle Files (*.pkl)",
-                                                               options=options)
+        file_paths, _ = QtWidgets.QFileDialog.getOpenFileNames(
+            self, "Specify model file", "", "Pickle Files (*.pkl)", options=options
+        )
         if file_paths:
             file_paths = [os.path.abspath(f) for f in file_paths]
             if len(file_paths) == 1:
-                self.model_label.setText('Model file: ' + file_paths[0])
+                self.model_label.setText("Model file: " + file_paths[0])
             else:
-                self.model_label.setText(f'{len(file_paths)} model files selected')
+                self.model_label.setText(f"{len(file_paths)} model files selected")
             self.selected_models = file_paths
             self.validate()

@@ -25,12 +25,20 @@ def _version_callback(ctx: typer.Context, param, value: bool):
     if not value or ctx.resilient_parsing:
         return
 
-    painter_version = _find_first_dist_version("root-painter-painter", "root-painter", "root_painter")
-    trainer_version = _find_first_dist_version("root-painter-trainer-jakob1397", "root-painter-trainer")
+    painter_version = _find_first_dist_version(
+        "root-painter-painter", "root-painter", "root_painter"
+    )
+    trainer_version = _find_first_dist_version(
+        "root-painter-trainer-jakob1397", "root-painter-trainer"
+    )
 
     # Compose and print a friendly, multi-line version summary.
-    typer.echo(f"Painter: {painter_version if painter_version is not None else 'not installed'}")
-    typer.echo(f"Trainer: {trainer_version if trainer_version is not None else 'not installed'}")
+    typer.echo(
+        f"Painter: {painter_version if painter_version is not None else 'not installed'}"
+    )
+    typer.echo(
+        f"Trainer: {trainer_version if trainer_version is not None else 'not installed'}"
+    )
     ctx.exit()
 
 
@@ -67,10 +75,18 @@ else:
       root-painter trainer --help
     """
 
+
 @app.callback(invoke_without_command=True, help=help_text)
 def _default(
     ctx: typer.Context,
-    version: bool = typer.Option(False, "--version", "-V", callback=_version_callback, is_eager=True, help="Show component versions and exit."),
+    version: bool = typer.Option(
+        False,
+        "--version",
+        "-V",
+        callback=_version_callback,
+        is_eager=True,
+        help="Show component versions and exit.",
+    ),
 ):
     """Launch the Painter graphical application (default)."""
     if ctx.invoked_subcommand is None:
@@ -78,6 +94,7 @@ def _default(
         # Use the package-level helper to avoid importing heavy GUI dependencies
         # at module import time.
         from root_painter import init_root_painter
+
         init_root_painter()
 
 
@@ -100,6 +117,7 @@ def run_trainer():
 
     # Expected function: root_painter_trainer.start()
     import root_painter_trainer
+
     root_painter_trainer.start()
 
 

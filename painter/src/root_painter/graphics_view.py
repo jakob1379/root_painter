@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-#pylint: disable=I1101,E0611,C0111
+# pylint: disable=I1101,E0611,C0111
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
 
@@ -27,6 +27,7 @@ class CustomGraphicsView(QtWidgets.QGraphicsView):
     Container for canvas where image and lines are drawn.
     Facilitates use of zoom and pan.
     """
+
     mouse_scroll_event = QtCore.pyqtSignal(QtGui.QWheelEvent)
     zoom_change = QtCore.pyqtSignal()
 
@@ -36,7 +37,7 @@ class CustomGraphicsView(QtWidgets.QGraphicsView):
         self.setDragMode(QtWidgets.QGraphicsView.NoDrag)
 
     def update_zoom(self):
-        """ Transform the view based on current zoom value """
+        """Transform the view based on current zoom value"""
         self.setTransform(QtGui.QTransform().scale(self.zoom, self.zoom))
         self.zoom_change.emit()
 
@@ -69,8 +70,10 @@ class CustomGraphicsView(QtWidgets.QGraphicsView):
             self.zoom = view_height / im_height
 
         scene_rect = self.sceneRect()
+
         def fitin():
             self.fitInView(scene_rect, Qt.KeepAspectRatio)
+
         fitin()
         QtCore.QTimer.singleShot(100, fitin)
         self.zoom_change.emit()

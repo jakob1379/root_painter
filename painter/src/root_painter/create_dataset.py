@@ -13,8 +13,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-#pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914, R0915, R0911
-import glob
+
+# pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914, R0915, R0911
 import itertools
 import json
 import os
@@ -27,10 +27,10 @@ import numpy as np
 
 # Avoiding bug with truncated images,
 # "Reason: "broken data stream when reading image file"
-from PIL import Image, ImageFile
+from PIL import ImageFile
 from PyQt5 import QtCore, QtWidgets
 from skimage.color import rgba2rgb
-from skimage.io import imread, imsave
+from skimage.io import imsave
 
 from root_painter.im_utils import is_image
 
@@ -73,11 +73,11 @@ def get_file_pieces(im, target_size):
     heights = [im_h // p[0] for p in possible_pieces]
 
     # and then get the ratio between width and height
-    ratios = [width/height for (width, height) in zip(widths, heights)]
+    ratios = [width / height for (width, height) in zip(widths, heights)]
 
     squareness = [abs(r - 1) for r in ratios]
     squareness = np.array(squareness) / (np.max(squareness) + 1e-5)
-    pix_counts = [width*height for (width, height) in zip(widths, heights)]
+    pix_counts = [width * height for (width, height) in zip(widths, heights)]
 
     # how close is the size to the target size
     size_dists = [abs(p - (target_size * target_size)) for p in pix_counts]
@@ -123,20 +123,21 @@ def save_im_pieces(im_path, target_dir, pieces_from_each_image, target_size):
             p = rgba2rgb(p)
         imsave(os.path.join(target_dir, piece_fname), p, check_contrast=False)
 
+
 class CreationProgressWidget(BaseProgressWidget):
     """
     Once the dataset creation process starts the CreateDatasetWidget
     is closed and the CreationProgressWidget will display the progress.
     """
-    def __init__(self):
-        super().__init__('Creating dataset')
 
-    def run(self, ims_to_sample_from, target_dir,
-            tiles_per_image, target_size):
+    def __init__(self):
+        super().__init__("Creating dataset")
+
+    def run(self, ims_to_sample_from, target_dir, tiles_per_image, target_size):
         self.progress_bar.setMaximum(len(ims_to_sample_from))
-        self.creation_thread = CreationThread(ims_to_sample_from, target_dir,
-                                              tiles_per_image,
-                                              target_size)
+        self.creation_thread = CreationThread(
+            ims_to_sample_from, target_dir, tiles_per_image, target_size
+        )
         self.creation_thread.progress_change.connect(self.onCountChanged)
         self.creation_thread.done.connect(self.done)
         self.creation_thread.start()
@@ -146,11 +147,13 @@ class CreationThread(QtCore.QThread):
     """
     Runs another thread.
     """
+
     progress_change = QtCore.pyqtSignal(int, int)
     done = QtCore.pyqtSignal(list)
 
-    def __init__(self, images_for_dataset, target_dir,
-                 pieces_from_each_image, target_size):
+    def __init__(
+        self, images_for_dataset, target_dir, pieces_from_each_image, target_size
+    ):
         super().__init__()
         self.images_for_dataset = images_for_dataset
         self.target_dir = target_dir
@@ -160,19 +163,22 @@ class CreationThread(QtCore.QThread):
     def run(self):
         error_messages = []
         for i, fpath in enumerate(self.images_for_dataset):
-            try:  
-                save_im_pieces(fpath, self.target_dir,
-                               self.pieces_from_each_image, self.target_size)
-            except Exception as e:
-                msg = f'Exception saving image pieces for {fpath} \n {traceback.format_exc()}'
+            try:
+                save_im_pieces(
+                    fpath,
+                    self.target_dir,
+                    self.pieces_from_each_image,
+                    self.target_size,
+                )
+            except Exception:
+                msg = f"Exception saving image pieces for {fpath} \n {traceback.format_exc()}"
                 print(msg)
                 error_messages.append(msg)
-            self.progress_change.emit(i+1, len(self.images_for_dataset))
+            self.progress_change.emit(i + 1, len(self.images_for_dataset))
         self.done.emit(error_messages)
 
 
 class CreateDatasetWidget(QtWidgets.QWidget):
-
     submit = QtCore.pyqtSignal()
 
     def __init__(self, sync_dir):
@@ -186,7 +192,7 @@ class CreateDatasetWidget(QtWidgets.QWidget):
     def on_radio_clicked(self):
         radio = self.sender()
         if radio.isChecked():
-            use_random = (radio.name == 'random')
+            use_random = radio.name == "random"
             self.num_ims_widget.setVisible(use_random)
             self.use_random = use_random
             self.validate()
@@ -194,10 +200,10 @@ class CreateDatasetWidget(QtWidgets.QWidget):
     def initUI(self):
         self.setWindowTitle("Create Dataset")
         layout = QtWidgets.QVBoxLayout()
-        self.layout = layout # to add progress bar later.
+        self.layout = layout  # to add progress bar later.
         self.setLayout(layout)
 
-        self.name_edit_widget = NameEditWidget('Dataset')
+        self.name_edit_widget = NameEditWidget("Dataset")
         self.name_edit_widget.changed.connect(self.validate)
         self.layout.addWidget(self.name_edit_widget)
 
@@ -207,10 +213,9 @@ class CreateDatasetWidget(QtWidgets.QWidget):
         layout.addWidget(directory_label)
         self.directory_label = directory_label
 
-        specify_image_dir_btn = QtWidgets.QPushButton('Specify source image directory')
+        specify_image_dir_btn = QtWidgets.QPushButton("Specify source image directory")
         specify_image_dir_btn.clicked.connect(self.select_image_dir)
         layout.addWidget(specify_image_dir_btn)
-
 
         # User can select all images or sample randomly
         radio_widget = QtWidgets.QWidget()
@@ -283,13 +288,15 @@ class CreateDatasetWidget(QtWidgets.QWidget):
 
         # info label for user feedback
         info_label = QtWidgets.QLabel()
-        info_label.setText("Name, directory and maximum images must"
-                           " be specified in order to create a dataset.")
+        info_label.setText(
+            "Name, directory and maximum images must"
+            " be specified in order to create a dataset."
+        )
         layout.addWidget(info_label)
         self.info_label = info_label
 
         # Add create button
-        create_btn = QtWidgets.QPushButton('Create dataset')
+        create_btn = QtWidgets.QPushButton("Create dataset")
         create_btn.clicked.connect(self.try_submit)
         layout.addWidget(create_btn)
         create_btn.setEnabled(False)
@@ -302,7 +309,7 @@ class CreateDatasetWidget(QtWidgets.QWidget):
         name = self.name_edit_widget.name
 
         if name:
-            self.target_dir = os.path.join(self.sync_dir, 'datasets', name)
+            self.target_dir = os.path.join(self.sync_dir, "datasets", name)
 
         if not name:
             self.info_label.setText("Name must be specified to create dataset")
@@ -314,21 +321,25 @@ class CreateDatasetWidget(QtWidgets.QWidget):
             return
 
         if not self.tiles_per_im_edit_widget.value():
-            self.info_label.setText("Maximum tiles per image must be "
-                                    "specified to create dataset")
+            self.info_label.setText(
+                "Maximum tiles per image must be specified to create dataset"
+            )
             self.create_btn.setEnabled(False)
             return
 
         if not self.im_size_edit_widget.value():
-            self.info_label.setText("Target width and height must be "
-                                    "specified to create dataset")
+            self.info_label.setText(
+                "Target width and height must be specified to create dataset"
+            )
             self.create_btn.setEnabled(False)
             return
 
         if not self.image_paths:
-            message = ('Source image directory must contain image files '
-                       ' with png, jpg, jpeg, tif'
-                       'or tiff extension.')
+            message = (
+                "Source image directory must contain image files "
+                " with png, jpg, jpeg, tif"
+                "or tiff extension."
+            )
             self.info_label.setText(message)
             self.create_btn.setEnabled(False)
             return
@@ -337,8 +348,10 @@ class CreateDatasetWidget(QtWidgets.QWidget):
         fnames = [os.path.basename(i) for i in self.image_paths]
         if len(set(fnames)) != len(fnames):
             dupes, seen = get_dupes(fnames)
-            self.info_label.setText(f"{len(dupes)} duplicates found including "
-                                    f"{dupes[0]} which was found {seen[dupes[0]]} times.")
+            self.info_label.setText(
+                f"{len(dupes)} duplicates found including "
+                f"{dupes[0]} which was found {seen[dupes[0]]} times."
+            )
             self.create_btn.setEnabled(False)
             return
         if os.path.exists(self.target_dir):
@@ -346,10 +359,9 @@ class CreateDatasetWidget(QtWidgets.QWidget):
             self.create_btn.setEnabled(False)
             return
 
-        # Sucess!
+        # Success!
         self.info_label.setText("")
         self.create_btn.setEnabled(True)
-
 
     def try_submit(self):
         target_dir = Path(self.target_dir)
@@ -359,19 +371,18 @@ class CreateDatasetWidget(QtWidgets.QWidget):
         all_images = self.image_paths
 
         if self.use_random:
-            ims_to_sample_from = random.sample(all_images,
-                                               num_ims_to_sample_from)
+            ims_to_sample_from = random.sample(all_images, num_ims_to_sample_from)
         else:
             ims_to_sample_from = all_images
 
         os.makedirs(target_dir)
 
         self.progress_widget = CreationProgressWidget()
-        self.progress_widget.run(ims_to_sample_from, target_dir,
-                                 tiles_per_image, target_size)
+        self.progress_widget.run(
+            ims_to_sample_from, target_dir, tiles_per_image, target_size
+        )
         self.close()
         self.progress_widget.show()
-
 
     def select_image_dir(self):
         self.image_dialog = QtWidgets.QFileDialog(self)
@@ -379,7 +390,7 @@ class CreateDatasetWidget(QtWidgets.QWidget):
 
         def output_selected():
             self.source_dir = self.image_dialog.selectedFiles()[0]
-            self.directory_label.setText('Image directory: ' + self.source_dir)
+            self.directory_label.setText("Image directory: " + self.source_dir)
             self.image_paths = im_utils.all_image_paths_in_dir(self.source_dir)
             self.validate()
 
@@ -388,30 +399,31 @@ class CreateDatasetWidget(QtWidgets.QWidget):
 
 
 def check_extend_dataset(main_window, dataset_dir, prev_fnames, proj_file_path):
-
     all_image_names = [f for f in os.listdir(dataset_dir) if is_image(f)]
 
     new_image_names = [f for f in all_image_names if f not in prev_fnames]
 
-    button_reply = QtWidgets.QMessageBox.question(main_window,
-        'Confirm',
+    button_reply = QtWidgets.QMessageBox.question(
+        main_window,
+        "Confirm",
         f"There are {len(new_image_names)} new images in the dataset."
         " Are you sure you want to extend the project to include these new images?",
-        QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No, 
-        QtWidgets.QMessageBox.No)
+        QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+        QtWidgets.QMessageBox.No,
+    )
 
     if button_reply == QtWidgets.QMessageBox.Yes:
         # shuffle the new file names
         shuffle(new_image_names)
         # load the project json for reading and writing
-        settings = json.load(open(proj_file_path, 'r'))
+        settings = json.load(open(proj_file_path, "r"))
         # read the file_names
-        all_file_names = settings['file_names'] + new_image_names
-        settings['file_names'] = all_file_names
+        all_file_names = settings["file_names"] + new_image_names
+        settings["file_names"] = all_file_names
 
         # Add the new_files to the list
         # then save the json again
-        json.dump(settings, open(proj_file_path, 'w'), indent=4)
+        json.dump(settings, open(proj_file_path, "w"), indent=4)
         return True, all_file_names
     else:
         return False, all_image_names

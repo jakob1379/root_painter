@@ -15,10 +15,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 # disable docstring warnings
-#pylint: disable=C0111, C0111
+# pylint: disable=C0111, C0111
 
 # Module has no member
-#pylint: disable=I1101
+# pylint: disable=I1101
 
 import re
 
@@ -26,7 +26,6 @@ from PyQt5 import QtCore, QtWidgets
 
 
 class NameEditWidget(QtWidgets.QWidget):
-
     changed = QtCore.pyqtSignal()
 
     def __init__(self, entity):
@@ -45,7 +44,7 @@ class NameEditWidget(QtWidgets.QWidget):
         name_widget_layout.addWidget(self.name_edit)
 
     def text_changed(self):
-        new_text = re.sub(r'\W+', '', self.name_edit.text())
+        new_text = re.sub(r"\W+", "", self.name_edit.text())
         self.name_edit.setText(new_text)
         self.name = new_text
         self.changed.emit()

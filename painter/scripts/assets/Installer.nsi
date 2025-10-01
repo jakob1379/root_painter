@@ -112,4 +112,3 @@ SectionEnd
 Function LaunchAsNonAdmin
   Exec '"$WINDIR\explorer.exe" "$InstDir\RootPainter.exe"'
 FunctionEnd
-

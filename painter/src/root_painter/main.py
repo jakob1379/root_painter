@@ -1,4 +1,3 @@
-
 """
 Copyright (C) 2020 Abraham George Smith
 
@@ -15,7 +14,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-#pylint: disable=I1101,C0111,W0201,R0903,E0611,R0902,R0914,W0703
+# pylint: disable=I1101,C0111,W0201,R0903,E0611,R0902,R0914,W0703
 import json
 import os
 import sys
@@ -32,9 +31,8 @@ def init_root_painter():
     # Import GUI libraries and heavy modules lazily so importing this module
     # doesn't pull PyQt5 into environments that don't need the UI.
     from PyQt5 import QtWidgets
-    from root_painter.root_painter import RootPainter
 
-    settings_path = os.path.join(Path.home(), 'root_painter_settings.json')
+    settings_path = os.path.join(Path.home(), "root_painter_settings.json")
     try:
         app = QtWidgets.QApplication([])
         # if the settings file does not exist then create it with
@@ -47,12 +45,10 @@ def init_root_painter():
             dir_path = QtWidgets.QFileDialog.getExistingDirectory()
             if not dir_path:
                 exit()
-            with open(settings_path, 'w') as json_file:
-                content = {
-                    "sync_dir": os.path.abspath(dir_path)
-                }
+            with open(settings_path, "w") as json_file:
+                content = {"sync_dir": os.path.abspath(dir_path)}
                 json.dump(content, json_file, indent=4)
-        sync_dir = Path(json.load(open(settings_path, 'r'))['sync_dir'])
+        sync_dir = Path(json.load(open(settings_path, "r"))["sync_dir"])
 
         def reopen():
             main_window = RootPainter(sync_dir)
@@ -60,7 +56,7 @@ def init_root_painter():
             main_window.show()
 
         main_window = RootPainter(sync_dir)
-        # close project causes reopen with missing project UI
+        # close project causes reopen with missing project UI
         main_window.closed.connect(reopen)
         main_window.show()
 
@@ -77,5 +73,6 @@ def init_root_painter():
     else:
         sys.exit(exit_code)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     init_root_painter()
