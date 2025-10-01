@@ -43,7 +43,7 @@ help = "Clean, build all packages, and publish root after painter and trainer su
 sequence = [
   '_clean_builds',
   '_build_packages',
-  {shell = "uv publish --index ${POE_PUBLISH_INDEX:-testpypi}"}
+  'uv publish --index ${POE_PUBLISH_INDEX:-testpypi}'
 ]
 
 [tool.uv.build-backend]

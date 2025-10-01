@@ -1,24 +1,24 @@
+---
 site_name: Root Painter
 site_url: https://jakob1379.github.io/root_painter/
 repo_name: jakob1379/root_painter
 repo_url: https://github.com/jakob1379/root_painter
-
 theme:
   palette:
     # Palette for light mode
-    - media: "(prefers-color-scheme: light)"
+    - media: '(prefers-color-scheme: light)'
       scheme: default
-      primary: "white" # Matches the background of the main shape
-      accent: "blue" # The vibrant blue circle
+      primary: white  # Matches the background of the main shape
+      accent: blue  # The vibrant blue circle
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
 
     # Palette for dark mode
-    - media: "(prefers-color-scheme: dark)"
+    - media: '(prefers-color-scheme: dark)'
       scheme: slate
-      primary: "black" # A dark background for dark mode
-      accent: "blue" # The vibrant blue circle
+      primary: black  # A dark background for dark mode
+      accent: blue  # The vibrant blue circle
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
@@ -40,8 +40,7 @@ theme:
     - toc.integrate
   favicon: assets/icon.svg
   logo: assets/icon.svg
-plugins:
-  - search
+plugins: [search]
 markdown_extensions:
   - admonition
   - pymdownx.details
