@@ -42,15 +42,6 @@ jobs:
 
       - name: Set up uv and Python
         uses: astral-sh/setup-uv@v6
-        with:
-          python-version: ${{ matrix.config.python-version }}
-          enable-cache: true
-
-      - name: Show environment
-        run: |
-          uv --version || true
-          python --version
-          pip --version
 
       - name: Build software (PyInstaller)
         working-directory: painter
@@ -82,5 +73,3 @@ jobs:
           name: Package-${{ matrix.config.name }}
           path: ${{github.workspace}}/painter/dist/${{ matrix.config.artifact-name }}
           if-no-files-found: error
-
-
