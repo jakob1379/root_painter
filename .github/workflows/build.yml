@@ -50,7 +50,7 @@ jobs:
           UV_PYTHON: ${{ matrix.config.python-version }}
         run: |
           # macOS: use .icns icon and build a windowed .app bundle
-          uv run python -m PyInstaller \
+          uv run -m PyInstaller \
             --noconfirm --clean \
             --hidden-import pyqtgraph.graphicsItems.ViewBox.axisCtrlTemplate_pyqt5 \
             --hidden-import pyqtgraph.graphicsItems.PlotItem.plotConfigTemplate_pyqt5 \
@@ -69,7 +69,7 @@ jobs:
           UV_PYTHON: ${{ matrix.config.python-version }}
         run: |
           # Windows: use .ico icon
-          uv run python -m PyInstaller \
+          uv run -m PyInstaller \
             --noconfirm --clean \
             --hidden-import pyqtgraph.graphicsItems.ViewBox.axisCtrlTemplate_pyqt5 \
             --hidden-import pyqtgraph.graphicsItems.PlotItem.plotConfigTemplate_pyqt5 \
@@ -88,7 +88,7 @@ jobs:
           UV_PYTHON: ${{ matrix.config.python-version }}
         run: |
           # Linux: no special icon required for the executable; package later into .deb
-          uv run python -m PyInstaller \
+          uv run -m PyInstaller \
             --noconfirm --clean \
             --hidden-import pyqtgraph.graphicsItems.ViewBox.axisCtrlTemplate_pyqt5 \
             --hidden-import pyqtgraph.graphicsItems.PlotItem.plotConfigTemplate_pyqt5 \
