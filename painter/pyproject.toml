@@ -23,7 +23,7 @@ dependencies = [
   "natsort>=8.0.2",
   "numpy>=1.22.1",
   "pillow>=9.3.0",
-  "pyqt5>=5.15.11",
+  "pyqt5==5.15.11",
   "pyqtgraph>=0.12.4",
   "pywavelets>=1.2.0",
   "qimage2ndarray>=1.9.0",
