@@ -67,6 +67,7 @@ jobs:
         working-directory: painter
         env:
           UV_PYTHON: ${{ matrix.config.python-version }}
+        shell: bash
         run: |
           # Windows: use .ico icon
           uv run -m PyInstaller \
