@@ -15,9 +15,9 @@ corresponding image in the viewer.
 
 If you stop annotating and let training continue it will eventually reach 60
 epochs out of 60 with no progress. It may not be easy for you to do this with
-your hardware (the free version of colab, for example, has time constraints). You
-may be wondering if leaving training to finish is essential and if it makes the
-model more robust.
+your hardware (the free version of colab, for example, has time constraints).
+You may be wondering if leaving training to finish is essential and if it makes
+the model more robust.
 
 We experimented with this in the original study. See
 [Figure 8](https://nph.onlinelibrary.wiley.com/doi/full/10.1111/nph.18387#nph18387-fig-0008).
@@ -213,7 +213,7 @@ will make it available in a more user-friendly client installer.
 A
 [colab notebook](https://colab.research.google.com/drive/1n1Iku3FwoLI0ImLTRQmMGawRyUU4YEJN)
 is available that runs the multiclass version of RootPainter. Classes can be
-specified when creating a project. Each class that is specified implicity has
+specified when creating a project. Each class that is specified implicitly has
 it's own background, thus a background class does not need to be explicitly
 specified. Foreground and background annotation should be assigned correctively
 for each class for each image.

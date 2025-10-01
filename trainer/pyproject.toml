@@ -3,8 +3,11 @@ requires = ["uv_build>=0.8.14,<0.9.0"]
 build-backend = "uv_build"
 
 [dependency-groups]
-dev = ["pytest>=8.3.5"]
-publish = ["build==1.2.2", "twine==6.1.0"]
+dev = [
+  "pytest>=8.3.5",
+  "pytest-cov>=7.0.0",
+  "pytest-xdist>=3.8.0"
+]
 
 [project]
 name = "root-painter-trainer-jakob1379"
@@ -16,6 +19,8 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3"
 ]
+license = "GPL-2.0"
+requires-python = ">=3.8,<3.11"
 dependencies = [
   "Pillow>=9.3.0",
   "imagecodecs>=2021.11.20",
@@ -25,8 +30,6 @@ dependencies = [
   "torch>=1.13.1",
   "torchvision>=0.14.1"
 ]
-license = "GPL-2.0"
-requires-python = ">=3.8,<3.11"
 
 [project.scripts]
 start-trainer = "root_painter_trainer:start"
