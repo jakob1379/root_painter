@@ -14,12 +14,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+
 import os
+
 
 def ls(dir_path):
     # Don't show hidden files
-    # These can happen due to issues like file system 
-    # synchonisation technology. RootPainter doesn't use them anywhere
+    # These can happen due to issues like file system
+    # synchronisation technology. RootPainter doesn't use them anywhere
     fnames = os.listdir(dir_path)
-    fnames = [f for f in fnames if f[0] != '.']
+    fnames = [f for f in fnames if f[0] != "."]
     return fnames

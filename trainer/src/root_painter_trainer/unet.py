@@ -22,33 +22,31 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+
 import torch.nn as nn
-from PIL import Image
 
 
 def get_valid_patch_sizes():
-    return list((572 - (16*i) for i in range(31)))
+    return list((572 - (16 * i) for i in range(31)))
+
 
 class DownBlock(nn.Module):
     def __init__(self, in_channels):
         super().__init__()
         self.pool = nn.MaxPool2d(2)
         self.conv1 = nn.Sequential(
-            nn.Conv2d(in_channels, in_channels*2,
-                      kernel_size=3, padding=1),
+            nn.Conv2d(in_channels, in_channels * 2, kernel_size=3, padding=1),
             nn.ReLU(),
-            nn.GroupNorm(32, in_channels*2)
+            nn.GroupNorm(32, in_channels * 2),
         )
         self.conv2 = nn.Sequential(
-            nn.Conv2d(in_channels*2, in_channels*2,
-                      kernel_size=3, padding=1),
+            nn.Conv2d(in_channels * 2, in_channels * 2, kernel_size=3, padding=1),
             nn.ReLU(),
-            nn.GroupNorm(32, in_channels*2)
+            nn.GroupNorm(32, in_channels * 2),
         )
         self.conv1x1 = nn.Sequential(
             # down sample channels again.
-            nn.Conv2d(in_channels*2, in_channels,
-                      kernel_size=1, stride=1, bias=False)
+            nn.Conv2d(in_channels * 2, in_channels, kernel_size=1, stride=1, bias=False)
         )
 
     def forward(self, x):
@@ -60,14 +58,14 @@ class DownBlock(nn.Module):
 
 
 def crop_tensor(tensor, target):
-    """ Crop tensor to target size """
+    """Crop tensor to target size"""
     _, _, tensor_height, tensor_width = tensor.size()
     _, _, crop_height, crop_width = target.size()
     left = (tensor_width - crop_height) // 2
     top = (tensor_height - crop_width) // 2
     right = left + crop_width
     bottom = top + crop_height
-    cropped_tensor = tensor[:, :, top: bottom, left: right]
+    cropped_tensor = tensor[:, :, top:bottom, left:right]
     return cropped_tensor
 
 
@@ -75,28 +73,27 @@ class UpBlock(nn.Module):
     def __init__(self, in_channels):
         super().__init__()
         self.conv1 = nn.Sequential(
-            nn.ConvTranspose2d(in_channels, in_channels,
-                               kernel_size=2, stride=2, padding=0),
+            nn.ConvTranspose2d(
+                in_channels, in_channels, kernel_size=2, stride=2, padding=0
+            ),
             nn.ReLU(),
-            nn.GroupNorm(32, in_channels)
+            nn.GroupNorm(32, in_channels),
         )
         self.conv2 = nn.Sequential(
-            nn.Conv2d(in_channels, in_channels,
-                      kernel_size=3, padding=0),
+            nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=0),
             nn.ReLU(),
-            nn.GroupNorm(32, in_channels)
+            nn.GroupNorm(32, in_channels),
         )
         self.conv3 = nn.Sequential(
-            nn.Conv2d(in_channels, in_channels,
-                      kernel_size=3, padding=0),
+            nn.Conv2d(in_channels, in_channels, kernel_size=3, padding=0),
             nn.ReLU(),
-            nn.GroupNorm(32, in_channels)
+            nn.GroupNorm(32, in_channels),
         )
 
     def forward(self, x, down_out):
         out = self.conv1(x)
         cropped = crop_tensor(down_out, out)
-        out = cropped + out # residual
+        out = cropped + out  # residual
         out = self.conv2(out)
         out = self.conv3(out)
         return out
@@ -111,7 +108,7 @@ class UNetGNRes(nn.Module):
             nn.GroupNorm(32, 64),
             nn.Conv2d(64, 64, kernel_size=3, padding=0),
             nn.ReLU(),
-            nn.GroupNorm(32, 64)
+            nn.GroupNorm(32, 64),
             # now at 568 x 568, 64 channels
         )
         self.down1 = DownBlock(64)
@@ -123,9 +120,7 @@ class UNetGNRes(nn.Module):
         self.up3 = UpBlock(64)
         self.up4 = UpBlock(64)
         self.conv_out = nn.Sequential(
-            nn.Conv2d(64, 2, kernel_size=1, padding=0),
-            nn.ReLU(),
-            nn.GroupNorm(2, 2)
+            nn.Conv2d(64, 2, kernel_size=1, padding=0), nn.ReLU(), nn.GroupNorm(2, 2)
         )
 
     def forward(self, x):
@@ -140,6 +135,3 @@ class UNetGNRes(nn.Module):
         out = self.up4(out, out1)
         out = self.conv_out(out)
         return out
-
-
-

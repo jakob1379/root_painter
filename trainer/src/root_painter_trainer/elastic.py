@@ -29,22 +29,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import numpy as np
 from scipy.ndimage import gaussian_filter
 from scipy.ndimage import map_coordinates
-from scipy.ndimage import gaussian_filter
 from skimage.transform import resize
-import root_painter_trainer.im_utils
+
 
 def get_indices(im_shape, scale, sigma, padding=60):
-    """ based on cognitivemedium.com/assets/rmnist/Simard.pdf """
+    """based on cognitivemedium.com/assets/rmnist/Simard.pdf"""
     im_shape = [im_shape[0] + (padding * 2), im_shape[1] + (padding * 2)]
 
-    # We generate a grid of smalelr co-ordinates and then resize
-    # It's faster as less guassian_filtering.
+    # We generate a grid of smalelr coordinates and then resize
+    # It's faster as less guassian_filtering.
     # Are there any downsides to this?
-    # Further emprical tests required.
+    # Further empirical tests required.
     resize_coef = 8
-    smaller = (im_shape[0]//resize_coef, im_shape[1]//resize_coef)
-    sigma /= (resize_coef / 2)
-    scale /= (resize_coef / 2)
+    smaller = (im_shape[0] // resize_coef, im_shape[1] // resize_coef)
+    sigma /= resize_coef / 2
+    scale /= resize_coef / 2
 
     randx = np.random.uniform(low=-1.0, high=1.0, size=smaller)
     randy = np.random.uniform(low=-1.0, high=1.0, size=smaller)
@@ -53,7 +52,7 @@ def get_indices(im_shape, scale, sigma, padding=60):
 
     x_filtered = resize(x_filtered, im_shape[:2])
     y_filtered = resize(y_filtered, im_shape[:2])
-    x_coords, y_coords = np.mgrid[0:im_shape[0], 0:im_shape[1]]
+    x_coords, y_coords = np.mgrid[0 : im_shape[0], 0 : im_shape[1]]
     x_deformed = x_coords + x_filtered
     y_deformed = y_coords + y_filtered
     return x_deformed, y_deformed
@@ -66,18 +65,18 @@ def get_elastic_map(im_shape, scale, intensity):
     max_alpha = 2500
     min_sigma = 15
     max_sigma = 60
-    alpha = min_alpha + ((max_alpha-min_alpha) * scale)
+    alpha = min_alpha + ((max_alpha - min_alpha) * scale)
     alpha *= intensity
-    sigma = min_sigma + ((max_sigma-min_sigma) * scale)
+    sigma = min_sigma + ((max_sigma - min_sigma) * scale)
     return get_indices(im_shape, scale=alpha, sigma=sigma)
 
 
 def transform_image(image, def_map, padding=60, channels=3):
-    """ conditional transform, depending on presence of
-        values in each channel """
+    """conditional transform, depending on presence of
+    values in each channel"""
     indices = def_map
     image = np.array(image)
-    image = im_utils.pad(image, padding, mode='reflect')
+    image = im_utils.pad(image, padding, mode="reflect")
     # We presume there are 3 channels. Checking shape is slow.
     for i in range(channels):
         if np.sum(image[:, :, i]):
