@@ -50,9 +50,27 @@ cp scripts/assets/RootPainter.desktop dist/ubuntu_setup/usr/share/applications
 
 mkdir -p dist/ubuntu_setup/DEBIAN
 cp -r scripts/assets/DEBIAN_control dist/ubuntu_setup/DEBIAN/control
-cp -r dist/RootPainter dist/ubuntu_setup/usr/local/bin/RootPainter
-cp -r src/root_painter/icons dist/ubuntu_setup/usr/local/bin/RootPainter/icons
 
+# Copy only necessary runtime files into the package working dir to reduce
+# temporary disk usage on the CI runner. Avoid copying build caches, tests,
+# and other large artifacts.
+mkdir -p dist/ubuntu_setup/usr/local/bin/RootPainter
+
+# Copy the main executable
+cp -r dist/RootPainter/bin dist/ubuntu_setup/usr/local/bin/RootPainter/ || cp -r dist/RootPainter dist/ubuntu_setup/usr/local/bin/RootPainter/
+
+# Copy icons (if present)
+if [ -d src/root_painter/icons ]; then
+  mkdir -p dist/ubuntu_setup/usr/local/bin/RootPainter/icons
+  cp -r src/root_painter/icons/* dist/ubuntu_setup/usr/local/bin/RootPainter/icons/ || true
+fi
+
+# Remove any large caches or pycache directories from the staged directory
+find dist/ubuntu_setup -type d -name '__pycache__' -prune -exec rm -rf '{}' + || true
+
+# Make the package (dpkg-deb will stream compression). If the runner is low on
+# disk space this may still fail; in that case consider using a runner with
+# larger disk or adjusting CI to build smaller artifacts earlier.
 dpkg-deb --build dist/ubuntu_setup
 mv dist/ubuntu_setup.deb dist/RootPainter.deb
 echo 'output debian package to dist/RootPainter.deb'
