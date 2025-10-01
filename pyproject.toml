@@ -33,6 +33,7 @@ _install_pre-commit = 'pre-commit install'
 _update_pre-commit = 'pre-commit autoupdate -j0'
 setup = {sequence = ["_install_pre-commit"]}
 update = {sequence = ["_update_pre-commit"]}
+lint = 'pre-commit run --all-files'
 
 [tool.poe.tasks.release]
 help = "Clean, build all packages, and publish root after painter and trainer succeed."
@@ -52,7 +53,7 @@ publish-url = "https://test.pypi.org/legacy/"
 explicit = true
 
 [tool.uv.sources]
-root-painter-painter = {workspace = true}
+root-painter-painter = {workspace = true}faq
 root-painter-trainer-jakob1379 = {workspace = true}
 
 [tool.uv.workspace]
