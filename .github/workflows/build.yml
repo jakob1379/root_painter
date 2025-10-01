@@ -73,3 +73,11 @@ jobs:
           name: Package-${{ matrix.config.name }}
           path: ${{github.workspace}}/painter/dist/${{ matrix.config.artifact-name }}
           if-no-files-found: error
+
+      - name: Publish packages to PyPI with poe
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: bash
+        run: |
+          uv run poe release
+        env:
+          POE_PUBLISH_INDEX: pypi
