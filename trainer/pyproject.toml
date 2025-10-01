@@ -1,5 +1,5 @@
 [project]
-name = "root-painter-trainer-jakob1397"
+name = "root-painter-trainer-jakob1379"
 version = "0.2.27.1"
 description = "Trainer (server component) for RootPainter"
 authors = [{ name = "Abraham George Smith" }]

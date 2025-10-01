@@ -11,7 +11,7 @@ version = "0.1.11"
 root-painter = "root_painter_cli.main:main"
 
 [project.optional-dependencies]
-trainer = ["root-painter-trainer-jakob1397"]
+trainer = ["root-painter-trainer-jakob1379"]
 
 [build-system]
 requires = ["uv_build>=0.8.14,<0.9.0"]
@@ -33,7 +33,7 @@ explicit = true
 
 [tool.uv.sources]
 root-painter-painter = { workspace = true }
-root-painter-trainer-jakob1397 = { workspace = true }
+root-painter-trainer-jakob1379 = { workspace = true }
 
 [tool.uv.workspace]
 members = ["painter", "trainer"]

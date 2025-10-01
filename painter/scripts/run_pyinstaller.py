@@ -8,7 +8,7 @@ import PyInstaller.__main__
 # python3 -m venv env
 # activate with
 # source env/bin/activate
-# and install environment requirements with 
+# and install environment requirements with
 # pip install -r requirements.txt
 
 
@@ -49,7 +49,7 @@ if platform == "darwin":
     icon_fname = 'Icon.icns' # icns for mac
 
 # icon path should be relative to the dist folder
-shutil.copyfile(os.path.join('root_painter', 'icons', icon_fname),
+shutil.copyfile(os.path.join('src', 'root_painter', 'icons', icon_fname),
                 os.path.join('dist', icon_fname))
 
 # pyinstaller command line argument documentation is available from:
@@ -61,19 +61,19 @@ run_args = [
     # --clean: Clean PyInstaller cache and remove temporary files before building.
     '--clean',
 
-    # hidden imports added based on this advice:    
+    # hidden imports added based on this advice:
     # https://github.com/pyqtgraph/pyqtgraph/issues/2179
     '--hidden-import', 'pyqtgraph.graphicsItems.ViewBox.axisCtrlTemplate_pyqt5',
     '--hidden-import', 'pyqtgraph.graphicsItems.PlotItem.plotConfigTemplate_pyqt5',
     '--hidden-import', 'pyqtgraph.imageview.ImageViewTemplate_pyqt5',
 
     # Where to put all the temporary work files .log, .pyz and etc. (default: ./build)
-    '--workpath', os.path.join('dist', 'tmp_files'), 
-    
+    '--workpath', os.path.join('dist', 'tmp_files'),
+
     # --debug==all provides a significant amount of diagnostic information.
     # This can be useful during development of a complex package, or when your
     # app doesn’t seem to be starting, or just to learn how the runtime works.
-    # '--debug', 'all', 
+    # '--debug', 'all',
 
     # Name to assign to the bundled app and spec file (default: first script’s basename)
     '--name', 'RootPainter',
@@ -87,7 +87,7 @@ run_args = [
     # thereby making the OS to show some default (default: apply PyInstaller's icon)
     '--icon', icon_fname,  # should be relative to the dist directory
     # I dont actually use the spec file yet, so put the auto-generated one in dist to avoid cluttering the repo
-    '--specpath', 'dist', 
+    '--specpath', 'dist',
 
 ]
 
@@ -112,7 +112,7 @@ run_args.append('--osx-bundle-identifier')
 run_args.append('com.rootpainter')
 
 # scriptname: Name of scriptfile to be processed.
-run_args.append(os.path.join('root_painter', 'main.py'))
+run_args.append(os.path.join('src', 'root_painter', 'main.py'))
 
 PyInstaller.__main__.run(run_args)
 

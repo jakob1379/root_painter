@@ -5,8 +5,16 @@
 name: Build
 
 on:
-  release:
-    types: [published]
+  pull_request:
+    branches:
+      - main
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -17,19 +25,15 @@ jobs:
       matrix:
         config:
           - name: 'Windows'
-            os: windows-2019
+            os: windows-latest
             python-version: '3.8'
             artifact-name: RootPainterInstaller.exe
-          - name: 'Ubuntu 22.04'
-            os: ubuntu-22.04
-            python-version: '3.10'
-            artifact-name: RootPainter.deb
-          - name: 'Ubuntu 20.04'
-            os: ubuntu-20.04
+          - name: 'Ubuntu'
+            os: ubuntu-latest
             python-version: '3.10'
             artifact-name: RootPainter.deb
           - name: 'macOS'
-            os: macos-11
+            os: macos-latest
             python-version: '3.9.5'
             artifact-name: RootPainter.pkg
 
@@ -38,44 +42,38 @@ jobs:
 
       - name: Set up uv and Python
         uses: astral-sh/setup-uv@v6
-        with:
-          version: '0.8.14'
-          python-version: ${{ matrix.config.python-version }}
-          enable-cache: true
-
-      - name: Show environment
-        run: |
-          uv --version || true
-          python --version
-          pip --version
-
-      - name: Sync dependencies with uv
-        run: |
-          # Install runtime and development dependencies for workspace members
-          uv sync --all-packages --group dev
 
       - name: Build software (PyInstaller)
+        working-directory: painter
+        env:
+          UV_PYTHON: ${{ matrix.config.python-version }}
         run: |
-          cd painter
-          python src/build/run_pyinstaller.py
+          # Run the PyInstaller build inside the uv-managed python
+          uv run python scripts/run_pyinstaller.py
 
       - name: Make installer (macOS)
         if: runner.os == 'macOS'
+        working-directory: painter
+        env:
+          UV_PYTHON: ${{ matrix.config.python-version }}
         run: |
-          cd painter
-          pkgbuild --component dist/RootPainter.app --install-location /Applications dist/RootPainter.pkg
+          uv run pkgbuild --component dist/RootPainter.app --install-location /Applications dist/RootPainter.pkg
 
       - name: Make installer (Linux)
         if: runner.os == 'Linux'
+        working-directory: painter
+        env:
+          UV_PYTHON: ${{ matrix.config.python-version }}
         run: |
-          cd painter
-          bash src/build/make_deb_file.sh
+          uv run scripts/make_deb_file
 
       - name: Make installer (Windows)
         if: runner.os == 'Windows'
+        working-directory: painter
+        env:
+          UV_PYTHON: ${{ matrix.config.python-version }}
         run: |
-          cd painter
-          makensis.exe src/build/assets/Installer.nsi
+          makensis.exe scripts/assets/Installer.nsi
 
       - name: Upload package
         uses: actions/upload-artifact@v4
@@ -83,3 +81,11 @@ jobs:
           name: Package-${{ matrix.config.name }}
           path: ${{github.workspace}}/painter/dist/${{ matrix.config.artifact-name }}
           if-no-files-found: error
+
+      - name: Publish packages to PyPI with poe
+        if: startsWith(github.ref, 'refs/tags/') && matrix.config.os == 'ubuntu-latest'
+        shell: bash
+        run: |
+           uv run -- poe release
+        env:
+          POE_PUBLISH_INDEX: pypi
