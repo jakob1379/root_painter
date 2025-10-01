@@ -53,7 +53,7 @@ publish-url = "https://test.pypi.org/legacy/"
 explicit = true
 
 [tool.uv.sources]
-root-painter-painter = {workspace = true}
+root-painter-painter = {workspace = true}faq
 root-painter-trainer-jakob1379 = {workspace = true}
 
 [tool.uv.workspace]
