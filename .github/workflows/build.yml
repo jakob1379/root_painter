@@ -27,7 +27,7 @@ jobs:
         config:
           - name: 'Windows'
             os: windows-latest
-            python-version: '3.10'
+            python-version: '3.8'
             artifact-name: RootPainterInstaller.exe
           - name: 'Ubuntu'
             os: ubuntu-latest
@@ -35,7 +35,7 @@ jobs:
             artifact-name: RootPainter.deb
           - name: 'macOS'
             os: macos-latest
-            python-version: '3.10'
+            python-version: '3.9.5'
             artifact-name: RootPainter.pkg
 
     steps:
@@ -47,21 +47,82 @@ jobs:
           python-version: ${{ matrix.config.python-version }}
           enable-cache: true
 
-      - name: Sync dependencies with uv
+      - name: Sync dependencies with uv (Linux/macOS)
+        if: runner.os != 'Windows'
+        shell: bash
         run: |
-          # Install runtime and development dependencies for workspace members
-          uv sync --all-packages --group dev
+          # Parse workspace members from top-level pyproject.toml and run uv sync per member to respect each package's requires-python.
+          MEMBERS_LINE=$(sed -n 's/^[[:space:]]*members[[:space:]]*=[[:space:]]*\[\(.*\)\].*/\1/p' pyproject.toml || true)
+          if [ -z "$MEMBERS_LINE" ]; then
+            echo "No members line found; running uv sync at root"
+            uv sync --all-packages --group dev
+            exit 0
+          fi
+          MEMBERS=$(echo "$MEMBERS_LINE" | tr -d '\"' | tr -d '[:space:]' | tr ',' ' ')
+          for m in $MEMBERS; do
+            if [ -f "$m/pyproject.toml" ]; then
+              echo "Processing $m"
+              REQ=$(sed -n 's/^[[:space:]]*requires-python[[:space:]]*= *\"\(.*\)\".*/\1/p' "$m/pyproject.toml" | head -n1)
+              PY=$(echo "$REQ" | sed -E 's/.*?([0-9]+\.[0-9]+).*/\1/')
+              if [ -z "$PY" ]; then
+                PY=${{ matrix.config.python-version }}
+              fi
+              echo "Using $PY for $m"
+              pushd "$m"
+              UV_PYTHON=$PY uv sync --group dev
+              popd
+            else
+              echo "Directory $m not found or missing pyproject.toml; running uv sync at root for safety"
+              uv sync --all-packages --group dev
+            fi
+          done
+
+      - name: Sync dependencies with uv (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $py = Get-Content pyproject.toml -Raw
+          if ($py -match 'members\s*=\s*\[(.*?)\]') {
+            $m = $Matches[1]
+            $members = $m -split ',' | ForEach-Object { $_.Trim() -replace '^["\']|["\']$','' }
+            foreach ($mem in $members) {
+              if (Test-Path (Join-Path $mem 'pyproject.toml')) {
+                Write-Host "Processing $mem"
+                $reqtoml = Get-Content (Join-Path $mem 'pyproject.toml') -Raw
+                $req = [regex]::Match($reqtoml, 'requires-python\s*=\s*"(.*?)"').Groups[1].Value
+                $pyv = [regex]::Match($req, '([0-9]+\.[0-9]+)').Groups[1].Value
+                if (-not $pyv) { $pyv = '${{ matrix.config.python-version }}' }
+                Push-Location $mem
+                $env:UV_PYTHON = $pyv
+                uv sync --group dev
+                Pop-Location
+              } else {
+                Write-Host "Directory $mem not found; skipping"
+              }
+            }
+          } else {
+            Write-Host 'No members found; running uv sync at root'
+            uv sync --all-packages --group dev
+          }
 
       - name: Build software (PyInstaller)
         working-directory: painter
         run: |
-          # Ensure uv is available and run PyInstaller inside uv selecting the matrix python version.
+          # Ensure uv is available.
           uv --version || true
-          echo "Using Python version ${{ matrix.config.python-version }} inside uv"
-          uv run --python ${{ matrix.config.python-version }} -- python --version
-          uv run --python ${{ matrix.config.python-version }} -- pip --version || true
+          # Determine package required Python from painter/pyproject.toml (fallback to matrix value).
+          REQ=$(sed -n 's/^[[:space:]]*requires-python[[:space:]]*= *"\(.*\)".*/\1/p' pyproject.toml | head -n1 || true)
+          if [ -z "$REQ" ]; then
+            PY=${{ matrix.config.python-version }}
+          else
+            PY=$(echo "$REQ" | sed -E 's/.*?([0-9]+\.[0-9]+).*/\1/')
+            if [ -z "$PY" ]; then PY=${{ matrix.config.python-version }}; fi
+          fi
+          echo "Using Python $PY for painter build"
+          uv run --python $PY -- python --version
+          uv run --python $PY -- pip --version || true
           # Run the PyInstaller build inside the uv-managed python
-          uv run --python ${{ matrix.config.python-version }} -- python scripts/run_pyinstaller.py
+          uv run --python $PY -- python scripts/run_pyinstaller.py
 
       - name: Make installer (macOS)
         if: runner.os == 'macOS'
