@@ -29,7 +29,7 @@ def start():
             "location of directory where data is synced between the client and server"
         ),
     )
-    args = parser.parse_args()
+    args, _ = parser.parse_known_args()
     if args.syncdir:
         trainer = Trainer(sync_dir=args.syncdir)
     else:
