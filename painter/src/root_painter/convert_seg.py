@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-#pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
+# pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
 import os
 
 import numpy as np
@@ -38,55 +38,62 @@ class ConvertThread(QtCore.QThread):
 
     def run(self):
         seg_fnames = os.listdir(str(self.seg_dir))
-        seg_fnames = [f for f in seg_fnames if os.path.splitext(f)[1] == '.png']
+        seg_fnames = [f for f in seg_fnames if os.path.splitext(f)[1] == ".png"]
         for i, f in enumerate(seg_fnames):
-            self.progress_change.emit(i+1, len(seg_fnames))
-            if os.path.isfile(os.path.join(self.seg_dir, os.path.splitext(f)[0] + '.png')):
+            self.progress_change.emit(i + 1, len(seg_fnames))
+            if os.path.isfile(
+                os.path.join(self.seg_dir, os.path.splitext(f)[0] + ".png")
+            ):
                 # Load RootPainter seg blue channel and invert.
                 seg = imread(os.path.join(self.seg_dir, f))
                 converted_seg = self.conversion_function(seg)
-                imsave(os.path.join(self.out_dir, f),
-                       converted_seg, check_contrast=False)
+                imsave(
+                    os.path.join(self.out_dir, f), converted_seg, check_contrast=False
+                )
         self.done.emit()
 
 
 def convert_seg_to_rve(seg):
     # Load RootPainter blue channel and invert.
-    rve_seg = (seg[:, :, 2] == 0)
+    rve_seg = seg[:, :, 2] == 0
     return img_as_ubyte(rve_seg)
 
+
 def convert_seg_to_annot(seg):
-    """ segmention blue channel is foreground annotation
-        everything else is background annotation """
+    """segmention blue channel is foreground annotation
+    everything else is background annotation"""
     annot = np.zeros((seg.shape[0], seg.shape[1], 4))
-    seg_fg = seg[:, :, 2] # assume blue is foreground prediction
+    seg_fg = seg[:, :, 2]  # assume blue is foreground prediction
     seg_fg = img_as_float(seg_fg)
-    annot[:, :, 0] = (seg_fg >= 0.5) 
-    annot[:, :, 1] = (seg_fg < 0.5) # bg channel
-    annot[:, :, 3] = np.ones(seg_fg.shape) 
+    annot[:, :, 0] = seg_fg >= 0.5
+    annot[:, :, 1] = seg_fg < 0.5  # bg channel
+    annot[:, :, 3] = np.ones(seg_fg.shape)
     return img_as_ubyte(annot)
 
-class ConvertProgressWidget(BaseProgressWidget):
 
+class ConvertProgressWidget(BaseProgressWidget):
     def __init__(self):
-        super().__init__('Converting Segmentations')
+        super().__init__("Converting Segmentations")
 
     def run(self, convert_function, seg_dir, out_dir):
         self.seg_dir = seg_dir
         self.out_dir = out_dir
         self.thread = ConvertThread(convert_function, seg_dir, out_dir)
         seg_fnames = os.listdir(str(self.seg_dir))
-        seg_fnames = [f for f in seg_fnames if os.path.splitext(f)[1] == '.png']
+        seg_fnames = [f for f in seg_fnames if os.path.splitext(f)[1] == ".png"]
         self.progress_bar.setMaximum(len(seg_fnames))
         self.thread.progress_change.connect(self.onCountChanged)
         self.thread.done.connect(self.done)
         self.thread.start()
 
     def done(self):
-        QtWidgets.QMessageBox.about(self, 'Segmentations Converted',
-                                    f'Converting segmentations from {self.seg_dir} '
-                                    f'to {self.out_dir} '
-                                    'is complete.')
+        QtWidgets.QMessageBox.about(
+            self,
+            "Segmentations Converted",
+            f"Converting segmentations from {self.seg_dir} "
+            f"to {self.out_dir} "
+            "is complete.",
+        )
         self.close()
 
 
@@ -112,7 +119,7 @@ class ConvertSegWidget(QtWidgets.QWidget):
         layout.addWidget(seg_dir_label)
         self.seg_dir_label = seg_dir_label
 
-        specify_seg_btn = QtWidgets.QPushButton('Specify segmentation directory')
+        specify_seg_btn = QtWidgets.QPushButton("Specify segmentation directory")
         specify_seg_btn.clicked.connect(self.select_seg_dir)
         layout.addWidget(specify_seg_btn)
 
@@ -122,18 +129,18 @@ class ConvertSegWidget(QtWidgets.QWidget):
         layout.addWidget(out_dir_label)
         self.out_dir_label = out_dir_label
 
-        specify_out_dir_btn = QtWidgets.QPushButton('Specify output directory')
+        specify_out_dir_btn = QtWidgets.QPushButton("Specify output directory")
         specify_out_dir_btn.clicked.connect(self.select_out_dir)
         layout.addWidget(specify_out_dir_btn)
 
-
         info_label = QtWidgets.QLabel()
-        info_label.setText("Segmentation directory and output directory"
-                           " must be specified.")
+        info_label.setText(
+            "Segmentation directory and output directory must be specified."
+        )
         layout.addWidget(info_label)
         self.info_label = info_label
 
-        submit_btn = QtWidgets.QPushButton('Convert Segmentations')
+        submit_btn = QtWidgets.QPushButton("Convert Segmentations")
         submit_btn.clicked.connect(self.convert_segmentations)
         layout.addWidget(submit_btn)
         submit_btn.setEnabled(False)
@@ -147,14 +154,16 @@ class ConvertSegWidget(QtWidgets.QWidget):
 
     def validate(self):
         if not self.seg_dir:
-            self.info_label.setText("Segmentation directory must be "
-                                    "specified to convert files.")
+            self.info_label.setText(
+                "Segmentation directory must be specified to convert files."
+            )
             self.submit_btn.setEnabled(False)
             return
 
         if not self.out_dir:
-            self.info_label.setText("Output directory must be "
-                                    "specified to convert files.")
+            self.info_label.setText(
+                "Output directory must be specified to convert files."
+            )
             self.submit_btn.setEnabled(False)
             return
 
@@ -164,19 +173,23 @@ class ConvertSegWidget(QtWidgets.QWidget):
     def select_seg_dir(self):
         self.input_dialog = QtWidgets.QFileDialog(self)
         self.input_dialog.setFileMode(QtWidgets.QFileDialog.Directory)
+
         def input_selected():
             self.seg_dir = self.input_dialog.selectedFiles()[0]
-            self.seg_dir_label.setText('Segmentation directory: ' + self.seg_dir)
+            self.seg_dir_label.setText("Segmentation directory: " + self.seg_dir)
             self.validate()
+
         self.input_dialog.fileSelected.connect(input_selected)
         self.input_dialog.open()
 
     def select_out_dir(self):
         self.input_dialog = QtWidgets.QFileDialog(self)
         self.input_dialog.setFileMode(QtWidgets.QFileDialog.Directory)
+
         def input_selected():
             self.out_dir = self.input_dialog.selectedFiles()[0]
-            self.out_dir_label.setText('Output directory: ' + self.out_dir)
+            self.out_dir_label.setText("Output directory: " + self.out_dir)
             self.validate()
+
         self.input_dialog.fileSelected.connect(input_selected)
         self.input_dialog.open()

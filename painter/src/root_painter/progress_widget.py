@@ -15,11 +15,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 # disable docstring warnings
-#pylint: disable=C0111, C0111
+# pylint: disable=C0111, C0111
 
 # Module has no member
-#pylint: disable=I1101
-
+# pylint: disable=I1101
 
 import time
 
@@ -28,20 +27,19 @@ from PyQt5 import QtWidgets
 
 
 class DoneMessageWindow(QtWidgets.QWidget):
-
-    def __init__(self, parent, task, errors=[]):        
+    def __init__(self, parent, task, errors=[]):
         super().__init__()
         self.layout = QtWidgets.QVBoxLayout(self)
         self.label = QtWidgets.QLabel(self)
 
         self.layout.addWidget(self.label)
-        label_msg = f'{task} complete \n'
+        label_msg = f"{task} complete \n"
         if len(errors):
             # if there are errors then show then in a text box.
-            label_msg += f'\n There were {len(errors)} error(s):'
-            error_msg = ''
+            label_msg += f"\n There were {len(errors)} error(s):"
+            error_msg = ""
             for e in errors:
-                error_msg += '\n' + e
+                error_msg += "\n" + e
             self.text_area = QtWidgets.QPlainTextEdit(self)
             self.layout.addWidget(self.text_area)
             self.text_area.insertPlainText(error_msg)
@@ -54,12 +52,11 @@ class DoneMessageWindow(QtWidgets.QWidget):
         self.setLayout(self.layout)
 
 
-
-
 class BaseProgressWidget(QtWidgets.QWidget):
     """
     Once a process starts this widget displays progress
     """
+
     def __init__(self, task):
         super().__init__()
         self.task = task
@@ -75,7 +72,7 @@ class BaseProgressWidget(QtWidgets.QWidget):
 
     def initUI(self):
         layout = QtWidgets.QVBoxLayout()
-        self.layout = layout # to add progress bar later.
+        self.layout = layout  # to add progress bar later.
         self.setLayout(layout)
         # info label for user feedback
         info_label = QtWidgets.QLabel()
@@ -93,15 +90,18 @@ class BaseProgressWidget(QtWidgets.QWidget):
         if value < 2 or not self.start_time:
             # first image could take a while due to the initial delay in syncing
             # so start estimating remaining time from second image onwards.
-            self.start_time = time.time() 
-            self.info_label.setText(f'{self.task} {value}/{total}. '
-                                    'Estimating time remaining..')
+            self.start_time = time.time()
+            self.info_label.setText(
+                f"{self.task} {value}/{total}. Estimating time remaining.."
+            )
         else:
             # value-1 because start_time is once the first image has completed.
-            seconds_remaining = self.get_seconds_remaining(value-1, total)
-            self.info_label.setText(f'{self.task} {value}/{total}. '
-                                    'Estimated time remaining: '
-                                    f'{format_timespan(seconds_remaining)}')
+            seconds_remaining = self.get_seconds_remaining(value - 1, total)
+            self.info_label.setText(
+                f"{self.task} {value}/{total}. "
+                "Estimated time remaining: "
+                f"{format_timespan(seconds_remaining)}"
+            )
         self.progress_bar.setValue(value)
 
     def done(self, errors=[]):

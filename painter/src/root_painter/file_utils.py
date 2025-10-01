@@ -27,11 +27,12 @@ from skimage.io import imread
 
 def ls(dir_path):
     # Don't show hidden files
-    # These can happen due to issues like file system 
-    # synchonisation technology. RootPainter doesn't use them anywhere
+    # These can happen due to issues like file system
+    # synchronisation technology. RootPainter doesn't use them anywhere
     fnames = os.listdir(dir_path)
-    fnames = [f for f in fnames if f[0] != '.']
+    fnames = [f for f in fnames if f[0] != "."]
     return fnames
+
 
 def last_fname_with_annotations(fnames, train_annot_dir, val_annot_dir):
     """
@@ -50,8 +51,8 @@ def last_fname_with_annotations(fnames, train_annot_dir, val_annot_dir):
 
     for i, fname in enumerate(fnames):
         if os.path.splitext(fname)[0] in annot_fnames:
-            if i+1 < len(fnames):
-                last_fname = fnames[i+1]
+            if i + 1 < len(fnames):
+                last_fname = fnames[i + 1]
             else:
                 return fnames[0]
     return last_fname
@@ -73,14 +74,14 @@ def get_annot_path(fname, train_dir, val_dir):
 
 
 def get_new_annot_target_dir(train_annot_dir, val_annot_dir):
-    """ Should we add new annotations to train or validation data? """
+    """Should we add new annotations to train or validation data?"""
     train_annots = os.listdir(train_annot_dir)
     val_annots = os.listdir(val_annot_dir)
-    train_annots = [f for f in train_annots if splitext(f)[1] == '.png']
-    val_annots = [f for f in val_annots if splitext(f)[1] == '.png']
+    train_annots = [f for f in train_annots if splitext(f)[1] == ".png"]
+    val_annots = [f for f in val_annots if splitext(f)[1] == ".png"]
     num_train_annots = len(train_annots)
     num_val_annots = len(val_annots)
-    # first aim to get at least one annotation in train and validation.
+    # first aim to get at least one annotation in train and validation.
     if num_train_annots == 0 and num_val_annots > 0:
         return train_annot_dir
     if num_train_annots > 0 and num_val_annots == 0:
@@ -91,34 +92,35 @@ def get_new_annot_target_dir(train_annot_dir, val_annot_dir):
     return train_annot_dir
 
 
-#pylint: disable=R0913 # Too many arguments
-def maybe_save_annotation(proj_location, annot_pixmap, annot_path, png_fname,
-                          train_annot_dir, val_annot_dir):
-    # First save to project folder as temp file.
-    temp_out = os.path.join(proj_location, 'temp_annot.png')
-    annot_pixmap.save(temp_out, 'PNG')
+# pylint: disable=R0913 # Too many arguments
+def maybe_save_annotation(
+    proj_location, annot_pixmap, annot_path, png_fname, train_annot_dir, val_annot_dir
+):
+    # First save to project folder as temp file.
+    temp_out = os.path.join(proj_location, "temp_annot.png")
+    annot_pixmap.save(temp_out, "PNG")
 
-    # if there is an existing annotation.
+    # if there is an existing annotation.
     if annot_path:
-        # and the annot we are saving is different.
+        # and the annot we are saving is different.
         if not filecmp.cmp(temp_out, annot_path):
-            # Then we must over-write the previously saved annoation.
-            # The user is performing an edit, possibly correcting an error.
-            annot_pixmap.save(annot_path, 'PNG')
+            # Then we must over-write the previously saved annotation.
+            # The user is performing an edit, possibly correcting an error.
+            annot_pixmap.save(annot_path, "PNG")
     else:
-        # if there is not an existing annotation
+        # if there is not an existing annotation
         # and the annotation has some content
         if np.sum(imread(temp_out)):
-            # then find the best place to put it based on current counts.
+            # then find the best place to put it based on current counts.
             annot_dir = get_new_annot_target_dir(train_annot_dir, val_annot_dir)
             annot_path = os.path.join(annot_dir, png_fname)
-            annot_pixmap.save(annot_path, 'PNG')
+            annot_pixmap.save(annot_path, "PNG")
         else:
             # if the annotation did not have content.
             # and there was not an existing annotation
-            # then don't save anything, this data is useless for
+            # then don't save anything, this data is useless for
             # training.
-            print('not saving as annotation empty')
+            print("not saving as annotation empty")
 
     # clean up the temp file
     while os.path.isfile(temp_out):
@@ -129,5 +131,5 @@ def maybe_save_annotation(proj_location, annot_pixmap, annot_path, png_fname,
             # it is being used by another process
             os.remove(temp_out)
         except Exception as e:
-            print('Caught exception when trying to detele temp annot', e)
+            print("Caught exception when trying to detele temp annot", e)
     return annot_path

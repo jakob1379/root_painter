@@ -16,7 +16,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # pylint: disable=I1101, C0111, E0611, R0902
 """ Canvas where image and annotations can be drawn """
-from math import hypot
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
@@ -26,6 +25,7 @@ class GraphicsScene(QtWidgets.QGraphicsScene):
     """
     Canvas where image and lines will be drawn
     """
+
     def __init__(self):
         super().__init__()
         self.drawing = False
@@ -38,13 +38,12 @@ class GraphicsScene(QtWidgets.QGraphicsScene):
         self.last_y = None
         self.annot_pixmap = None
 
-        # These globals should eventually be loaded from a configuation file, which would
-        # be created on project creation.
+        # These globals should eventually be loaded from a configuration file, which would
+        # be created on project creation.
         self.foreground_color = QtGui.QColor(255, 0, 0, 180)
         self.background_color = QtGui.QColor(0, 255, 0, 180)
         self.eraser_color = QtGui.QColor(255, 105, 180, 0)
         self.brush_color = self.foreground_color
-
 
     def undo(self):
         if len(self.history) > 1:
@@ -53,7 +52,6 @@ class GraphicsScene(QtWidgets.QGraphicsScene):
             new_state = self.history[-1].copy()
             self.annot_pixmap_holder.setPixmap(new_state)
             self.annot_pixmap = new_state
-
 
     def redo(self):
         if self.redo_list:
@@ -78,25 +76,32 @@ class GraphicsScene(QtWidgets.QGraphicsScene):
             painter = QtGui.QPainter(self.annot_pixmap)
             painter.setCompositionMode(QtGui.QPainter.CompositionMode_Source)
             painter.drawPixmap(0, 0, self.annot_pixmap)
-            painter.setPen(QtGui.QPen(self.brush_color, 0, Qt.SolidLine,
-                                      Qt.RoundCap, Qt.RoundJoin))
+            painter.setPen(
+                QtGui.QPen(self.brush_color, 0, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
+            )
             painter.setBrush(QtGui.QBrush(self.brush_color, Qt.SolidPattern))
             if self.brush_size == 1:
                 painter.drawPoint(round(circle_x), round(circle_y))
             else:
-                painter.drawEllipse(round(circle_x), round(circle_y),
-                                    round(self.brush_size-1), round(self.brush_size-1))
+                painter.drawEllipse(
+                    round(circle_x),
+                    round(circle_y),
+                    round(self.brush_size - 1),
+                    round(self.brush_size - 1),
+                )
             self.annot_pixmap_holder.setPixmap(self.annot_pixmap)
             painter.end()
             self.last_x = x
             self.last_y = y
         # log even if not drawing - all interaction is relevant
-        self.parent.log(f'mouse_press,'
-                        f'fname:{self.parent.png_fname}'
-                        f',x:{x},y:{y}'
-                        f',brush_size:{self.brush_size}'
-                        f',brush_color:{self.brush_color.name()}'
-                        f',drawing:{self.drawing}')
+        self.parent.log(
+            f"mouse_press,"
+            f"fname:{self.parent.png_fname}"
+            f",x:{x},y:{y}"
+            f",brush_size:{self.brush_size}"
+            f",brush_color:{self.brush_color.name()}"
+            f",drawing:{self.drawing}"
+        )
 
     def mouseReleaseEvent(self, event):
         was_drawing = self.drawing
@@ -110,17 +115,18 @@ class GraphicsScene(QtWidgets.QGraphicsScene):
 
         pos = event.scenePos()
         x, y = pos.x(), pos.y()
-        self.parent.log(f'mouse_release'
-                        f',fname:{self.parent.png_fname}'
-                        f',x:{x},y:{y}'
-                        f',brush_size:{self.brush_size}'
-                        f',brush_color:{self.brush_color.name()}'
-                        f',drawing:{was_drawing}')
-
+        self.parent.log(
+            f"mouse_release"
+            f",fname:{self.parent.png_fname}"
+            f",x:{x},y:{y}"
+            f",brush_size:{self.brush_size}"
+            f",brush_color:{self.brush_color.name()}"
+            f",drawing:{was_drawing}"
+        )
 
     def mouseMoveEvent(self, event):
         modifiers = QtWidgets.QApplication.keyboardModifiers()
-        shift_down = (modifiers & QtCore.Qt.ShiftModifier)
+        shift_down = modifiers & QtCore.Qt.ShiftModifier
         pos = event.scenePos()
         x, y = pos.x(), pos.y()
         if shift_down:
@@ -133,16 +139,27 @@ class GraphicsScene(QtWidgets.QGraphicsScene):
             painter = QtGui.QPainter(self.annot_pixmap)
             painter.setCompositionMode(QtGui.QPainter.CompositionMode_Source)
             painter.drawPixmap(0, 0, self.annot_pixmap)
-            pen = QtGui.QPen(self.brush_color, self.brush_size, Qt.SolidLine,
-                             Qt.RoundCap, Qt.RoundJoin)
+            pen = QtGui.QPen(
+                self.brush_color,
+                self.brush_size,
+                Qt.SolidLine,
+                Qt.RoundCap,
+                Qt.RoundJoin,
+            )
             painter.setPen(pen)
 
-            # Based on empirical observation
+            # Based on empirical observation
             if self.brush_size % 2 == 0:
-                painter.drawLine(round(self.last_x+0.5), round(self.last_y+0.5),
-                                 round(x+0.5), round(y+0.5))
+                painter.drawLine(
+                    round(self.last_x + 0.5),
+                    round(self.last_y + 0.5),
+                    round(x + 0.5),
+                    round(y + 0.5),
+                )
             else:
-                painter.drawLine(round(self.last_x), round(self.last_y), round(x), round(y))
+                painter.drawLine(
+                    round(self.last_x), round(self.last_y), round(x), round(y)
+                )
 
             self.annot_pixmap_holder.setPixmap(self.annot_pixmap)
             painter.end()

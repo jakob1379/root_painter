@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-#pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
+# pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
 import json
 import os
 import random
@@ -32,7 +32,6 @@ from root_painter.palette import PaletteEditWidget
 
 
 class CreateProjectWidget(QtWidgets.QWidget):
-
     created = QtCore.pyqtSignal(Path)
 
     def __init__(self, sync_dir):
@@ -47,7 +46,7 @@ class CreateProjectWidget(QtWidgets.QWidget):
     def initUI(self):
         self.layout = QtWidgets.QVBoxLayout()
         self.setLayout(self.layout)
-        self.name_edit_widget = NameEditWidget('Project')
+        self.name_edit_widget = NameEditWidget("Project")
         self.name_edit_widget.changed.connect(self.validate)
         self.layout.addWidget(self.name_edit_widget)
 
@@ -55,7 +54,7 @@ class CreateProjectWidget(QtWidgets.QWidget):
         self.add_radio_widget()
         self.add_model_btn()
         if False:
-            self.add_palette_widget() 
+            self.add_palette_widget()
         self.add_info_label()
         self.add_create_btn()
 
@@ -66,7 +65,7 @@ class CreateProjectWidget(QtWidgets.QWidget):
         self.layout.addWidget(directory_label)
         self.directory_label = directory_label
 
-        specify_image_dir_btn = QtWidgets.QPushButton('Specify image directory')
+        specify_image_dir_btn = QtWidgets.QPushButton("Specify image directory")
         specify_image_dir_btn.clicked.connect(self.select_photo_dir)
         self.layout.addWidget(specify_image_dir_btn)
 
@@ -76,7 +75,7 @@ class CreateProjectWidget(QtWidgets.QWidget):
         radio_widget.setLayout(radio_layout)
         self.layout.addWidget(radio_widget)
 
-        # Add radio, use random weight or specify model file.
+        # Add radio, use random weight or specify model file.
         radio = QtWidgets.QRadioButton("Random Weights")
         radio.setChecked(True)
         radio.name = "random"
@@ -93,7 +92,7 @@ class CreateProjectWidget(QtWidgets.QWidget):
         model_label.setText("Model: Please specify model file")
         self.layout.addWidget(model_label)
         self.model_label = model_label
-        specify_model_btn = QtWidgets.QPushButton('Specify model file')
+        specify_model_btn = QtWidgets.QPushButton("Specify model file")
         specify_model_btn.clicked.connect(self.select_model)
         self.specify_model_btn = specify_model_btn
         self.layout.addWidget(specify_model_btn)
@@ -108,14 +107,15 @@ class CreateProjectWidget(QtWidgets.QWidget):
 
     def add_info_label(self):
         info_label = QtWidgets.QLabel()
-        info_label.setText("Name, directory and model must be specified"
-                           " to create project.")
+        info_label.setText(
+            "Name, directory and model must be specified to create project."
+        )
         self.layout.addWidget(info_label)
         self.info_label = info_label
 
     def add_create_btn(self):
         # Add create button
-        create_project_btn = QtWidgets.QPushButton('Create project')
+        create_project_btn = QtWidgets.QPushButton("Create project")
         create_project_btn.clicked.connect(self.create_project)
         self.layout.addWidget(create_project_btn)
         create_project_btn.setEnabled(False)
@@ -125,7 +125,7 @@ class CreateProjectWidget(QtWidgets.QWidget):
         radio = self.sender()
         if radio.isChecked():
             print("Radio is %s" % (radio.name))
-            specify = (radio.name == 'specify')
+            specify = radio.name == "specify"
             self.model_label.setVisible(specify)
             self.specify_model_btn.setVisible(specify)
             self.use_random_weights = not specify
@@ -144,7 +144,9 @@ class CreateProjectWidget(QtWidgets.QWidget):
             return
 
         if not self.use_random_weights and not self.selected_model:
-            self.info_label.setText("Starting model must be specified to create project")
+            self.info_label.setText(
+                "Starting model must be specified to create project"
+            )
             self.create_project_btn.setEnabled(False)
             return
 
@@ -158,42 +160,46 @@ class CreateProjectWidget(QtWidgets.QWidget):
 
         if False:
             if len(self.palette_edit_widget.get_brush_data()) < 2:
-                self.info_label.setText('At least one foreground class must be specified')
+                self.info_label.setText(
+                    "At least one foreground class must be specified"
+                )
                 self.create_project_btn.setEnabled(False)
                 return
 
-        self.project_location = os.path.join('projects', self.proj_name)
+        self.project_location = os.path.join("projects", self.proj_name)
         if os.path.exists(os.path.join(self.sync_dir, self.project_location)):
-            self.info_label.setText(f"Project with name {self.proj_name} already exists")
+            self.info_label.setText(
+                f"Project with name {self.proj_name} already exists"
+            )
             self.create_project_btn.setEnabled(False)
         else:
             self.info_label.setText(f"Project location: {self.project_location}")
             self.create_project_btn.setEnabled(True)
 
-
     def select_photo_dir(self):
-        self.photo_dialog = QtWidgets.QFileDialog(self, directory=os.path.join(self.sync_dir, 'datasets'))
+        self.photo_dialog = QtWidgets.QFileDialog(
+            self, directory=os.path.join(self.sync_dir, "datasets")
+        )
 
         self.photo_dialog.setFileMode(QtWidgets.QFileDialog.Directory)
+
         def output_selected():
             self.selected_dir = self.photo_dialog.selectedFiles()[0]
-            self.directory_label.setText('Image directory: ' + self.selected_dir)
+            self.directory_label.setText("Image directory: " + self.selected_dir)
             self.validate()
 
         self.photo_dialog.fileSelected.connect(output_selected)
         self.photo_dialog.open()
 
-
     def select_model(self):
         options = QtWidgets.QFileDialog.Options()
-        file_path, _ = QtWidgets.QFileDialog.getOpenFileName(self,
-                                                             "Specify model file", "",
-                                                             "Pickle Files (*.pkl)",
-                                                             options=options)
+        file_path, _ = QtWidgets.QFileDialog.getOpenFileName(
+            self, "Specify model file", "", "Pickle Files (*.pkl)", options=options
+        )
         if file_path:
             file_path = os.path.abspath(file_path)
             self.selected_model = file_path
-            self.model_label.setText('Model file: ' + self.selected_model)
+            self.model_label.setText("Model file: " + self.selected_model)
             self.validate()
 
     def create_project(self):
@@ -201,42 +207,44 @@ class CreateProjectWidget(QtWidgets.QWidget):
         project_location = Path(self.project_location)
 
         dataset_path = os.path.abspath(self.selected_dir)
-        datasets_dir = str(self.sync_dir / 'datasets')
-    
+        datasets_dir = str(self.sync_dir / "datasets")
+
         if not dataset_path.startswith(datasets_dir):
-            message = ("When creating a project the selected dataset must be in "
-                       "the datasets folder. The selected dataset is "
-                       f"{dataset_path} and the datasets folder is "
-                       f"{datasets_dir}.\n\n"
-                       "Your sync directory is currently specified as "
-                       f"{self.sync_dir}. Your active datasets and projects must"
-                       " be located in this folder."
-                       " If you would like to modify your local sync directory"
-                       " then this can be done using the 'Specify sync directory'"
-                       " option availble from the extras menu in the RootPainter GUI.")
-        
-            QtWidgets.QMessageBox.about(self, 'Project Creation Error', message)
+            message = (
+                "When creating a project the selected dataset must be in "
+                "the datasets folder. The selected dataset is "
+                f"{dataset_path} and the datasets folder is "
+                f"{datasets_dir}.\n\n"
+                "Your sync directory is currently specified as "
+                f"{self.sync_dir}. Your active datasets and projects must"
+                " be located in this folder."
+                " If you would like to modify your local sync directory"
+                " then this can be done using the 'Specify sync directory'"
+                " option available from the extras menu in the RootPainter GUI."
+            )
+
+            QtWidgets.QMessageBox.about(self, "Project Creation Error", message)
             return
 
         os.makedirs(self.sync_dir / project_location)
-        proj_file_path = (self.sync_dir / project_location /
-                          (project_name + '.seg_proj'))
-        os.makedirs(self.sync_dir / project_location / 'annotations' / 'train')
-        os.makedirs(self.sync_dir / project_location / 'annotations' / 'val')
-        os.makedirs(self.sync_dir / project_location / 'segmentations')
-        os.makedirs(self.sync_dir / project_location / 'models')
-        os.makedirs(self.sync_dir / project_location / 'messages')
-        os.makedirs(self.sync_dir / project_location / 'logs')
+        proj_file_path = self.sync_dir / project_location / (project_name + ".seg_proj")
+        os.makedirs(self.sync_dir / project_location / "annotations" / "train")
+        os.makedirs(self.sync_dir / project_location / "annotations" / "val")
+        os.makedirs(self.sync_dir / project_location / "segmentations")
+        os.makedirs(self.sync_dir / project_location / "models")
+        os.makedirs(self.sync_dir / project_location / "messages")
+        os.makedirs(self.sync_dir / project_location / "logs")
 
         if self.use_random_weights:
-            original_model_file = 'random weights'
+            original_model_file = "random weights"
         else:
             model_num = 1
             model_name = str(model_num).zfill(6)
-            model_name += '_' + str(int(round(time.time()))) + '.pkl'
-            shutil.copyfile(self.selected_model,
-                            self.sync_dir / project_location /
-                            'models' / model_name)
+            model_name += "_" + str(int(round(time.time()))) + ".pkl"
+            shutil.copyfile(
+                self.selected_model,
+                self.sync_dir / project_location / "models" / model_name,
+            )
             original_model_file = self.selected_model
 
         # get files in random order for training.
@@ -246,24 +254,23 @@ class CreateProjectWidget(QtWidgets.QWidget):
 
         all_fnames = sorted(all_fnames)
         random.shuffle(all_fnames)
-       
 
         dataset_abs_path = os.path.abspath(dataset_path)
-        datasets_abs_path = os.path.abspath(os.path.join(self.sync_dir, 'datasets'))
+        datasets_abs_path = os.path.abspath(os.path.join(self.sync_dir, "datasets"))
         # remove the sync_dir/datasets part from the initial part of the dataset path.
         # as the server will prepend the 'datasets' directory when searching for the dataset.
         dataset_rel_path = os.path.relpath(dataset_abs_path, datasets_abs_path)
 
         # create project file.
         project_info = {
-            'name': project_name,
-            'dataset': str(PurePosixPath(dataset_rel_path)),
-            'original_model_file': original_model_file,
-            'location': str(PurePosixPath(project_location)),
-            'file_names': all_fnames
+            "name": project_name,
+            "dataset": str(PurePosixPath(dataset_rel_path)),
+            "original_model_file": original_model_file,
+            "location": str(PurePosixPath(project_location)),
+            "file_names": all_fnames,
         }
         # 'classes': self.palette_edit_widget.get_brush_data()
-        with open(proj_file_path, 'w') as json_file:
+        with open(proj_file_path, "w") as json_file:
             json.dump(project_info, json_file, indent=4)
         self.created.emit(proj_file_path)
         self.close()

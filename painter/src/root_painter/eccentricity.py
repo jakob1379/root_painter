@@ -37,48 +37,52 @@ POSSIBILITY OF SUCH DAMAGE.
 """
 
 import itertools
-import os
 from math import sqrt
 
 import numpy as np
-from PIL import Image
-from skimage import measure
 from skimage.measure import _moments
 
 
 def eccentricity_for_region(region):
-
     image = region.image.astype(np.uint8)
     # compute centroid for image
 
     M = _moments.moments_central(image, center=(0,) * image.ndim, order=1)
 
-    center = (M[tuple(np.eye(image.ndim, dtype=int))]  # array of weighted sums
-                                                       # for each axis
-              / M[(0,) * image.ndim])  # weighted sum of all points
-    print('after get center', center)
+    center = (
+        M[tuple(np.eye(image.ndim, dtype=int))]  # array of weighted sums
+        # for each axis
+        / M[(0,) * image.ndim]
+    )  # weighted sum of all points
+    print("after get center", center)
     order = 3
     calc = image.astype(float)
-    print('after make float')
+    print("after make float")
     for dim, dim_length in enumerate(image.shape):
         delta = np.arange(dim_length, dtype=float) - center[dim]
         powers_of_delta = delta[:, np.newaxis] ** np.arange(order + 1)
         calc = np.rollaxis(calc, dim, image.ndim)
         calc = np.dot(calc, powers_of_delta)
         calc = np.rollaxis(calc, -1, dim)
-    M = calc # moments
-    #M = _moments.moments(region_image, 3)
-    print('M')
-    local_centroid = tuple(M[tuple(np.eye(region._ndim, dtype=int))] /  M[(0,) * region._ndim])
-    print('local_centroid')
-    mu = _moments.moments_central(region.image.astype(np.uint8), local_centroid, order=3)
-    print('mu')
-    inertia_tensor =  _moments.inertia_tensor(region.image, mu)
-    print('intertia_tensor')
-    inertia_tensor_eigvals = _moments.inertia_tensor_eigvals(region.image, T=inertia_tensor)
-    print('intertia_tensor_eigvals')
+    M = calc  # moments
+    # M = _moments.moments(region_image, 3)
+    print("M")
+    local_centroid = tuple(
+        M[tuple(np.eye(region._ndim, dtype=int))] / M[(0,) * region._ndim]
+    )
+    print("local_centroid")
+    mu = _moments.moments_central(
+        region.image.astype(np.uint8), local_centroid, order=3
+    )
+    print("mu")
+    inertia_tensor = _moments.inertia_tensor(region.image, mu)
+    print("intertia_tensor")
+    inertia_tensor_eigvals = _moments.inertia_tensor_eigvals(
+        region.image, T=inertia_tensor
+    )
+    print("intertia_tensor_eigvals")
     l1, l2 = inertia_tensor_eigvals
-    print('l1 l2')
+    print("l1 l2")
     if l1 == 0:
         return 0
     return sqrt(1 - l2 / l1)
@@ -86,9 +90,11 @@ def eccentricity_for_region(region):
 
 def centroid(image):
     M = moments_central(image, center=(0,) * image.ndim, order=1)
-    center = (M[tuple(np.eye(image.ndim, dtype=int))]  # array of weighted sums
-                                                       # for each axis
-              / M[(0,) * image.ndim])  # weighted sum of all points
+    center = (
+        M[tuple(np.eye(image.ndim, dtype=int))]  # array of weighted sums
+        # for each axis
+        / M[(0,) * image.ndim]
+    )  # weighted sum of all points
     return center
 
 
@@ -103,6 +109,7 @@ def moments_central(image, center=None, order=3):
         calc = np.dot(calc, powers_of_delta)
         calc = np.rollaxis(calc, -1, dim)
     return calc
+
 
 def inertia_tensor(image, mu=None):
     if mu is None:
@@ -120,6 +127,7 @@ def inertia_tensor(image, mu=None):
         result.T[dims] = -mu[tuple(mu_index)] / mu0
     return result
 
+
 def inertia_tensor_eigvals(image, mu=None, T=None):
     if T is None:
         T = inertia_tensor(image, mu)
@@ -127,8 +135,10 @@ def inertia_tensor_eigvals(image, mu=None, T=None):
     eigvals = np.clip(eigvals, 0, None, out=eigvals)
     return sorted(eigvals, reverse=True)
 
+
 def get_inertia_tensor_eigvals(region):
     return inertia_tensor_eigvals(region.image, T=inertia_tensor(region.image))
+
 
 def eccentricity2(region):
     l1, l2 = get_inertia_tensor_eigvals(region)

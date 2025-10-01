@@ -14,27 +14,27 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-#pylint: disable=C0111
+# pylint: disable=C0111
 import json
 import os
 from pathlib import Path
 
 
 def fix_path(path, sync_dir):
-    """ fix path by removing everything that might
-        be different on another machine """
+    """fix path by removing everything that might
+    be different on another machine"""
     path_str = str(path)
-    path_str = path_str.replace(str(sync_dir), '')
-    path_str = path_str.replace('\\', '/') # server is unix.
-    
-    # sometimes the path has forward slash so the sync dir doesn't 
+    path_str = path_str.replace(str(sync_dir), "")
+    path_str = path_str.replace("\\", "/")  # server is unix.
+
+    # sometimes the path has forward slash so the sync dir doesn't
     # get removed. In this case get the sync dir with forward
     # slash and then try to remove that.
-    sync_dir_forward = str(sync_dir).replace('\\', '/')
-    path_str = path_str.replace(sync_dir_forward, '')
+    sync_dir_forward = str(sync_dir).replace("\\", "/")
+    path_str = path_str.replace(sync_dir_forward, "")
 
     # only remove first character if it is a forward slash
-    if path_str[0] == '/':
+    if path_str[0] == "/":
         return path_str[1:]
     return path_str
 
@@ -43,7 +43,7 @@ def fix_instruction_paths(old_config, sync_dir):
     # remove part of path that might be different on server.
     new_config = {}
     for k, v in old_config.items():
-        if k == 'file_names':
+        if k == "file_names":
             # names dont need anything removing
             new_config[k] = v
         elif isinstance(v, list):
@@ -65,10 +65,10 @@ def fix_instruction_paths(old_config, sync_dir):
 def send_instruction(name, content, instruction_dir, sync_dir):
     content = fix_instruction_paths(content, sync_dir)
     # append a hash to avoid over writing older instructions that
-    # have not yet finished.
-    hash_str = '_' + str(hash(json.dumps(content)))
+    # have not yet finished.
+    hash_str = "_" + str(hash(json.dumps(content)))
     fpath = os.path.join(instruction_dir, name + hash_str)
     # if this instruction already exists then don't send again
     if not os.path.isfile(fpath):
-        with open(fpath, 'w') as json_file:
+        with open(fpath, "w") as json_file:
             json.dump(content, json_file, indent=4)

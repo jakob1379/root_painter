@@ -13,7 +13,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import sys
 
 from PyQt5 import QtCore, QtWidgets
 
@@ -49,7 +48,7 @@ class ControlsDialog(QtWidgets.QDialog):
 
         - Change Brush Size: Shift + Scroll
 
-        - Undo: Z        
+        - Undo: Z
         - Redo: Shift + cmd + Z
 
         - Zoom In: Shift + '+'
@@ -57,7 +56,7 @@ class ControlsDialog(QtWidgets.QDialog):
         - Zoom: Scroll
 
         - Pan: cmd + drag the on the image with right click
-        
+
         """
 
         layout = QtWidgets.QVBoxLayout()

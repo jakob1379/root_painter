@@ -14,8 +14,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-
-#pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
+# pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
 import os
 
 import numpy as np
@@ -32,13 +31,14 @@ def save_length_to_csv(seg_dir, fname, writer, headers):
     skel = skeletonize(seg_im)
     skel = skel.astype(int)
     skel_pixels = np.sum(skel)
-    name = fname.replace('.png', '')
+    name = fname.replace(".png", "")
     writer.writerow([name, skel_pixels])
+
 
 class ExtractLengthWidget(BaseExtractWidget):
     def __init__(self):
         super().__init__(
             "Length",
-            ['file_name', 'length_pixels'],
+            ["file_name", "length_pixels"],
             save_length_to_csv,
         )

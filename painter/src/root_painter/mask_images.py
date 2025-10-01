@@ -14,7 +14,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-#pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
+# pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
 import os
 
 from PyQt5 import QtCore, QtWidgets
@@ -35,19 +35,20 @@ class Thread(QtCore.QThread):
         self.out_dir = out_dir
 
     def run(self):
-        seg_fnames = ls(self.seg_dir) # list without hidden files
-        seg_fnames = [f for f in seg_fnames if os.path.splitext(f)[1] == '.png']
+        seg_fnames = ls(self.seg_dir)  # list without hidden files
+        seg_fnames = [f for f in seg_fnames if os.path.splitext(f)[1] == ".png"]
         for i, f in enumerate(seg_fnames):
-            self.progress_change.emit(i+1, len(seg_fnames))
-            if os.path.isfile(os.path.join(self.seg_dir, os.path.splitext(f)[0] + '.png')):
+            self.progress_change.emit(i + 1, len(seg_fnames))
+            if os.path.isfile(
+                os.path.join(self.seg_dir, os.path.splitext(f)[0] + ".png")
+            ):
                 save_masked_image(self.seg_dir, self.im_dir, self.out_dir, f)
         self.done.emit()
 
 
 class ProgressWidget(BaseProgressWidget):
-
     def __init__(self):
-        super().__init__('Generating masked images')
+        super().__init__("Generating masked images")
 
     def run(self, seg_dir, im_dir, out_dir):
         self.seg_dir = seg_dir
@@ -55,17 +56,20 @@ class ProgressWidget(BaseProgressWidget):
         self.out_dir = out_dir
         self.thread = Thread(seg_dir, im_dir, out_dir)
         seg_fnames = os.listdir(str(self.seg_dir))
-        seg_fnames = [f for f in seg_fnames if os.path.splitext(f)[1] == '.png']
+        seg_fnames = [f for f in seg_fnames if os.path.splitext(f)[1] == ".png"]
         self.progress_bar.setMaximum(len(seg_fnames))
         self.thread.progress_change.connect(self.onCountChanged)
         self.thread.done.connect(self.done)
         self.thread.start()
 
     def done(self):
-        QtWidgets.QMessageBox.about(self, 'Masked images generated',
-                                    f'Extracting masked images from {self.seg_dir} '
-                                    f'and {self.im_dir} to {self.out_dir} '
-                                    'is complete.')
+        QtWidgets.QMessageBox.about(
+            self,
+            "Masked images generated",
+            f"Extracting masked images from {self.seg_dir} "
+            f"and {self.im_dir} to {self.out_dir} "
+            "is complete.",
+        )
         self.close()
 
 
@@ -90,7 +94,7 @@ class MaskImWidget(QtWidgets.QWidget):
         layout.addWidget(seg_dir_label)
         self.seg_dir_label = seg_dir_label
 
-        specify_seg_btn = QtWidgets.QPushButton('Specify segmentation directory')
+        specify_seg_btn = QtWidgets.QPushButton("Specify segmentation directory")
         specify_seg_btn.clicked.connect(self.select_seg_dir)
         layout.addWidget(specify_seg_btn)
 
@@ -100,7 +104,7 @@ class MaskImWidget(QtWidgets.QWidget):
         layout.addWidget(im_dir_label)
         self.im_dir_label = im_dir_label
 
-        specify_im_dir_btn = QtWidgets.QPushButton('Specify image directory')
+        specify_im_dir_btn = QtWidgets.QPushButton("Specify image directory")
         specify_im_dir_btn.clicked.connect(self.select_im_dir)
         layout.addWidget(specify_im_dir_btn)
 
@@ -110,18 +114,18 @@ class MaskImWidget(QtWidgets.QWidget):
         layout.addWidget(out_dir_label)
         self.out_dir_label = out_dir_label
 
-        specify_out_dir_btn = QtWidgets.QPushButton('Specify output directory')
+        specify_out_dir_btn = QtWidgets.QPushButton("Specify output directory")
         specify_out_dir_btn.clicked.connect(self.select_out_dir)
         layout.addWidget(specify_out_dir_btn)
 
-
         info_label = QtWidgets.QLabel()
-        info_label.setText("Segmentation directory, image and output directory"
-                           "must be specified.")
+        info_label.setText(
+            "Segmentation directory, image and output directorymust be specified."
+        )
         layout.addWidget(info_label)
         self.info_label = info_label
 
-        submit_btn = QtWidgets.QPushButton('Extract masked images')
+        submit_btn = QtWidgets.QPushButton("Extract masked images")
         submit_btn.clicked.connect(self.extract)
         layout.addWidget(submit_btn)
         submit_btn.setEnabled(False)
@@ -135,20 +139,17 @@ class MaskImWidget(QtWidgets.QWidget):
 
     def validate(self):
         if not self.seg_dir:
-            self.info_label.setText("Segmentation directory must be "
-                                    "specified.")
+            self.info_label.setText("Segmentation directory must be specified.")
             self.submit_btn.setEnabled(False)
             return
 
         if not self.im_dir:
-            self.info_label.setText("Image directory must be "
-                                    "specified.")
+            self.info_label.setText("Image directory must be specified.")
             self.submit_btn.setEnabled(False)
             return
 
         if not self.out_dir:
-            self.info_label.setText("Output directory must be "
-                                    "specified.")
+            self.info_label.setText("Output directory must be specified.")
             self.submit_btn.setEnabled(False)
             return
 
@@ -158,10 +159,12 @@ class MaskImWidget(QtWidgets.QWidget):
     def select_seg_dir(self):
         self.input_dialog = QtWidgets.QFileDialog(self)
         self.input_dialog.setFileMode(QtWidgets.QFileDialog.Directory)
+
         def input_selected():
             self.seg_dir = self.input_dialog.selectedFiles()[0]
-            self.seg_dir_label.setText('Segmentation directory: ' + self.seg_dir)
+            self.seg_dir_label.setText("Segmentation directory: " + self.seg_dir)
             self.validate()
+
         self.input_dialog.fileSelected.connect(input_selected)
         self.input_dialog.open()
 
@@ -171,17 +174,20 @@ class MaskImWidget(QtWidgets.QWidget):
 
         def input_selected():
             self.im_dir = self.input_dialog.selectedFiles()[0]
-            self.im_dir_label.setText('Image directory: ' + self.im_dir)
+            self.im_dir_label.setText("Image directory: " + self.im_dir)
             self.validate()
+
         self.input_dialog.fileSelected.connect(input_selected)
         self.input_dialog.open()
 
     def select_out_dir(self):
         self.input_dialog = QtWidgets.QFileDialog(self)
         self.input_dialog.setFileMode(QtWidgets.QFileDialog.Directory)
+
         def input_selected():
             self.out_dir = self.input_dialog.selectedFiles()[0]
-            self.out_dir_label.setText('Masked image directory: ' + self.out_dir)
+            self.out_dir_label.setText("Masked image directory: " + self.out_dir)
             self.validate()
+
         self.input_dialog.fileSelected.connect(input_selected)
         self.input_dialog.open()

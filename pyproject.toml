@@ -47,8 +47,13 @@ module-name = "root_painter_cli"
 # Set POE_PUBLISH_INDEX to override default index (default: testpypi).
 
 [tool.poe.tasks]
+# _update_deps = 'uv sync --upgrade'
 _build_packages = 'uv build --all-packages'
 _clean_builds = { shell = "rm -rf painter/dist trainer/dist dist || true" }
+_install_pre-commit = 'pre-commit install'
+_update_pre-commit = 'pre-commit autoupdate -j0'
+setup = {sequence = ["_install_pre-commit"]}
+update = {sequence = ["_update_pre-commit"]}
 
 [tool.poe.tasks.release]
 help = "Clean, build all packages, and publish root after painter and trainer succeed."
