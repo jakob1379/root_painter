@@ -43,13 +43,61 @@ jobs:
       - name: Set up uv and Python
         uses: astral-sh/setup-uv@v6
 
-      - name: Build software (PyInstaller)
+      - name: Build software (PyInstaller) — macOS
+        if: runner.os == 'macOS'
         working-directory: painter
         env:
           UV_PYTHON: ${{ matrix.config.python-version }}
         run: |
-          # Run the PyInstaller build inside the uv-managed python
-          uv run python scripts/run_pyinstaller.py
+          # macOS: use .icns icon and build a windowed .app bundle
+          uv run python -m PyInstaller \
+            --noconfirm --clean \
+            --hidden-import pyqtgraph.graphicsItems.ViewBox.axisCtrlTemplate_pyqt5 \
+            --hidden-import pyqtgraph.graphicsItems.PlotItem.plotConfigTemplate_pyqt5 \
+            --hidden-import pyqtgraph.imageview.ImageViewTemplate_pyqt5 \
+            --workpath dist/tmp_files \
+            --name RootPainter \
+            --icon src/root_painter/icons/Icon.icns \
+            --specpath dist \
+            --windowed \
+            src/root_painter/main.py
+
+      - name: Build software (PyInstaller) — Windows
+        if: runner.os == 'Windows'
+        working-directory: painter
+        env:
+          UV_PYTHON: ${{ matrix.config.python-version }}
+        run: |
+          # Windows: use .ico icon
+          uv run python -m PyInstaller \
+            --noconfirm --clean \
+            --hidden-import pyqtgraph.graphicsItems.ViewBox.axisCtrlTemplate_pyqt5 \
+            --hidden-import pyqtgraph.graphicsItems.PlotItem.plotConfigTemplate_pyqt5 \
+            --hidden-import pyqtgraph.imageview.ImageViewTemplate_pyqt5 \
+            --workpath dist/tmp_files \
+            --name RootPainter \
+            --icon src/root_painter/icons/Icon.ico \
+            --specpath dist \
+            --console \
+            src/root_painter/main.py
+
+      - name: Build software (PyInstaller) — Linux
+        if: runner.os == 'Linux'
+        working-directory: painter
+        env:
+          UV_PYTHON: ${{ matrix.config.python-version }}
+        run: |
+          # Linux: no special icon required for the executable; package later into .deb
+          uv run python -m PyInstaller \
+            --noconfirm --clean \
+            --hidden-import pyqtgraph.graphicsItems.ViewBox.axisCtrlTemplate_pyqt5 \
+            --hidden-import pyqtgraph.graphicsItems.PlotItem.plotConfigTemplate_pyqt5 \
+            --hidden-import pyqtgraph.imageview.ImageViewTemplate_pyqt5 \
+            --workpath dist/tmp_files \
+            --name RootPainter \
+            --specpath dist \
+            --console \
+            src/root_painter/main.py
 
       - name: Make installer (macOS)
         if: runner.os == 'macOS'
