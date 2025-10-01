@@ -1,9 +1,12 @@
 ### DIKU RootPainter Setup
 
-This is is a guide for getting started with the RootPainter software
-using the diku servers and has been tested using python 3.7. RootPainter is described in [this paper.](https://www.biorxiv.org/content/10.1101/2020.04.16.044461v1)
+This is is a guide for getting started with the RootPainter software using the
+diku servers and has been tested using python 3.7. RootPainter is described in
+[this paper.](https://www.biorxiv.org/content/10.1101/2020.04.16.044461v1)
 
-1. You will need to be able to ssh into slurm. If you don't have one already then add an entry for slurm in your ssh config file. Add the following to ~/.ssh/config and replace KUID with your own KU ID.
+1. You will need to be able to ssh into slurm. If you don't have one already
+   then add an entry for slurm in your ssh config file. Add the following to
+   ~/.ssh/config and replace KUID with your own KU ID.
 
 ---
 
@@ -15,7 +18,9 @@ Host slurm
 ```
 
 ---
-There is more information about working with slurm in the [Slurm Wiki](https://diku-dk.github.io/wiki/slurm-cluster).
+
+There is more information about working with slurm in the
+[Slurm Wiki](https://diku-dk.github.io/wiki/slurm-cluster).
 
 2. SSH into the server to set up the server component of RootPainter.
 
@@ -23,14 +28,16 @@ There is more information about working with slurm in the [Slurm Wiki](https://d
 ssh slurm
 ```
 
-3. Clone the RootPainter code from the repository and then cd into the trainer directory (the server component).
+3. Clone the RootPainter code from the repository and then cd into the trainer
+   directory (the server component).
 
 ```
 git clone --branch 0.2.4 https://github.com/Abe404/root_painter.git
 cd root_painter/trainer
 ```
 
-4. To avoid alterating global packages. I suggest using a virtual environment. Create a virtual environment and activate it.
+4. To avoid alterating global packages. I suggest using a virtual environment.
+   Create a virtual environment and activate it.
 
 ```
 python -m venv env
@@ -50,11 +57,13 @@ pip install -r requirements.txt
 python main.py
 ```
 
-You will be prompted to input a location for the sync directory. This is the folder where files are shared between the client and server. I will use ~/root_painter_sync.
-RootPainter will then create some folders inside ~/root_painter_sync
+You will be prompted to input a location for the sync directory. This is the
+folder where files are shared between the client and server. I will use
+~/root_painter_sync. RootPainter will then create some folders inside
+~/root_painter_sync
 
-7. Create a slurm job.
-Create a file named job.sh and insert the following. Modify the details based on your preferences.
+7. Create a slurm job. Create a file named job.sh and insert the following.
+   Modify the details based on your preferences.
 
 ---
 
@@ -82,7 +91,8 @@ python main.py
 sbatch job.sh
 ```
 
-9. To mount the sync directory from your local machine you will need to install sshfs locally (SSH Filesystem client).
+9. To mount the sync directory from your local machine you will need to install
+   sshfs locally (SSH Filesystem client).
 
 Debian / Ubuntu:
 
@@ -96,15 +106,17 @@ OSX:
 brew cask install osxfuse
 ```
 
-Windows:
-See [sshfs-win](https://github.com/billziss-gh/sshfs-win)
+Windows: See [sshfs-win](https://github.com/billziss-gh/sshfs-win)
 
-10. Create the directory and mount the drive locally using sshfs. Replace KUID with your own KU ID.
+10. Create the directory and mount the drive locally using sshfs. Replace KUID
+    with your own KU ID.
 
 ```
 mkdir ~/Desktop/root_painter_sync
 sshfs -o allow_other,default_permissions KUID@slurm:/home/KUID/root_painter_sync ~/Desktop/root_painter_sync
 ```
 
-You should now be able to see the folders created by RootPainter (datasets, instructions and projects) inside ~/Desktop/root_painter_sync on your local machine
-See [lung tutorial](../tutorials/cxr_lung.md) for an example of how to use RootPainter to train a model.
+You should now be able to see the folders created by RootPainter (datasets,
+instructions and projects) inside ~/Desktop/root_painter_sync on your local
+machine See [lung tutorial](../tutorials/cxr_lung.md) for an example of how to
+use RootPainter to train a model.

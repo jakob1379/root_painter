@@ -7,8 +7,8 @@ Modifications include only taking the MultiEpochsDataLoader and _RepeatSampler c
 
 import torch
 
-class MultiEpochsDataLoader(torch.utils.data.DataLoader):
 
+class MultiEpochsDataLoader(torch.utils.data.DataLoader):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._DataLoader__initialized = False
@@ -19,26 +19,21 @@ class MultiEpochsDataLoader(torch.utils.data.DataLoader):
     def __len__(self):
         return len(self.batch_sampler.sampler)
 
-
     def __iter__(self):
         for i in range(len(self)):
             yield next(self.iterator)
 
 
 class _RepeatSampler(object):
-    """ Sampler that repeats forever.
+    """Sampler that repeats forever.
 
     Args:
         sampler (Sampler)
     """
 
-
     def __init__(self, sampler):
         self.sampler = sampler
-
 
     def __iter__(self):
         while True:
             yield from iter(self.sampler)
-
-

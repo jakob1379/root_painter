@@ -37,6 +37,6 @@ def test_unet_gn_res_smoke(tmp_path):
     im_arr = softmaxed.cpu().numpy() * 255
     im = Image.fromarray(im_arr.astype(np.uint8))
 
-    out_fpath = os.path.join(tmp_path, 'out.png')
+    out_fpath = os.path.join(tmp_path, "out.png")
     im.save(out_fpath)
     assert os.path.exists(out_fpath)

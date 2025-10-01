@@ -27,7 +27,7 @@ theme:
     repo: fontawesome/brands/github
   features:
     - content.tabs.link
-    - navigation.expand    
+    - navigation.expand
     - navigation.footer
     - navigation.prune
     - navigation.sections
@@ -46,15 +46,9 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.tilde
-  - pymdownx.blocks.caption  
+  - pymdownx.blocks.caption
   - pymdownx.superfences
   - attr_list
   - md_in_html
   - toc:
       permalink: true
-  
-
-
-
-
-
