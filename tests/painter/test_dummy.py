@@ -1,7 +1,6 @@
 from PyQt5 import QtCore, QtWidgets
-from time import sleep
 
-def test_dummy_button_closes_window(qtbot):
+def test_dummy_button_closes_window(qtbot, capsys):
     # Create a simple window with a label and a button
     window = QtWidgets.QWidget()
     window.setWindowTitle("Dummy Window")
@@ -25,7 +24,6 @@ def test_dummy_button_closes_window(qtbot):
     qtbot.addWidget(window)
     window.show()
 
-    sleep(5)
     assert window.isVisible()
 
     # Click the button
@@ -34,3 +32,5 @@ def test_dummy_button_closes_window(qtbot):
     # Verify that button worked (label updated) and window closed
     qtbot.waitUntil(lambda: not window.isVisible(), timeout=3000)
     assert label.text() == "Clicked"
+    captured = capsys.readouterr()
+    assert "hello world" in captured.out
