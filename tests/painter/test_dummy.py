@@ -15,6 +15,7 @@ def test_dummy_button_closes_window(qtbot):
 
     # Button action: update label and close the window (simulate exiting app UI)
     def on_clicked():
+        print("hello world")
         label.setText("Clicked")
         window.close()
 
