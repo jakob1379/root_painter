@@ -30,7 +30,7 @@ from root_painter.root_painter import RootPainter
 def init_root_painter():
     # Import GUI libraries and heavy modules lazily so importing this module
     # doesn't pull PyQt5 into environments that don't need the UI.
-    from PyQt5 import QtWidgets
+    from root_painter.qt_compat import QtWidgets
 
     settings_path = os.path.join(Path.home(), "root_painter_settings.json")
     try:
@@ -41,7 +41,7 @@ def init_root_painter():
             msg = QtWidgets.QMessageBox()
             output = "Sync directory not specified. Please specify a sync directory."
             msg.setText(output)
-            msg.exec_()
+            msg.exec()
             dir_path = QtWidgets.QFileDialog.getExistingDirectory()
             if not dir_path:
                 exit()
@@ -60,7 +60,7 @@ def init_root_painter():
         main_window.closed.connect(reopen)
         main_window.show()
 
-        exit_code = app.exec_()
+        exit_code = app.exec()
     except Exception as e:
         msg = QtWidgets.QMessageBox()
         output = f"""
@@ -69,7 +69,7 @@ def init_root_painter():
         sys.exec_info()[0]: {sys.exc_info()[0]}
         """
         msg.setText(output)
-        msg.exec_()
+        msg.exec()
     else:
         sys.exit(exit_code)
 

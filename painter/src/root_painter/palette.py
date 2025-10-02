@@ -14,12 +14,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-"""
-Palette: Provides a way to add, edit and remove brushes / colours / classes
-"""
+# Palette: Provides a way to add, edit and remove brushes / colours / classes
 import random
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from root_painter.qt_compat import QtCore, QtGui, QtWidgets
 
 
 class BrushEditWidget(QtWidgets.QWidget):
@@ -75,9 +73,9 @@ class BrushEditWidget(QtWidgets.QWidget):
 
 
 def get_random_rgba():
-    r = 255 * random.random()
-    g = 255 * random.random()
-    b = 255 * random.random()
+    r = 255 * random.random()  # nosec
+    g = 255 * random.random()  # nosec
+    b = 255 * random.random()  # nosec
     a = 255
     return [r, g, b, a]
 

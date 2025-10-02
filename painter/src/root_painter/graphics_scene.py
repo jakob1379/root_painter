@@ -15,10 +15,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 # pylint: disable=I1101, C0111, E0611, R0902
-""" Canvas where image and annotations can be drawn """
+# Canvas where image and annotations can be drawn
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
+from root_painter.qt_compat import QtCore, QtGui, QtWidgets, Qt
 
 
 class GraphicsScene(QtWidgets.QGraphicsScene):

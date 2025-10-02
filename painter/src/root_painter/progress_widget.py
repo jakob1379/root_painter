@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import time
 
 from humanfriendly import format_timespan
-from PyQt5 import QtWidgets
+from root_painter.qt_compat import QtWidgets
 
 
 class DoneMessageWindow(QtWidgets.QWidget):

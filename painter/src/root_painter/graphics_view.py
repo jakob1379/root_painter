@@ -18,8 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 # pylint: disable=I1101,E0611,C0111
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
+from root_painter.qt_compat import QtCore, QtGui, QtWidgets, Qt
 
 
 class CustomGraphicsView(QtWidgets.QGraphicsView):
@@ -34,7 +33,7 @@ class CustomGraphicsView(QtWidgets.QGraphicsView):
     def __init__(self):
         super().__init__()
         self.zoom = 1
-        self.setDragMode(QtWidgets.QGraphicsView.NoDrag)
+        self.setDragMode(QtWidgets.QGraphicsView.DragMode.NoDrag)
 
     def update_zoom(self):
         """Transform the view based on current zoom value"""
@@ -46,11 +45,11 @@ class CustomGraphicsView(QtWidgets.QGraphicsView):
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Control:
-            self.setDragMode(QtWidgets.QGraphicsView.ScrollHandDrag)
+            self.setDragMode(QtWidgets.QGraphicsView.DragMode.ScrollHandDrag)
 
     def keyReleaseEvent(self, event):
         if event.key() == Qt.Key_Control:
-            self.setDragMode(QtWidgets.QGraphicsView.NoDrag)
+            self.setDragMode(QtWidgets.QGraphicsView.DragMode.NoDrag)
 
     def show_actual_size(self):
         self.zoom = 1

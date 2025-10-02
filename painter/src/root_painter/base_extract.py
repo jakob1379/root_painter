@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import csv
 import os
 
-from PyQt5 import QtCore, QtWidgets
+from root_painter.qt_compat import QtCore, QtWidgets
 
 from root_painter.progress_widget import BaseProgressWidget
 
@@ -139,7 +139,7 @@ class BaseExtractWidget(QtWidgets.QWidget):
 
         if not self.output_csv:
             self.info_label.setText(
-                "Output CSV must be specified to extract region propertie."
+                "Output CSV must be specified to extract region property."
             )
             self.submit_btn.setEnabled(False)
             return

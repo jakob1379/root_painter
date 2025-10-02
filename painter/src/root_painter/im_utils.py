@@ -23,7 +23,7 @@ import warnings
 import numpy as np
 import qimage2ndarray
 from PIL import Image, ImageOps
-from PyQt5 import QtGui
+from root_painter.qt_compat import QtGui
 from skimage import color, exposure, img_as_float, img_as_ubyte
 from skimage.color import rgb2gray
 from skimage.io import imread, imsave
@@ -203,7 +203,8 @@ def gen_composite(annot_dir, photo_dir, comp_dir, fname, ext=".jpg"):
             comp = np.vstack((background, comp_right))
         else:
             comp = np.hstack((background, comp_right))
-        assert comp.dtype == np.uint8
+        if comp.dtype != np.uint8:
+            raise TypeError("component dtype must be uint8")
         with warnings.catch_warnings():
             # avoid low contrast warning.
             warnings.simplefilter("ignore")
