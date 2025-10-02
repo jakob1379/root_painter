@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtWidgets
-
+from time import sleep
 
 def test_dummy_button_closes_window(qtbot):
     # Create a simple window with a label and a button
@@ -24,6 +24,7 @@ def test_dummy_button_closes_window(qtbot):
     qtbot.addWidget(window)
     window.show()
 
+    sleep(5)
     assert window.isVisible()
 
     # Click the button
