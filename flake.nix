@@ -27,9 +27,9 @@
           libsForQt5.qt5.wrapQtAppsHook
           libsForQt5.qt5.full
           # Qt6 runtime for PyQt6/PySide6
-          libsForQt6.qt6.wrapQtAppsHook
-          libsForQt6.qt6.full
           qt6.qtbase
+          qt6.qttools
+          qt6.qtdeclarative
           qtcreator
           libxkbcommon
           stdenv.cc.cc.lib
