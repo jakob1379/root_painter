@@ -28,17 +28,17 @@ import numpy as np
 # Avoiding bug with truncated images,
 # "Reason: "broken data stream when reading image file"
 from PIL import ImageFile
-from PyQt5 import QtCore, QtWidgets
+from root_painter.qt_compat import QtCore, QtWidgets
 from skimage.color import rgba2rgb
 from skimage.io import imsave
 
 from root_painter.im_utils import is_image
 
-ImageFile.LOAD_TRUNCATED_IMAGES = True
-
 from . import im_utils
 from .name_edit_widget import NameEditWidget
 from .progress_widget import BaseProgressWidget
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 def get_dupes(a):
@@ -85,17 +85,23 @@ def get_file_pieces(im, target_size):
     # scale 0-1
     size_dists = np.array(size_dists) / (np.max(size_dists) + 1e-5)
 
-    assert min(size_dists) >= 0
-    assert max(size_dists) <= 1
-    assert min(squareness) >= 0, f"{squareness}"
-    assert max(squareness) <= 1, f"{squareness}"
-    assert len(size_dists) == len(squareness)
+    if float(np.min(size_dists)) < 0:
+        raise ValueError("size_dists must be >= 0")
+    if float(np.max(size_dists)) > 1:
+        raise ValueError("size_dists must be <= 1")
+    if float(np.min(squareness)) < 0:
+        raise ValueError(f"squareness min < 0: {squareness}")
+    if float(np.max(squareness)) > 1:
+        raise ValueError(f"squareness max > 1: {squareness}")
+    if len(size_dists) != len(squareness):
+        raise ValueError("size_dists and squareness must have same length")
     combined_dists = squareness + size_dists
     best_idx = sorted(zip(combined_dists, range(len(pix_counts))))[0][1]
     h_pieces, w_pieces = possible_pieces[best_idx]
     piece_w = widths[best_idx]
     piece_h = heights[best_idx]
-    assert h_pieces and w_pieces
+    if not (h_pieces and w_pieces):
+        raise ValueError("h_pieces and w_pieces must be non-zero")
 
     if h_pieces == 1 and w_pieces == 1:
         return [im]
@@ -114,7 +120,7 @@ def get_file_pieces(im, target_size):
 
 def save_im_pieces(im_path, target_dir, pieces_from_each_image, target_size):
     pieces = get_file_pieces(im_utils.load_image(im_path), target_size)
-    pieces = random.sample(pieces, min(pieces_from_each_image, len(pieces)))
+    pieces = random.sample(pieces, min(pieces_from_each_image, len(pieces)))  # nosec
     fname = os.path.basename(im_path)
     fname = os.path.splitext(fname)[0]
     for i, p in enumerate(pieces):
@@ -371,7 +377,7 @@ class CreateDatasetWidget(QtWidgets.QWidget):
         all_images = self.image_paths
 
         if self.use_random:
-            ims_to_sample_from = random.sample(all_images, num_ims_to_sample_from)
+            ims_to_sample_from = random.sample(all_images, num_ims_to_sample_from)  # nosec
         else:
             ims_to_sample_from = all_images
 

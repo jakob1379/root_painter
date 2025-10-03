@@ -19,7 +19,7 @@ import os
 
 import numpy as np
 from PIL import Image
-from PyQt5 import QtCore, QtWidgets
+from root_painter.qt_compat import QtCore, QtWidgets
 from skimage import measure
 
 from root_painter.base_extract import BaseExtractWidget
