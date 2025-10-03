@@ -73,9 +73,9 @@ class BrushEditWidget(QtWidgets.QWidget):
 
 
 def get_random_rgba():
-    r = 255 * random.random()  # nosec
-    g = 255 * random.random()  # nosec
-    b = 255 * random.random()  # nosec
+    r = 255 * random.random()
+    g = 255 * random.random()
+    b = 255 * random.random()
     a = 255
     return [r, g, b, a]
 
