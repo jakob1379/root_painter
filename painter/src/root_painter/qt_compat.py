@@ -48,7 +48,6 @@ if _BACKEND == "PyQt6":
         QtCore.Slot = QtCore.pyqtSlot
 
 
-
 class _QtCompat:
     """Compatibility object that exposes legacy Qt.* names.
 
