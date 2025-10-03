@@ -39,6 +39,7 @@
           xcbutilimage
           xcbutilkeysyms
           xcbutilrenderutil
+          xcbutilcursor
           xcbutilwm
         ];
 
