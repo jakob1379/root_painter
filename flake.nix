@@ -75,6 +75,8 @@
             echo "📦 Using uv for package management"
             export UV_PUBLISH_TOKEN="$(${pkgs.python313Packages.keyring}/bin/keyring get testpypi root-painter)"
             export SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
+            # Prefer X11 (xcb) in the devShell to avoid Wayland plugin mismatches with PyQt6/PySide6
+            export QT_QPA_PLATFORM=xcb
           '';
         };
 
