@@ -24,6 +24,30 @@ except Exception:
     except Exception as exc:  # pragma: no cover - import-time environment dependent
         raise ImportError("No Qt bindings found. Install PyQt6 or PySide6") from exc
 
+# Provide PyQt-style signal/slot aliases when using PySide6 so existing
+# code that declares signals as `QtCore.pyqtSignal(...)` continues to work.
+if _BACKEND == "PySide6":
+    try:
+        QtCore.pyqtSignal = QtCore.Signal
+    except Exception:
+        pass
+    try:
+        QtCore.pyqtSlot = QtCore.Slot
+    except Exception:
+        pass
+    # Provide pyqtProperty alias if code expects it
+    if not hasattr(QtCore, "pyqtProperty") and hasattr(QtCore, "Property"):
+        QtCore.pyqtProperty = QtCore.Property
+
+# For PyQt6 ensure the Signal/Slot names exist as well (some code may use
+# `QtCore.Signal` or `QtCore.Slot` instead of `pyqtSignal`)
+if _BACKEND == "PyQt6":
+    if not hasattr(QtCore, "Signal") and hasattr(QtCore, "pyqtSignal"):
+        QtCore.Signal = QtCore.pyqtSignal
+    if not hasattr(QtCore, "Slot") and hasattr(QtCore, "pyqtSlot"):
+        QtCore.Slot = QtCore.pyqtSlot
+
+
 
 class _QtCompat:
     """Compatibility object that exposes legacy Qt.* names.
