@@ -16,6 +16,7 @@ def test_root_painter_starts(qtbot, qapp, tmp_path):
     # Prevent pytest's argv (which often contains the test file path) from being
     # interpreted by the app as a .seg_proj project file.
     import sys
+
     sys.argv = [sys.argv[0]]
     from root_painter.root_painter import RootPainter
 
