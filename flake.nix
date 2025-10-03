@@ -23,11 +23,6 @@
           glib
           krb5
           libGL
-          # Qt6 runtime for PyQt6/PySide6
-          qt6.qtbase
-          qt6.qttools
-          qt6.qtdeclarative
-          qtcreator
           libxkbcommon
           stdenv.cc.cc.lib
           zlib
