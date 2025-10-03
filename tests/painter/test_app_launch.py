@@ -25,8 +25,28 @@ def test_root_painter_starts(qtbot, qapp, tmp_path):
     window = RootPainter(sync_dir)
     qtbot.addWidget(window)
     window.show()
-    # Wait until visible or timeout (milliseconds)
-    qtbot.waitUntil(lambda: window.isVisible(), timeout=2000)
-    assert window.isVisible()
+    # Wait until the window is exposed to the windowing system and painted
+    qtbot.waitExposed(window, timeout=2000)
+    # Give the event loop a chance to finish painting
+    qapp.processEvents()
+    # Grab the rendered content and verify it is not a fully black/empty image.
+    pixmap = window.grab()
+    assert not pixmap.isNull()
+    img = pixmap.toImage()
+    w, h = img.width(), img.height()
+    assert w > 0 and h > 0, "Grabbed image has zero size"
+    # Sample a small 3x3 area around the center and check average brightness
+    cx, cy = w // 2, h // 2
+    brightness_total = 0
+    count = 0
+    for dx in (-1, 0, 1):
+        for dy in (-1, 0, 1):
+            x, y = cx + dx, cy + dy
+            if 0 <= x < w and 0 <= y < h:
+                color = img.pixelColor(x, y)
+                brightness_total += (color.red() + color.green() + color.blue()) / 3
+                count += 1
+    avg_brightness = brightness_total / max(1, count)
+    assert avg_brightness > 10, f"Window content appears too dark (avg={avg_brightness})"
     # Close the window to clean up
     window.close()
