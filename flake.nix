@@ -23,9 +23,6 @@
           glib
           krb5
           libGL
-          # Qt5 compatibility (legacy)
-          libsForQt5.qt5.wrapQtAppsHook
-          libsForQt5.qt5.full
           # Qt6 runtime for PyQt6/PySide6
           qt6.qtbase
           qt6.qttools
