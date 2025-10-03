@@ -29,26 +29,18 @@ def test_root_painter_starts(qtbot, qapp, tmp_path):
     qtbot.waitExposed(window, timeout=2000)
     # Give the event loop a chance to finish painting
     qapp.processEvents()
-    # Grab the rendered content and verify it is not a fully black/empty image.
-    pixmap = window.grab()
-    assert not pixmap.isNull()
-    img = pixmap.toImage()
-    w, h = img.width(), img.height()
-    assert w > 0 and h > 0, "Grabbed image has zero size"
-    # Sample a small 3x3 area around the center and check average brightness
-    cx, cy = w // 2, h // 2
-    brightness_total = 0
-    count = 0
-    for dx in (-1, 0, 1):
-        for dy in (-1, 0, 1):
-            x, y = cx + dx, cy + dy
-            if 0 <= x < w and 0 <= y < h:
-                color = img.pixelColor(x, y)
-                brightness_total += (color.red() + color.green() + color.blue()) / 3
-                count += 1
-    avg_brightness = brightness_total / max(1, count)
-    assert avg_brightness > 10, (
-        f"Window content appears too dark (avg={avg_brightness})"
-    )
+    # Basic textual checks (window title, menubar menus, and central buttons)
+    assert "RootPainter" in window.windowTitle()
+    menu_texts = [a.text() for a in window.menuBar().actions()]
+    for expected in ("Project", "Network", "Extras", "About"):
+        assert any(expected in t for t in menu_texts), f"Missing menu '{expected}' in {menu_texts}"
+    # central project buttons when project not set
+    central = window.centralWidget()
+    assert central is not None
+    from root_painter.qt_compat import QtWidgets
+    buttons = [b.text() for b in central.findChildren(QtWidgets.QPushButton)]
+    assert any("Open existing project" == t for t in buttons), f"Missing Open button: {buttons}"
+    assert any("Create new project" == t for t in buttons), f"Missing Create button: {buttons}"
+    assert any("Create training dataset" in t for t in buttons), f"Missing Create dataset button: {buttons}"
     # Close the window to clean up
     window.close()
