@@ -47,6 +47,8 @@ def test_root_painter_starts(qtbot, qapp, tmp_path):
                 brightness_total += (color.red() + color.green() + color.blue()) / 3
                 count += 1
     avg_brightness = brightness_total / max(1, count)
-    assert avg_brightness > 10, f"Window content appears too dark (avg={avg_brightness})"
+    assert avg_brightness > 10, (
+        f"Window content appears too dark (avg={avg_brightness})"
+    )
     # Close the window to clean up
     window.close()
