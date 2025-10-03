@@ -120,3 +120,23 @@ class _QtCompat:
 Qt = _QtCompat()
 
 __all__ = ["QtCore", "QtGui", "QtWidgets", "Qt"]
+
+# Some Qt6 bindings expose a few classes from a different module namespace
+# (for example some builds expose QAction on QtGui). Re-export commonly used
+# widget classes on QtWidgets so older code that expects `QtWidgets.QAction`
+# continues to work regardless of where the binding places them.
+try:
+    # If QAction is missing from QtWidgets but present on QtGui, copy it across.
+    if not hasattr(QtWidgets, "QAction") and hasattr(QtGui, "QAction"):
+        QtWidgets.QAction = QtGui.QAction
+    # Common menu-related classes
+    if not hasattr(QtWidgets, "QMenu") and hasattr(QtGui, "QMenu"):
+        QtWidgets.QMenu = QtGui.QMenu
+    if not hasattr(QtWidgets, "QMenuBar") and hasattr(QtGui, "QMenuBar"):
+        QtWidgets.QMenuBar = QtGui.QMenuBar
+    if not hasattr(QtWidgets, "QSystemTrayIcon") and hasattr(QtGui, "QSystemTrayIcon"):
+        QtWidgets.QSystemTrayIcon = QtGui.QSystemTrayIcon
+except Exception:
+    # Be conservative: if anything goes wrong here, don't fail the import
+    # as the rest of the shim will still be useful.
+    pass
