@@ -33,14 +33,23 @@ def test_root_painter_starts(qtbot, qapp, tmp_path):
     assert "RootPainter" in window.windowTitle()
     menu_texts = [a.text() for a in window.menuBar().actions()]
     for expected in ("Project", "Network", "Extras", "About"):
-        assert any(expected in t for t in menu_texts), f"Missing menu '{expected}' in {menu_texts}"
+        assert any(expected in t for t in menu_texts), (
+            f"Missing menu '{expected}' in {menu_texts}"
+        )
     # central project buttons when project not set
     central = window.centralWidget()
     assert central is not None
     from root_painter.qt_compat import QtWidgets
+
     buttons = [b.text() for b in central.findChildren(QtWidgets.QPushButton)]
-    assert any("Open existing project" == t for t in buttons), f"Missing Open button: {buttons}"
-    assert any("Create new project" == t for t in buttons), f"Missing Create button: {buttons}"
-    assert any("Create training dataset" in t for t in buttons), f"Missing Create dataset button: {buttons}"
+    assert any("Open existing project" == t for t in buttons), (
+        f"Missing Open button: {buttons}"
+    )
+    assert any("Create new project" == t for t in buttons), (
+        f"Missing Create button: {buttons}"
+    )
+    assert any("Create training dataset" in t for t in buttons), (
+        f"Missing Create dataset button: {buttons}"
+    )
     # Close the window to clean up
     window.close()
