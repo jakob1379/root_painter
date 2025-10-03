@@ -5,8 +5,6 @@ RootPainter main window. This is a lightweight smoke-test that verifies the
 Qt bindings and basic UI construction paths work in the test environment.
 """
 
-from pathlib import Path
-
 
 def test_root_painter_starts(qtbot, qapp, tmp_path):
     """Create RootPainter with a temporary sync directory and ensure it shows.
