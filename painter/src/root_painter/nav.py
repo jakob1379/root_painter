@@ -17,8 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # pylint: disable=C0111, I1101, E0611
 import os
 
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import Qt
+from root_painter.qt_compat import QtCore, QtWidgets, Qt
 
 
 class NavWidget(QtWidgets.QWidget):

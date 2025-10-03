@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import os
 
 import numpy as np
-from PyQt5 import QtCore, QtWidgets
+from root_painter.qt_compat import QtCore, QtWidgets
 from skimage import img_as_float, img_as_ubyte
 from skimage.io import imread, imsave
 

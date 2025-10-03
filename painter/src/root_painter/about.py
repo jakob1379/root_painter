@@ -15,7 +15,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 # pylint: disable=I1101,C0111,R0903
-from PyQt5 import QtCore, QtWidgets
+from root_painter.qt_compat import QtCore, QtWidgets
 
 license_text = """
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"

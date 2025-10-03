@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # pylint: disable=I1101,C0111,W0201,R0903,E0611, R0902, R0914
 import os
 
-from PyQt5 import QtCore, QtWidgets
+from root_painter.qt_compat import QtCore, QtWidgets
 
 from root_painter.im_utils import gen_composite
 from root_painter.progress_widget import BaseProgressWidget

@@ -20,7 +20,7 @@ import random
 import shutil
 from pathlib import Path
 
-from PyQt5 import QtCore, QtWidgets
+from root_painter.qt_compat import QtCore, QtWidgets
 
 from root_painter import im_utils
 from root_painter.progress_widget import BaseProgressWidget

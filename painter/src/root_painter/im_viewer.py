@@ -18,7 +18,7 @@ import os
 
 import numpy as np
 import qimage2ndarray
-from PyQt5 import QtCore, QtGui, QtWidgets
+from root_painter.qt_compat import QtCore, QtGui, QtWidgets
 from skimage.color import rgb2gray
 
 

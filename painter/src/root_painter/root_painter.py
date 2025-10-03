@@ -26,7 +26,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import json
 import os
-import subprocess
+import subprocess  # nosec
 import sys
 import threading
 import time
@@ -36,8 +36,7 @@ from functools import partial
 from pathlib import Path, PurePath
 
 from PIL import Image
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
+from root_painter.qt_compat import QtCore, QtGui, QtWidgets, Qt
 from skimage.io import use_plugin
 
 from root_painter import im_utils
@@ -177,7 +176,7 @@ class RootPainter(QtWidgets.QMainWindow):
                 f"Please specify the location of the dataset for this project."
             )
             msg.setText(output)
-            msg.exec_()
+            msg.exec()
             dir_path = QtWidgets.QFileDialog.getExistingDirectory()
             if not dir_path:
                 exit()
@@ -350,8 +349,10 @@ class RootPainter(QtWidgets.QMainWindow):
         im_size = image_pixmap.size()
 
         im_width, im_height = im_size.width(), im_size.height()
-        assert im_width > 0, self.image_path
-        assert im_height > 0, self.image_path
+        if im_width <= 0:
+            raise ValueError(f"Invalid image width: {self.image_path}")
+        if im_height <= 0:
+            raise ValueError(f"Invalid image height: {self.image_path}")
         self.graphics_view.image = image_pixmap  # for resize later
         self.im_width = im_width
         self.im_height = im_height
@@ -552,11 +553,11 @@ class RootPainter(QtWidgets.QMainWindow):
 
     def open_sync_directory(self):
         if sys.platform == "darwin":  # Mac/OSX
-            subprocess.call(["open", self.sync_dir])
+            subprocess.call(["open", self.sync_dir])  # nosec
         elif sys.platform == "win32":  # Windows
-            os.startfile(self.sync_dir)
+            os.startfile(self.sync_dir)  # nosec
         else:  # assume linux/ubuntu
-            subprocess.call(["xdg-open", self.sync_dir])
+            subprocess.call(["xdg-open", self.sync_dir])  # nosec
 
     def specify_sync_directory(self):
         """User may choose to update the sync directory.
@@ -653,9 +654,7 @@ class RootPainter(QtWidgets.QMainWindow):
             if file_path:
                 self.metrics_plot.view_plot_from_csv(file_path)
 
-        view_metrics_csv_btn = QtWidgets.QAction(
-            QtGui.QIcon(""), "View Metrics Plot from CSV", self
-        )
+        QtWidgets.QAction(QtGui.QIcon(""), "View Metrics Plot from CSV", self)
         self.metrics_plot = MetricsPlot()
 
         # view_metrics_csv_btn.triggered.connect(view_metric_csv)
@@ -1055,7 +1054,7 @@ class RootPainter(QtWidgets.QMainWindow):
                     "Please specify the original image directory."
                 )
                 msg.setText(output)
-                msg.exec_()
+                msg.exec()
                 self.original_image_dir = QtWidgets.QFileDialog.getExistingDirectory()
                 if not self.original_image_dir:
                     return
@@ -1354,7 +1353,7 @@ class RootPainter(QtWidgets.QMainWindow):
         # Check if control key is up to disable it.
         modifiers = QtWidgets.QApplication.keyboardModifiers()
         if not modifiers & QtCore.Qt.ControlModifier:
-            self.graphics_view.setDragMode(QtWidgets.QGraphicsView.NoDrag)
+            self.graphics_view.setDragMode(QtWidgets.QGraphicsView.DragMode.NoDrag)
 
     def open_contrast_enhance_dialog(self):
         items = ("Disabled", "Enabled")
@@ -1376,7 +1375,7 @@ class RootPainter(QtWidgets.QMainWindow):
         # Check if control key is up to disable it.
         modifiers = QtWidgets.QApplication.keyboardModifiers()
         if not modifiers & QtCore.Qt.ControlModifier:
-            self.graphics_view.setDragMode(QtWidgets.QGraphicsView.NoDrag)
+            self.graphics_view.setDragMode(QtWidgets.QGraphicsView.DragMode.NoDrag)
 
     def save_annotation(self):
         if self.scene.annot_pixmap:

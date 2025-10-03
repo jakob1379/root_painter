@@ -20,13 +20,13 @@ import csv
 import json
 import math
 import os
-import pickle
+import pickle  # nosec
 import random
 import time
 
 import numpy as np
 import pyqtgraph as pg
-from PyQt5 import QtCore, QtWidgets
+from root_painter.qt_compat import QtCore, QtWidgets
 from pyqtgraph.Qt import mkQApp
 from skimage.io import imread
 
@@ -200,7 +200,7 @@ class Thread(QtCore.QThread):
         annot_events = load_annot_events(self.proj_dir)
         cache_dict_path = os.path.join(self.proj_dir, "metrics_cache.pkl")
         if os.path.isfile(cache_dict_path):
-            cache_dict = pickle.load(open(cache_dict_path, "rb"))
+            cache_dict = pickle.load(open(cache_dict_path, "rb"))  # nosec
         else:
             cache_dict = {}
 
@@ -245,7 +245,7 @@ class Thread(QtCore.QThread):
                     writer.writerow(row)
 
         with open(cache_dict_path, "wb") as cache_file:
-            pickle.dump(cache_dict, cache_file)
+            pickle.dump(cache_dict, cache_file)  # nosec
         print("Seconds to get metrics: ", round(time.time() - start, 2))
         self.done.emit(json.dumps([all_fnames, all_metrics]))
 
@@ -357,7 +357,7 @@ class MetricsPlot:
             annot_dir = os.path.join(self.proj_dir, "annotations")
 
             cache_dict_path = os.path.join(self.proj_dir, "metrics_cache.pkl")
-            cache_dict = pickle.load(open(cache_dict_path, "rb"))
+            cache_dict = pickle.load(open(cache_dict_path, "rb"))  # nosec
             cache_key = get_cache_key(fname)
 
             annot_events = load_annot_events(self.proj_dir)
@@ -374,16 +374,16 @@ class MetricsPlot:
                 self.plot_window.add_point(fname, metrics)
 
             with open(cache_dict_path, "wb") as cache_file:
-                pickle.dump(cache_dict, cache_file)
+                pickle.dump(cache_dict, cache_file)  # nosec
 
     def view_plot_from_csv(self, csv_fpath):
         # CSV Headers.
         # file_name,accuracy,tn,fp,fn,tp,precision,recall,f1,annot_fg,annot_bg
         csv_lines = open(csv_fpath).readlines()[1:]
-        parts_lists = [l.strip().split(",") for l in csv_lines]
+        parts_lists = [ln.strip().split(",") for ln in csv_lines]
         metrics_list = []
         fnames = []
-        for l in parts_lists:
+        for ln in parts_lists:
             (
                 file_name,
                 accuracy,
@@ -396,7 +396,7 @@ class MetricsPlot:
                 f1,
                 annot_fg,
                 annot_bg,
-            ) = l
+            ) = ln
             fnames.append(file_name)
             metrics_list.append(
                 {
@@ -737,9 +737,8 @@ class QtGraphMetricsPlot(QtWidgets.QMainWindow):
                 # does not exist yet.
 
     def render_data(self):
-        assert self.graph_plot is not None, (
-            "plot should be created before rendering data"
-        )
+        if self.graph_plot is None:
+            raise RuntimeError("plot should be created before rendering data")
         self.corrected_dice = self.get_corrected_dice()
         if not [c for c in self.corrected_dice if not math.isnan(c)]:
             self.graph_plot.clear()
@@ -842,12 +841,12 @@ class QtGraphMetricsPlot(QtWidgets.QMainWindow):
         pg.setConfigOption("background", "w")
         pg.setConfigOption("foreground", "w")
         view = pg.GraphicsView()
-        l = pg.GraphicsLayout(border=None)
-        l.setContentsMargins(10, 10, 10, 10)
-        view.setCentralItem(l)
+        layout = pg.GraphicsLayout(border=None)
+        layout.setContentsMargins(10, 10, 10, 10)
+        view.setCentralItem(layout)
         view.setWindowTitle("RootPainter: Segmentation Metrics")
         view.resize(800, 600)
-        l2 = l.addLayout()
+        l2 = layout.addLayout()
         l2.setContentsMargins(0, 0, 0, 0)
         pg.setConfigOption("foreground", "k")
         p21 = l2.addPlot()
@@ -906,13 +905,13 @@ def demo_plot_test():
         if plot.rolling_n > 30:
             plot.add_point(
                 str(len(plot.metrics_list)),
-                {"f1": random.random(), "annot_fg": 100, "annot_bg": 100},
+                {"f1": random.random(), "annot_fg": 100, "annot_bg": 100},  # nosec,
             )
 
     _proxy = pg.SignalProxy(
         plot.view.scene().sigMouseMoved, rateLimit=60, slot=mouseMoved
     )
-    app.exec_()
+    app.exec()
 
 
 if __name__ == "__main__":
