@@ -47,6 +47,9 @@ sequence = [
   'uv publish --index ${POE_PUBLISH_INDEX:-testpypi}'
 ]
 
+[tool.pytest]
+qt_api = "pyqt6"
+
 [tool.uv.build-backend]
 module-name = "root_painter_cli"
 
