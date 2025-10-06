@@ -6,8 +6,6 @@ sync directory. Tests use qtbot to interact with QActions and wait for dialogs
 or widgets to appear.
 """
 
-from root_painter.qt_compat import QtWidgets
-
 
 def test_top_level_menus_present(main_window):
     """Assert top-level menus and a few actions are present with expected text."""
@@ -43,8 +41,10 @@ def test_trigger_about_shows_dialog(main_window, qtbot):
 
     # Trigger and wait for window
     about_action.trigger()
-    qtbot.waitUntil(lambda: hasattr(window, "about_window") and window.about_window.isVisible(),
-                    timeout=2000)
+    qtbot.waitUntil(
+        lambda: hasattr(window, "about_window") and window.about_window.isVisible(),
+        timeout=2000,
+    )
     assert window.about_window.windowTitle() == "About RootPainter"
     # Close
     window.about_window.close()
@@ -61,10 +61,14 @@ def test_trigger_create_project_shows_widget(main_window, qtbot):
 
     assert create_act is not None
     create_act.trigger()
-    qtbot.waitUntil(lambda: hasattr(window, "create_project_widget") and window.create_project_widget.isVisible(),
-                    timeout=2000)
+    qtbot.waitUntil(
+        lambda: hasattr(window, "create_project_widget")
+        and window.create_project_widget.isVisible(),
+        timeout=2000,
+    )
     # Close the widget
     window.create_project_widget.close()
+
 
 def test_create_project_opens_dialog(main_window, qtbot):
     # Trigger the create project action and assert the CreateProjectWidget is shown
@@ -82,20 +86,39 @@ def test_create_project_opens_dialog(main_window, qtbot):
 
 def test_about_and_license_open(main_window, qtbot):
     # Find the About menu and its actions
-    about_menu_action = next((a for a in main_window.menuBar().actions() if "About" in a.text()), None)
+    about_menu_action = next(
+        (a for a in main_window.menuBar().actions() if "About" in a.text()), None
+    )
     assert about_menu_action is not None
     about_menu = about_menu_action.menu()
 
-    license_action = next((a for a in about_menu.actions() if "License" in a.text()), None)
-    about_action = next((a for a in about_menu.actions() if "RootPainter" in a.text() or "About" in a.text()), None)
+    license_action = next(
+        (a for a in about_menu.actions() if "License" in a.text()), None
+    )
+    about_action = next(
+        (
+            a
+            for a in about_menu.actions()
+            if "RootPainter" in a.text() or "About" in a.text()
+        ),
+        None,
+    )
 
     assert license_action is not None
     assert about_action is not None
 
     license_action.trigger()
-    qtbot.waitUntil(lambda: hasattr(main_window, "license_window") and main_window.license_window.isVisible(), timeout=2000)
+    qtbot.waitUntil(
+        lambda: hasattr(main_window, "license_window")
+        and main_window.license_window.isVisible(),
+        timeout=2000,
+    )
     assert main_window.license_window.isVisible()
 
     about_action.trigger()
-    qtbot.waitUntil(lambda: hasattr(main_window, "about_window") and main_window.about_window.isVisible(), timeout=2000)
+    qtbot.waitUntil(
+        lambda: hasattr(main_window, "about_window")
+        and main_window.about_window.isVisible(),
+        timeout=2000,
+    )
     assert main_window.about_window.isVisible()
