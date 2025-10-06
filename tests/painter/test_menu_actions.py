@@ -10,14 +10,19 @@ from root_painter.qt_compat import QtWidgets
 
 
 def test_top_level_menus_present(main_window):
+<<<<<<< HEAD
     """Assert top-level menus and a few actions are present with expected text."""
     window = main_window
     menu_texts = [a.text() for a in window.menuBar().actions()]
+=======
+    menu_texts = [a.text() for a in main_window.menuBar().actions()]
+>>>>>>> 9a49253 (test: add integration tests for top-level menus and actions)
     for expected in ("Project", "Network", "Extras", "About"):
         assert any(expected in t for t in menu_texts), (
             f"Missing menu '{expected}' in {menu_texts}"
         )
 
+<<<<<<< HEAD
     # Check a couple of actions exist on the Project menu if available
     if hasattr(window, 'project_menu'):
         project_actions = [a.text() for a in window.project_menu.actions()]
@@ -28,6 +33,12 @@ def test_top_level_menus_present(main_window):
 def test_create_project_opens_dialog(main_window, qtbot):
     # Trigger the create project action and assert the CreateProjectWidget is shown
     action = getattr(main_window, 'create_project_action', None)
+=======
+
+def test_create_project_opens_dialog(main_window, qtbot):
+    # Trigger the create project action and assert the CreateProjectWidget is shown
+    action = getattr(main_window, 'create_project_action', None)
+>>>>>>> 9a49253 (test: add integration tests for top-level menus and actions)
     assert action is not None
     action.trigger()
 
