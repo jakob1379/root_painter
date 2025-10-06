@@ -53,5 +53,6 @@ def test_root_painter_starts(qtbot, qapp, tmp_path):
     )
     # Close the window to clean up
     from time import sleep
+
     sleep(4)
     window.close()
