@@ -44,8 +44,8 @@
         # Determine Qt libs set (Qt6 when available, otherwise Qt5)
         qtLibs = if builtins.hasAttr "libsForQt6" pkgs then pkgs.libsForQt6.qt6 else pkgs.libsForQt5.qt5;
 
-        # All runtime libraries
-        runtimeLibs = systemLibs ++ x11Libs ++ [ qtLibs.wrapQtAppsHook qtLibs.full ];
+        # All runtime libraries (only include the wrap hook to avoid pulling in optional components like qtwebengine)
+        runtimeLibs = systemLibs ++ x11Libs ++ [ qtLibs.wrapQtAppsHook ];
 
         # Development tools
         devTools = with pkgs; [
