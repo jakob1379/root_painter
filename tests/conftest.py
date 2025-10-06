@@ -48,4 +48,3 @@ def main_window(qtbot, qapp, tmp_path):
         win.close()
     except Exception:
         pass
-
