@@ -18,7 +18,6 @@ def test_top_level_menus_present(main_window):
             f"Missing menu '{expected}' in {menu_texts}"
         )
 
-<<<<<<< HEAD
     # Check a couple of actions exist on the Project menu
     project_actions = [a.text() for a in window.project_menu.actions()]
     assert any("Open project" in t for t in project_actions)
@@ -66,7 +65,6 @@ def test_trigger_create_project_shows_widget(main_window, qtbot):
                     timeout=2000)
     # Close the widget
     window.create_project_widget.close()
-=======
 
 def test_create_project_opens_dialog(main_window, qtbot):
     # Trigger the create project action and assert the CreateProjectWidget is shown
@@ -101,4 +99,3 @@ def test_about_and_license_open(main_window, qtbot):
     about_action.trigger()
     qtbot.waitUntil(lambda: hasattr(main_window, "about_window") and main_window.about_window.isVisible(), timeout=2000)
     assert main_window.about_window.isVisible()
->>>>>>> origin/test/integration/menu-actions
