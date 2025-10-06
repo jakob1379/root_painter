@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtWidgets
 
+
 def test_dummy_button_closes_window(qtbot, capsys):
     # Create a simple window with a label and a button
     window = QtWidgets.QWidget()
