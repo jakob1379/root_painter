@@ -62,3 +62,6 @@ root-painter-trainer-jakob1379 = {workspace = true}
 
 [tool.uv.workspace]
 members = ["painter", "trainer"]
+
+[tool.pytest]
+qt_api = "pyqt6"
