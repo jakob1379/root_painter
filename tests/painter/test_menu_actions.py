@@ -1,6 +1,3 @@
-from root_painter.qt_compat import QtWidgets
-
-
 def test_menus_and_actions_present(main_window):
     """Assert top-level menus and a few actions are present with expected text."""
     window = main_window
@@ -35,8 +32,10 @@ def test_trigger_about_shows_dialog(main_window, qtbot):
 
     # Trigger and wait for window
     about_action.trigger()
-    qtbot.waitUntil(lambda: hasattr(window, "about_window") and window.about_window.isVisible(),
-                    timeout=2000)
+    qtbot.waitUntil(
+        lambda: hasattr(window, "about_window") and window.about_window.isVisible(),
+        timeout=2000,
+    )
     assert window.about_window.windowTitle() == "About RootPainter"
     # Close
     window.about_window.close()
@@ -53,7 +52,10 @@ def test_trigger_create_project_shows_widget(main_window, qtbot):
 
     assert create_act is not None
     create_act.trigger()
-    qtbot.waitUntil(lambda: hasattr(window, "create_project_widget") and window.create_project_widget.isVisible(),
-                    timeout=2000)
+    qtbot.waitUntil(
+        lambda: hasattr(window, "create_project_widget")
+        and window.create_project_widget.isVisible(),
+        timeout=2000,
+    )
     # Close the widget
     window.create_project_widget.close()
