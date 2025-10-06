@@ -23,8 +23,6 @@
           glib
           krb5
           libGL
-          libsForQt6.qt6.wrapQtAppsHook
-          libsForQt6.qt6.full
           libxkbcommon
           stdenv.cc.cc.lib
           zlib
