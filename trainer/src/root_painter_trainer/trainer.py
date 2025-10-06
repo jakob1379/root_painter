@@ -576,7 +576,7 @@ class Trainer:
                     # default output is PNG with alpha channel
                     seg_alpha = np.zeros((seg_out.shape[0], seg_out.shape[1], 4))
                     seg_alpha[seg_out > 0] = [0, 1.0, 1.0, 0.7]
-                    # Conver to uint8 to save as png without warning
+                    # Convert to uint8 to save as png without warning
                     seg_out = (seg_alpha * 255).astype(np.uint8)
 
                 save_then_move(out_path, seg_out, npy)

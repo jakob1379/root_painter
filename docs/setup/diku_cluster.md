@@ -36,7 +36,7 @@ git clone --branch 0.2.4 https://github.com/Abe404/root_painter.git
 cd root_painter/trainer
 ```
 
-4. To avoid alterating global packages. I suggest using a virtual environment.
+4. To avoid alternating global packages. I suggest using a virtual environment.
    Create a virtual environment and activate it.
 
 ```

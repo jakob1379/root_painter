@@ -20,7 +20,7 @@ IFS=$'\n\t'
 # bash painter/scripts/make_deb_file
 
 # from man dpkg-deb
-# dpkl-deb --build creates a debian archive from the filesystem tree stroed in binary-directory.
+# dpkl-deb --build creates a debian archive from the filesystem tree stored in binary-directory.
 # binary-directory must have a DEBIAN subdirectory, which contains the control
 # information files such as the control file itself. These files will be put in the
 # binary package's control information area.

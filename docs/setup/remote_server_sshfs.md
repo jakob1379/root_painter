@@ -26,7 +26,7 @@ git clone https://github.com/Abe404/root_painter.git
 cd root_painter/trainer
 ```
 
-3. To avoid alterating global packages. I suggest using a virtual environment.
+3. To avoid alternating global packages. I suggest using a virtual environment.
    Create a virtual environment and activate it. This tutorial has been tested
    using python 3.7
 

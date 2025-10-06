@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 # https://stackoverflow.com/questions/12306223/how-to-manually-create-icns-files-using-iconutil
 mkdir Icon.iconset
