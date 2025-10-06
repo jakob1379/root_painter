@@ -25,6 +25,8 @@ version = "0.1.11"
 
 [project.optional-dependencies]
 trainer = ["root-painter-trainer-jakob1379"]
+# Allow users to install an alternative Qt binding (PySide6)
+pyqt_backends = ["PySide6>=6.5"]
 
 [project.scripts]
 root-painter = "root_painter_cli.main:main"
@@ -52,10 +54,6 @@ sequence = [
 # with either backend; qt_compat will select PyQt6 by default but having
 # pytest configured to "pyqt6" keeps CI aligned with the preferred binding.
 qt_api = "pyqt6"
-
-[project.optional-dependencies]
-# Allow users to install an alternative Qt binding (PySide6)
-pyqt_backends = ["PySide6>=6.5"]
 
 [tool.uv.build-backend]
 module-name = "root_painter_cli"

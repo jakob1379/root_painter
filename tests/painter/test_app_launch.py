@@ -52,7 +52,4 @@ def test_root_painter_starts(qtbot, qapp, tmp_path):
         f"Missing Create dataset button: {buttons}"
     )
     # Close the window to clean up
-    from time import sleep
-
-    sleep(4)
     window.close()
