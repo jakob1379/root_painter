@@ -55,7 +55,6 @@ sequence = [
 # pytest configured to "pyqt6" keeps CI aligned with the preferred binding.
 qt_api = "pyqt6"
 
-
 [tool.uv.build-backend]
 module-name = "root_painter_cli"
 

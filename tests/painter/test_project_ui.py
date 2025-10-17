@@ -89,7 +89,9 @@ def test_contrast_toggle(project_window, monkeypatch):
         "keyboardModifiers",
         staticmethod(lambda: Qt.KeyboardModifier.NoModifier),
     )
-    monkeypatch.setattr(QtCore.Qt, "ControlModifier", Qt.KeyboardModifier.NoModifier, raising=False)
+    monkeypatch.setattr(
+        QtCore.Qt, "ControlModifier", Qt.KeyboardModifier.NoModifier, raising=False
+    )
     project_window.open_contrast_enhance_dialog()
     assert project_window.contrast_enhance_enabled
     project_window.open_contrast_enhance_dialog()
@@ -149,7 +151,9 @@ def test_metrics_plot_widgets(project_window, qtbot, monkeypatch):
         captured_navigation.append((proj_file, current_image))
         navigate(Path(current_image).name)
 
-    monkeypatch.setattr(project_window.metrics_plot, "create_metrics_plot", fake_create_plot)
+    monkeypatch.setattr(
+        project_window.metrics_plot, "create_metrics_plot", fake_create_plot
+    )
 
     action.trigger()
     assert captured_navigation
