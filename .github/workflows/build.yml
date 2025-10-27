@@ -42,7 +42,9 @@ jobs:
           UV_PYTHON: ${{ matrix.config.python-version }}
         run: |
           mkdir -p dist
+          mkdir -p dist/src/root_painter/icons
           cp src/root_painter/icons/Icon.icns dist/Icon.icns
+          cp src/root_painter/icons/Icon.icns dist/src/root_painter/icons/Icon.icns
           # macOS: use .icns icon and build a windowed .app bundle
           uv run -m PyInstaller \
             --noconfirm --clean \
@@ -63,7 +65,9 @@ jobs:
         shell: bash
         run: |
           mkdir -p dist
+          mkdir -p dist/src/root_painter/icons
           cp src/root_painter/icons/Icon.ico dist/Icon.ico
+          cp src/root_painter/icons/Icon.ico dist/src/root_painter/icons/Icon.ico
           # Windows: use .ico icon
           uv run -m PyInstaller \
             --noconfirm --clean \
