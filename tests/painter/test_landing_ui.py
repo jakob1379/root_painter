@@ -98,7 +98,9 @@ def test_open_project_action_loads_project(main_window, qtbot, tmp_path, monkeyp
     def fake_get_open_file_name(*args, **kwargs):
         return str(proj_file), ""
 
-    monkeypatch.setattr(QtWidgets.QFileDialog, "getOpenFileName", staticmethod(fake_get_open_file_name))
+    monkeypatch.setattr(
+        QtWidgets.QFileDialog, "getOpenFileName", staticmethod(fake_get_open_file_name)
+    )
 
     monkeypatch.setattr(main_window, "send_instruction", lambda *args, **kwargs: None)
 

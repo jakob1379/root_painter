@@ -10,7 +10,6 @@ dev = [
   "pre-commit>=4.3.0",
   "pytest>=8.4.2",
   "pytest-cov>=7.0.0",
-  "pytest-xdist>=3.8.0",
   "pytest-qt>=4.5.0"
 ]
 
@@ -30,6 +29,27 @@ pyqt_backends = ["PySide6>=6.5"]
 
 [project.scripts]
 root-painter = "root_painter_cli.main:main"
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: no cover",
+  "if __name__ == \"__main__\":",
+  "if TYPE_CHECKING:",
+  "@overload"
+]
+fail_under = 0
+
+[tool.coverage.run]
+branch = true
+source = ["painter/src", "trainer/src", "src"]
+omit = [
+  "tests/*",
+  "*/__init__.py",
+  "*/__main__.py",
+  "*/conftest.py",
+  "*/test_*",
+  "*/site-packages/*"
+]
 
 [tool.poe.tasks]
 # _update_deps = 'uv sync --upgrade'
@@ -54,6 +74,7 @@ sequence = [
 # with either backend; qt_compat will select PyQt6 by default but having
 # pytest configured to "pyqt6" keeps CI aligned with the preferred binding.
 qt_api = "pyqt6"
+addopts = "--cov --cov-report=term-missing"
 
 [tool.uv.build-backend]
 module-name = "root_painter_cli"

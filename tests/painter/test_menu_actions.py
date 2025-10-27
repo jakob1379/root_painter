@@ -6,8 +6,6 @@ sync directory. Tests use qtbot to interact with QActions and wait for dialogs
 or widgets to appear.
 """
 
-from root_painter.qt_compat import QtWidgets
-
 
 def test_top_level_menus_present(main_window):
     """Assert top-level menus and a few actions are present with expected text."""
@@ -39,11 +37,15 @@ def test_create_project_opens_dialog(main_window, qtbot):
 
 def test_about_and_license_open(main_window, qtbot):
     # Find the About menu and its actions
-    about_menu_action = next((a for a in main_window.menuBar().actions() if "About" in a.text()), None)
+    about_menu_action = next(
+        (a for a in main_window.menuBar().actions() if "About" in a.text()), None
+    )
     assert about_menu_action is not None
     about_menu = about_menu_action.menu()
 
-    license_action = next((a for a in about_menu.actions() if "License" in a.text()), None)
+    license_action = next(
+        (a for a in about_menu.actions() if "License" in a.text()), None
+    )
     about_action = next(
         (
             a

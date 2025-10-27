@@ -9,6 +9,7 @@ dummy data.
 """
 
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -16,7 +17,9 @@ import pytest
 import numpy as np
 from PIL import Image
 
-from root_painter.qt_compat import Qt, QtCore, QtGui, QtWidgets
+os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+
+from root_painter.qt_compat import Qt, QtCore, QtWidgets
 
 try:
     from PyQt6 import QtGui as _QtGui
@@ -92,6 +95,12 @@ def main_window(qtbot, qapp, tmp_path):
         win.close()
     except Exception:
         pass
+    finally:
+        try:
+            win.deleteLater()
+        except Exception:
+            pass
+        QtWidgets.QApplication.processEvents()
 
 
 @pytest.fixture
@@ -143,7 +152,9 @@ def project_window(qtbot, tmp_path, monkeypatch):
     from root_painter import root_painter as root_painter_module
     from root_painter.root_painter import RootPainter
 
-    monkeypatch.setattr(root_painter_module.RootPainter, "track_changes", lambda self: None)
+    monkeypatch.setattr(
+        root_painter_module.RootPainter, "track_changes", lambda self: None
+    )
 
     orig_argv = sys.argv[:]
     sys.argv[:] = [orig_argv[0], str(proj_file)]
@@ -161,4 +172,9 @@ def project_window(qtbot, tmp_path, monkeypatch):
     except Exception:
         pass
     finally:
+        try:
+            win.deleteLater()
+        except Exception:
+            pass
+        QtWidgets.QApplication.processEvents()
         sys.argv[:] = orig_argv
