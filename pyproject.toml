@@ -37,17 +37,21 @@ exclude_lines = [
   "if TYPE_CHECKING:",
   "@overload"
 ]
+skip_covered = true
+skip_empty = true
+precision = 1
 fail_under = 0
 
 [tool.coverage.run]
 branch = true
 source = ["painter/src", "trainer/src", "src"]
 omit = [
-  "tests/*",
+  "*/tests/*",
+  "*/test_*",
+  "*/conftest.py",
   "*/__init__.py",
   "*/__main__.py",
-  "*/conftest.py",
-  "*/test_*",
+  "*/migrations/*",
   "*/site-packages/*"
 ]
 
@@ -74,7 +78,10 @@ sequence = [
 # with either backend; qt_compat will select PyQt6 by default but having
 # pytest configured to "pyqt6" keeps CI aligned with the preferred binding.
 qt_api = "pyqt6"
-addopts = "--cov --cov-report=term-missing"
+addopts = "--cov --cov-report=term-missing --cov-report=xml"
+
+[tool.coverage.html]
+directory = "build/coverage"
 
 [tool.uv.build-backend]
 module-name = "root_painter_cli"
