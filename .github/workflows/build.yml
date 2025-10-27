@@ -120,8 +120,22 @@ jobs:
         working-directory: painter
         env:
           UV_PYTHON: ${{ matrix.config.python-version }}
+        shell: powershell
         run: |
-          makensis.exe scripts/assets/Installer.nsi
+          $candidates = @()
+          if ($env:ProgramFiles -and (Test-Path $env:ProgramFiles)) {
+            $candidates += Join-Path $env:ProgramFiles 'NSIS\makensis.exe'
+          }
+          $pf86 = ${env:ProgramFiles(x86)}
+          if ($pf86 -and (Test-Path $pf86)) {
+            $candidates = ,(Join-Path $pf86 'NSIS\makensis.exe') + $candidates
+          }
+          $candidates += 'C:\ProgramData\chocolatey\bin\makensis.exe'
+          $nsisPath = $candidates | Where-Object { $_ -and (Test-Path $_) } | Select-Object -First 1
+          if (-not $nsisPath) {
+            throw 'makensis executable not found; ensure NSIS is installed and on PATH'
+          }
+          & $nsisPath 'scripts/assets/Installer.nsi'
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
