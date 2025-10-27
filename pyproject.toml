@@ -30,6 +30,9 @@ pyqt_backends = ["PySide6>=6.5"]
 [project.scripts]
 root-painter = "root_painter_cli.main:main"
 
+[tool.coverage.html]
+directory = "build/coverage"
+
 [tool.coverage.report]
 exclude_lines = [
   "pragma: no cover",
@@ -79,9 +82,6 @@ sequence = [
 # pytest configured to "pyqt6" keeps CI aligned with the preferred binding.
 qt_api = "pyqt6"
 addopts = "--cov --cov-report=term-missing --cov-report=xml"
-
-[tool.coverage.html]
-directory = "build/coverage"
 
 [tool.uv.build-backend]
 module-name = "root_painter_cli"
